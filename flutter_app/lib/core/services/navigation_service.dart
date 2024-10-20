@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
+import 'package:flutter_app/core/models/app_init_user_model.dart';
+import 'package:flutter_app/core/services/app_state_handler.dart';
 import 'package:flutter_app/core/services/network_handler.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'storage_handler.dart';
 
@@ -54,11 +60,30 @@ class NavigationService {
     navigatorKey.currentState?.pushReplacementNamed(routeName);
   }
 
-  static Future<String> goToInitialRoute() async{
+  static Future<String> prepareInitialAppState() async{
     //PROBLEM: could Potentially be null and is unsafe
     if (!(await StorageHandler.isLoggedIn())) {
-      return "/initial-login-page";
+      return "/initial-login";
     }
-    return "/landing";
+    Response response = await NetworkHandler.getMainUser();
+    if (response.statusCode == 404) {
+      return "/initial-login";
+    } else if (response.statusCode == 500) {
+      return "/server-connection-error";
+    } else if (response.statusCode == 200) {
+      dynamic mainUserJson = jsonDecode(response.body);
+      AppStateHandler.appPreparationUserData = appInitUserModelFromJson(mainUserJson);
+      if (!AppStateHandler.appPreparationUserData!.hasNecessaryDataForLanding()) {
+        return "/data-fill";
+      } else {
+        return "/landing";
+      }
+    }
+
+    // safety net
+    else {
+      AppStateHandler.logout();
+      return "/initial-login";
+    }
   }
 }

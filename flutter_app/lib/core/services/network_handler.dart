@@ -19,7 +19,7 @@ class NetworkHandler {
       headers: {"Content-type": "application/json"}
       );
     if (justBody) {
-      return response.body;
+      return jsonDecode(response.body);
     }
     return response;
   }
@@ -33,7 +33,7 @@ class NetworkHandler {
         }
     );
     if (justBody) {
-      return response.body;
+      return jsonDecode(response.body);
     }
     return response;
   }
@@ -48,7 +48,7 @@ class NetworkHandler {
       body: body,
     );
     if (justBody) {
-      return response.body;
+      return jsonDecode(response.body);
     }
     return response;
   }
@@ -65,7 +65,7 @@ class NetworkHandler {
       body: body,
     );
     if (justBody) {
-      return response.body;
+      return jsonDecode(response.body);
     }
     return response;
   }
@@ -82,7 +82,7 @@ class NetworkHandler {
           // print((await http.Response.fromStream(response)).body);
     var response = await http.Response.fromStream(responseStream);
     if (justBody) {
-      return response.body;
+      return jsonDecode(response.body);
     }
     return response;
   }
@@ -111,13 +111,13 @@ class NetworkHandler {
     return NetworkImage('$host$specifier');
   }
 
-  static Future<String> getMainUserJson() async {
-    //TODO
-    return 'l';
+  static Future<http.Response> getMainUser() async {
+    //TODO:
+    return http.Response('full response', 200);
   }
   
   static Future<List<String>> getUserAccessIdentifiers() async{
-    //TODO
+    //TODO:
     return [];
   }
 }

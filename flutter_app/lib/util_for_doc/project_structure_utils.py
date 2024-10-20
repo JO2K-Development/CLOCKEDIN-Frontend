@@ -28,7 +28,7 @@ def remove_description_files(root_dir):
     for dirpath, dirnames, filenames in os.walk(root_dir):
         for filename in filenames:
             # Check if the file is named 'description.txt'
-            if filename == 'description.txt':
+            if filename == 'doc.txt':
                 # Construct the full path to the file
                 file_path = os.path.join(dirpath, filename)
                 try:
@@ -39,6 +39,6 @@ def remove_description_files(root_dir):
                     print(f"Error removing {file_path}: {e}")
         
         
-# remove_all_description_file("../")
+# remove_description_files("../")
 # create_description_file("../")
     

@@ -11,8 +11,8 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-  // String initRoute = await NavigationService.goToInitialRoute();
-  String initRoute = "/landing";
+  String initRoute = await NavigationService.prepareInitialAppState();
+  // String initRoute = "/landing";
   runApp(MyApp(initRoute));
 }
 
@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: initialRoute,
         routes: {
-          '/initial-login-page': (context) => InitialLoginPage(),
+          '/initial-login': (context) => InitialLoginPage(),
+          '/data-fill': (context) => InitialLoginPage(),
           '/landing': (context) => LandingPage(),
         }
          

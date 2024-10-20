@@ -41,13 +41,15 @@ static void storeToken(String token) async {
     return (await getToken()) != null;
   }
 
-  static Future<String?> getMainUserJson() async {
-    String? token = await getToken();
-    if (token == null){
-      return null;
-    } else {
-      String? data = await retrieveValue(token);
-      return data;
-    }
-  }
+  //      *NOT TO BE IMPLEMENTED IN CURRENT VERSION*
+  //
+  // static Future<String?> getMainUserJson() async {
+  //   String? token = await getToken();
+  //   if (token == null){
+  //     return null;
+  //   } else {
+  //     String? data = await retrieveValue(token);
+  //     return data;
+  //   }
+  // }
 }
