@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
 import 'package:flutter_app/core/services/network_handler.dart';
+import 'package:provider/provider.dart';
 import 'storage_handler.dart';
 
 class NavigationService {
@@ -52,9 +54,10 @@ class NavigationService {
     navigatorKey.currentState?.pushReplacementNamed(routeName);
   }
 
-  static Future<String> getInitialRoute() async{
+  static Future<String> goToInitialRoute() async{
+    //PROBLEM: could Potentially be null and is unsafe
     if (!(await StorageHandler.isLoggedIn())) {
-      return "/login";
+      return "/initial-login-page";
     }
     return "/landing";
   }

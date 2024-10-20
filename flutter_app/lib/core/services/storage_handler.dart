@@ -40,4 +40,14 @@ static void storeToken(String token) async {
   static Future<bool> isLoggedIn() async {
     return (await getToken()) != null;
   }
+
+  static Future<String?> getMainUserJson() async {
+    String? token = await getToken();
+    if (token == null){
+      return null;
+    } else {
+      String? data = await retrieveValue(token);
+      return data;
+    }
+  }
 }

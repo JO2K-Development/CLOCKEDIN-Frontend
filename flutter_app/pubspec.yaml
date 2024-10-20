@@ -14,7 +14,7 @@ dependencies:
   
   cupertino_icons: ^1.0.8
   provider: 
-  flutter_native_splash: ^2.4.0
+  # flutter_native_splash: ^2.4.0
   stroke_text: ^0.0.3
   http: ^1.2.1
   flutter_secure_storage: ^9.2.2
@@ -25,65 +25,81 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  flutter_native_splash: ^2.4.0
+
 
 flutter:
   uses-material-design: true
 
   fonts:
-    - family: CascadiaMonoPL
+    - family: CascadiaCodePL
       fonts:
-        - asset: assets/fonts/CascadiaMonoPL-ExtraLight.ttf
+        - asset: assets/fonts/CascadiaCodePL-ExtraLight.ttf
           weight: 200
-        - asset: assets/fonts/CascadiaMonoPL-ExtraLightItalic.ttf
+        - asset: assets/fonts/CascadiaCodePL-ExtraLightItalic.ttf
           weight: 200
           style: italic
-        - asset: assets/fonts/CascadiaMonoPL-Light.ttf
+        - asset: assets/fonts/CascadiaCodePL-Light.ttf
           weight: 300
-        - asset: assets/fonts/CascadiaMonoPL-LightItalic.ttf
+        - asset: assets/fonts/CascadiaCodePL-LightItalic.ttf
           weight: 300
           style: italic
-        - asset: assets/fonts/CascadiaMonoPL-Regular.ttf
+        - asset: assets/fonts/CascadiaCodePL-Regular.ttf
           weight: 400
-        - asset: assets/fonts/CascadiaMonoPL-Italic.ttf
+        - asset: assets/fonts/CascadiaCodePL-Italic.ttf
           weight: 400
           style: italic
-        - asset: assets/fonts/CascadiaMonoPL-SemiBold.ttf
+        - asset: assets/fonts/CascadiaCodePL-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/CascadiaMonoPL-SemiBoldItalic.ttf
+        - asset: assets/fonts/CascadiaCodePL-SemiBoldItalic.ttf
           weight: 600
           style: italic
-        - asset: assets/fonts/CascadiaMonoPL-SemiLight.ttf
+        - asset: assets/fonts/CascadiaCodePL-SemiLight.ttf
           weight: 500
-        - asset: assets/fonts/CascadiaMonoPL-SemiLightItalic.ttf
+        - asset: assets/fonts/CascadiaCodePL-SemiLightItalic.ttf
           weight: 500
           style: italic
 
-    - family: CascadiaMono
+    - family: CascadiaCode
       fonts:
-        - asset: assets/fonts/CascadiaMono-Bold.ttf
+        - asset: assets/fonts/CascadiaCode-Bold.ttf
           weight: 700
-        - asset: assets/fonts/CascadiaMono-BoldItalic.ttf
+        - asset: assets/fonts/CascadiaCode-BoldItalic.ttf
           weight: 700
           style: italic
-        - asset: assets/fonts/CascadiaMono-ExtraLight.ttf
+        - asset: assets/fonts/CascadiaCode-ExtraLight.ttf
           weight: 200
-        - asset: assets/fonts/CascadiaMono-ExtraLightItalic.ttf
+        - asset: assets/fonts/CascadiaCode-ExtraLightItalic.ttf
           weight: 200
           style: italic
-        - asset: assets/fonts/CascadiaMono-Light.ttf
+        - asset: assets/fonts/CascadiaCode-Light.ttf
           weight: 300
-        - asset: assets/fonts/CascadiaMono-LightItalic.ttf
+        - asset: assets/fonts/CascadiaCode-LightItalic.ttf
           weight: 300
           style: italic
-        - asset: assets/fonts/CascadiaMono-Regular.ttf
+        - asset: assets/fonts/CascadiaCode-Regular.ttf
           weight: 400
-        - asset: assets/fonts/CascadiaMono-Italic.ttf
+        - asset: assets/fonts/CascadiaCode-Italic.ttf
           weight: 400
           style: italic
-        - asset: assets/fonts/CascadiaMono-SemiBold.ttf
+        - asset: assets/fonts/CascadiaCode-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/CascadiaMono-SemiBoldItalic.ttf
+        - asset: assets/fonts/CascadiaCode-SemiBoldItalic.ttf
           weight: 600
           style: italic
-        - asset: assets/fonts/CascadiaMono-SemiLight.ttf
+        - asset: assets/fonts/CascadiaCode-SemiLight.ttf
           weight: 500
+
+# to create splash screen run: flutter pub run flutter_native_splash:create 
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  color: "#ffffff"
+  branding: "assets/images/logos/splash-branding-with-color-ios.png"
+
+  android_12:
+    color: "#ffffff"
+    image: "assets/images/logos/splash-branding-with-color-android.png"
+    

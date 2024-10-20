@@ -1,37 +1,37 @@
 import 'dart:convert';
 
-UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
+AppInitUserModel appInitUserModelFromJson(String str) => AppInitUserModel.fromJson(json.decode(str));
 
-String userModelToJson(UserModel data) => json.encode(data.toJson());
+String appInitUserModelToJson(AppInitUserModel data) => json.encode(data.toJson());
 
-class UserModel {
-  int id;
-  int companyId;
+class AppInitUserModel {
+  String id;
+  String companyId;
   String position;
   String firstName;
   String lastName;
   String email;
-  int? managerId; // Make optional (nullable)
+  String? managerId; // Optional
   DateTime createdAt;
-  DateTime? updatedAt; // Make optional (nullable)
+  DateTime? updatedAt; // Optional
   String profilePictureUrl;
-  List<String>? accessIdentifiers; // Make optional (nullable)
+  List<String> accessIdentifiers;
 
-  UserModel({
+  AppInitUserModel({
     required this.id,
     required this.companyId,
     required this.position,
     required this.firstName,
     required this.lastName,
     required this.email,
-    this.managerId, // Make optional (nullable)
+    this.managerId, // Optional
     required this.createdAt,
-    this.updatedAt, // Make optional (nullable)
+    this.updatedAt, // Optional
     required this.profilePictureUrl,
-    this.accessIdentifiers, // Make optional (nullable)
+    required this.accessIdentifiers,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+  factory AppInitUserModel.fromJson(Map<String, dynamic> json) => AppInitUserModel(
         id: json["id"],
         companyId: json["company_id"],
         position: json["position"],
@@ -42,9 +42,7 @@ class UserModel {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] != null ? DateTime.parse(json["updated_at"]) : null, // Handle null
         profilePictureUrl: json["profile_picture_url"],
-        accessIdentifiers: json["access_identifiers"] != null
-            ? List<String>.from(json["access_identifiers"].map((x) => x))
-            : null, // Handle null
+        accessIdentifiers: List<String>.from(json["access_identifiers"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,8 +56,6 @@ class UserModel {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(), // Handle null
         "profile_picture_url": profilePictureUrl,
-        "access_identifiers": accessIdentifiers != null
-            ? List<dynamic>.from(accessIdentifiers!.map((x) => x))
-            : null, // Handle null
+        "access_identifiers": List<dynamic>.from(accessIdentifiers.map((x) => x)),
       };
 }

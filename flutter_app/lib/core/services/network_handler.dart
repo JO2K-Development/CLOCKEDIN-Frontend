@@ -12,16 +12,19 @@ class NetworkHandler {
   static final storage = FlutterSecureStorage();
   static const String host = 'http://10.0.2.2:5000/';
 
-  static Future<dynamic> post (var body, String endPoint) async {
+  static Future<dynamic> post (var body, String endPoint, {bool justBody = false}) async {
     var response = await client.post(
       buildUrl(endPoint), 
       body: body, 
       headers: {"Content-type": "application/json"}
       );
+    if (justBody) {
+      return response.body;
+    }
     return response;
   }
 
-  static Future<dynamic> get (String endPoint, String? token) async {
+  static Future<dynamic> get (String endPoint, String? token, {bool justBody = false}) async {
     var response = await client.get(
       buildUrl(endPoint),
       headers: {
@@ -29,10 +32,13 @@ class NetworkHandler {
         "authorization": "Bearer $token"
         }
     );
+    if (justBody) {
+      return response.body;
+    }
     return response;
   }
 
-   static Future<dynamic> put(var body, String endPoint, String? token) async {
+   static Future<dynamic> put(var body, String endPoint, String? token, {bool justBody = false}) async {
     var response = await client.put(
       buildUrl(endPoint),
       headers: {
@@ -41,11 +47,13 @@ class NetworkHandler {
         },
       body: body,
     );
-
+    if (justBody) {
+      return response.body;
+    }
     return response;
   }
 
-  static Future<dynamic> patch(String endPoint, var body) async {
+  static Future<dynamic> patch(String endPoint, var body, {bool justBody = false}) async {
     String token = await StorageHandler.getTokenOrLogOut();
 
     var response = await client.patch(
@@ -56,11 +64,13 @@ class NetworkHandler {
         },
       body: body,
     );
-
+    if (justBody) {
+      return response.body;
+    }
     return response;
   }
 
-  static Future<dynamic> patchImage(String endPoint, String filepath) async {
+  static Future<dynamic> patchImage(String endPoint, String filepath, {bool justBody = false}) async {
     String token = await StorageHandler.getTokenOrLogOut();
     var request = http.MultipartRequest('PATCH', buildUrl(endPoint));
     request.files.add(await http.MultipartFile.fromPath('imageUrl', filepath));
@@ -68,10 +78,13 @@ class NetworkHandler {
       "Content-type": "multipart/form-data",
       "Authorization": "Bearer $token"
     });
-    var response = await request.send();
+    var responseStream = await request.send();
           // print((await http.Response.fromStream(response)).body);
-
-    return (await http.Response.fromStream(response)).body;
+    var response = await http.Response.fromStream(responseStream);
+    if (justBody) {
+      return response.body;
+    }
+    return response;
   }
 
   static Uri buildUrl(String endPoint) {
@@ -98,6 +111,10 @@ class NetworkHandler {
     return NetworkImage('$host$specifier');
   }
 
+  static Future<String> getMainUserJson() async {
+    //TODO
+    return 'l';
+  }
   
   static Future<List<String>> getUserAccessIdentifiers() async{
     //TODO
