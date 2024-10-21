@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
 import 'package:flutter_app/core/services/navigation_service.dart';
+import 'package:flutter_app/core/utils/theme/my_theme.dart';
 import 'package:flutter_app/features/common/landing/view/LandingPage.dart';
 import 'package:flutter_app/features/login/initial_login/view/initial_login_page.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +34,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'CLOCKED-IN',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
+        themeMode: ThemeMode.system,
+        darkTheme: MyTheme.darkTheme,
+        theme: MyTheme.lightTheme,
         initialRoute: initialRoute,
         routes: {
           '/initial-login': (context) => InitialLoginPage(),
