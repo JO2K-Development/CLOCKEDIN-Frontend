@@ -15,6 +15,7 @@ class AppColors {
   };
 
   static MaterialColor customMaterialColor = MaterialColor(0xFF5856D6, colorSwatch);
+  static const Color inputHintColor = Color(0xFF414141); 
 }
 
 class AppColorsLight {

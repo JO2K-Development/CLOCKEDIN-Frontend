@@ -19,11 +19,12 @@ class InitialLoginPage extends StatelessWidget {
             padding: const EdgeInsets.all(30.0),
             child: Column(
               children: [
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 Text("Aby rozpocząć zaloguj się:", style: Theme.of(context).textTheme.titleLarge,),
-                SizedBox(height: 20),
+                SizedBox(height: 60),
                 PlainTextIntputDecorationWrapper(LoginWidget(initialLoginProvider)),
-                
+                SizedBox(height: 25),
+                MyDivider(indentPercent: 0.2),
               ],
             ),
           );
@@ -42,33 +43,43 @@ class LoginWidget extends StatelessWidget {
     return WhiteBeveledContainer(
                   Column(
                     children: [
-                      SizedBox(height: 20),
+                      SizedBox(height: 30),
                 Padding(
-                  padding: const EdgeInsets.only(left:20.0),
+                  padding: const EdgeInsets.symmetric(horizontal:45.0),
                   child: MyTextField(initialLoginProvider.emailController, hintText: "Email"),
                 ),
-                MyDivider(indentPercent: 0.1),
+                MyDivider(indentPercent: 0.2),
+                SizedBox(height: 20),
+
                 Padding(
-                  padding: const EdgeInsets.only(left:20.0),
+                  padding: const EdgeInsets.symmetric(horizontal:45.0),
                   child: MyTextField(initialLoginProvider.passwordController, hintText: "Hasło", obscureText: true),
                 ),
-                MyDivider(indentPercent: 0.1),
+                MyDivider(indentPercent: 0.2),
                 SizedBox(height: 20),
-                if (initialLoginProvider.isLoading)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: initialLoginProvider.isLoading ?
                   CircularProgressIndicator()
-                else
-                  ElevatedButton( 
-                    
-                    onPressed: () {
-                      initialLoginProvider.login();
-                    },
-                    child: Text('Zaloguj'),
+                  :
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: SizedBox(
+                      height: 70,
+                      child: ElevatedButton(                        
+                        onPressed: () {
+                          initialLoginProvider.login();
+                        },
+                        child: Text('Zaloguj'),
+                      ),
+                    ),
                   ),
+                ),
                 if (initialLoginProvider.errorMessage.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Text(initialLoginProvider.errorMessage),
-                  ),
+                  )
                     ],
                   )
                 );

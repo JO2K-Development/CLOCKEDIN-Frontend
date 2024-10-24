@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/app_colors.dart';
+import 'package:flutter_app/core/utils/theme/my_text_themes.dart';
 
 import '../constants/widget_properties.dart';
 
@@ -20,7 +21,12 @@ class MyElevatedButtonThemes {
         BorderSide(color: AppColorsLight.accent, width: 1.0, style: BorderStyle.solid, strokeAlign: 0.9),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: AppColorsLight.background),
+        // MyTextThemes.lightTextTheme.labelLarge!,
+        TextStyle(
+          fontFamily: 'CascadiaCode',  // Ensure font is applied directly here as a fallback
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ),
   );
@@ -39,7 +45,12 @@ class MyElevatedButtonThemes {
         BorderSide(color: AppColorsDark.accent, width: 1.0, style: BorderStyle.solid, strokeAlign: 0.9),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: AppColorsDark.background),
+        // MyTextThemes.darkTextTheme.labelLarge!,
+        TextStyle(
+          fontFamily: 'CascadiaCode',  // Ensure font is applied directly here as a fallback
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ),
   );

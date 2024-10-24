@@ -12,6 +12,7 @@ class MyDivider extends StatelessWidget {
 
         return 
         Divider(
+        height: 0,
         color: Theme.of(context).dividerColor,
         thickness: 1.0,
         indent: indent,

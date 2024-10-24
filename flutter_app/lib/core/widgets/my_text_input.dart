@@ -32,6 +32,7 @@ class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      
       maxLength: 50,
       controller: widget.controller,
       focusNode: _focusNode,
@@ -44,8 +45,11 @@ class _MyTextFieldState extends State<MyTextField> {
         // focusedBorder: InputBorder.none,
         // errorBorder: InputBorder.none,
         // disabledBorder: InputBorder.none,
+    //     enabledBorder: OutlineInputBorder(
+    //   borderSide: BorderSide(color: Colors.blue), // Border color when not focused
+    // ),
         counterText: '',
-        contentPadding: EdgeInsets.all(10),
+        // contentPadding: EdgeInsets.all(10),
       ),
     );
   }
