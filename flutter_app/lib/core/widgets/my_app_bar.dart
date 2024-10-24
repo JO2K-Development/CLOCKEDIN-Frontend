@@ -21,6 +21,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: optionWidgets,
       elevation: 0,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      foregroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }
 

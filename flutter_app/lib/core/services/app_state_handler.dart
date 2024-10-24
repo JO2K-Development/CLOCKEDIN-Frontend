@@ -7,11 +7,10 @@ class AppStateHandler {
   static AppInitUserModel? appPreparationUserData;
 
   static logout() async {
-    String token = await StorageHandler.getToken() ?? '';
-    if (token != '') {
-      StorageHandler.discardStored(token);
-    }
-    StorageHandler.discardToken();
+    // catch for safety
+    try {
+      StorageHandler.discardTokens();
+    } on Exception catch (e) {}
     NavigationService.goToAndRemoveUntil('/login');
   }
 }

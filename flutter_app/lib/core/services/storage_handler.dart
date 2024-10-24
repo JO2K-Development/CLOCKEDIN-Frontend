@@ -1,6 +1,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'app_state_handler.dart';
+//TODO: HANDLE TOKEN EXPIRED
+//TODO: HANDLE TOKEN EXPIRED
+//TODO: HANDLE TOKEN EXPIRED
 
 class StorageHandler {
   static final storage = new FlutterSecureStorage();
@@ -17,28 +20,47 @@ class StorageHandler {
     await storage.delete(key: key);
   }
 
-static void storeToken(String token) async {
-    await storage.write(key: "token", value: token);
+  static void storeTokens(String access, String refresh) async {
+    await storage.write(key: "access", value: access);
+    await storage.write(key: "refresh", value: refresh);
   }
 
-  static void discardToken() async {
-    await storage.delete(key: "token");
+  static void discardTokens() async {
+    await storage.delete(key: "access");
+    await storage.delete(key: "refresh");
   }
 
-  static Future<String?> getToken() async {
-    return await storage.read(key: "token");
+  static Future<Map<String, String?>> getTokens() async {
+    String? access = await storage.read(key: "access");
+    String? refresh = await storage.read(key: "refresh");
+    return {"access": access, "refresh": refresh};
   }
 
-  static Future<String> getTokenOrLogOut() async {
-    String? token = await storage.read(key: "token");
+  static Future<String> getAccessTokenOrLogOut() async {
+    String? token = await storage.read(key: "access");
     if (token == null) {
       AppStateHandler.logout();
     }
     return token!;
   }
 
+  static Future<Map<String, String?>> getTokensOrLogOut() async {
+    String? access = await storage.read(key: "access");
+    String? refresh = await storage.read(key: "refresh");
+    if (access == null || refresh == null) {
+      AppStateHandler.logout();
+    }
+    return {"access": access, "refresh": refresh};
+  }
+
   static Future<bool> isLoggedIn() async {
-    return (await getToken()) != null;
+    bool isLogged = true;
+    (await getTokens()).forEach((key, value) {
+      if (value == null) {
+        isLogged = false;
+      }
+    });
+    return isLogged;
   }
 
   //      *NOT TO BE IMPLEMENTED IN CURRENT VERSION*

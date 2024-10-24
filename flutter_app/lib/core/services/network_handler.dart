@@ -5,26 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/services/storage_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:http/http.dart';
+//TODO: HANDLE TOKEN EXPIRED
+//TODO: HANDLE TOKEN EXPIRED
+//TODO: HANDLE TOKEN EXPIRED
 
 class NetworkHandler {
   static final client = http.Client();
   static final storage = FlutterSecureStorage();
   static const String host = 'http://10.0.2.2:5000/';
 
-  static Future<dynamic> post (var body, String endPoint, {bool justBody = false}) async {
+  static Future<http.Response> post (var body, String endPoint) async {
     var response = await client.post(
       buildUrl(endPoint), 
       body: body, 
       headers: {"Content-type": "application/json"}
       );
-    if (justBody) {
-      return jsonDecode(response.body);
-    }
     return response;
   }
 
-  static Future<dynamic> get (String endPoint, String? token, {bool justBody = false}) async {
+  static Future<http.Response> get (String endPoint, String? token) async {
     var response = await client.get(
       buildUrl(endPoint),
       headers: {
@@ -32,13 +32,10 @@ class NetworkHandler {
         "authorization": "Bearer $token"
         }
     );
-    if (justBody) {
-      return jsonDecode(response.body);
-    }
     return response;
   }
 
-   static Future<dynamic> put(var body, String endPoint, String? token, {bool justBody = false}) async {
+   static Future<http.Response> put (var body, String endPoint, String? token) async {
     var response = await client.put(
       buildUrl(endPoint),
       headers: {
@@ -47,14 +44,11 @@ class NetworkHandler {
         },
       body: body,
     );
-    if (justBody) {
-      return jsonDecode(response.body);
-    }
     return response;
   }
 
-  static Future<dynamic> patch(String endPoint, var body, {bool justBody = false}) async {
-    String token = await StorageHandler.getTokenOrLogOut();
+  static Future<http.Response> patch(var body, String endPoint) async {
+    String token = await StorageHandler.getAccessTokenOrLogOut();
 
     var response = await client.patch(
       buildUrl(endPoint),
@@ -64,14 +58,11 @@ class NetworkHandler {
         },
       body: body,
     );
-    if (justBody) {
-      return jsonDecode(response.body);
-    }
     return response;
   }
 
-  static Future<dynamic> patchImage(String endPoint, String filepath, {bool justBody = false}) async {
-    String token = await StorageHandler.getTokenOrLogOut();
+  static Future<http.Response> patchImage(String filepath, String endPoint) async {
+    String token = await StorageHandler.getAccessTokenOrLogOut();
     var request = http.MultipartRequest('PATCH', buildUrl(endPoint));
     request.files.add(await http.MultipartFile.fromPath('imageUrl', filepath));
     request.headers.addAll({
@@ -81,9 +72,6 @@ class NetworkHandler {
     var responseStream = await request.send();
           // print((await http.Response.fromStream(response)).body);
     var response = await http.Response.fromStream(responseStream);
-    if (justBody) {
-      return jsonDecode(response.body);
-    }
     return response;
   }
 
@@ -116,8 +104,20 @@ class NetworkHandler {
     return http.Response('full response', 200);
   }
   
-  static Future<List<String>> getUserAccessIdentifiers() async{
+  static Future<List<String>> getUserAccessIdentifiers() async {
     //TODO:
     return [];
   }
+
+  static Future<http.Response> postUserLogin(String email, String password) async {
+    http.Response response = await NetworkHandler.post(
+      jsonEncode({
+      'email': email,
+      'password': password
+      }),
+      'login'
+    );
+    return response;
+    }
+  
 }
