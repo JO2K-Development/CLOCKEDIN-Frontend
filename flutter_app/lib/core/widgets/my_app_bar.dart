@@ -14,15 +14,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Padding(
-        padding: const EdgeInsets.only(left: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: title != null
             ? Text(title!, style: Theme.of(context).textTheme.titleMedium) // Display title if provided
-            : Image.asset('assets/logo-with-color.png', height: 40), // Hardcoded fallback image
+            : Image.asset('./assets/images/logos/logo-with-color.png', height: 25), // Hardcoded fallback image
       ),
       actions: optionWidgets,
       elevation: 0,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      foregroundColor: Theme.of(context).scaffoldBackgroundColor,
+      
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      // foregroundColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }
 

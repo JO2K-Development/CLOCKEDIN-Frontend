@@ -37,8 +37,8 @@ class AppColorsLight {
   static const Color analogous2 = Color(0xFF56D6C1); // #56D6C1
 
   // Neutral Colors
-  static const Color background = Color(0xFFF0F0F3); // #F0F0F3
-  static const Color text = Color(0xFF333333); // #333333
+  static const Color background = Color.fromARGB(255, 255, 255, 255); // #F0F0F3
+  static const Color text = Color.fromARGB(255, 0, 0, 0); // #333333
   static const Color fadedText = Color.fromARGB(255, 91, 91, 91); // #D1D1D6
 
   // Shadow Color (For elevation and depth effects)

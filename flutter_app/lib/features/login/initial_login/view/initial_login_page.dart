@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/theme/my_divider.dart';
+import 'package:flutter_app/core/widgets/google_logo_button.dart';
+import 'package:flutter_app/core/widgets/my_app_bar.dart';
 import 'package:flutter_app/core/widgets/my_text_input.dart';
 import 'package:flutter_app/core/widgets/plain_text_intput_decoration_wrapper.dart';
 import 'package:flutter_app/core/widgets/white_beveled_container.dart';
@@ -10,8 +12,8 @@ class InitialLoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
+      appBar: MyAppBar(
+        // title: Text('Login'),
       ),
       body: Consumer<InitialLoginProvider>(
         builder: (context, initialLoginProvider, child) {
@@ -23,8 +25,20 @@ class InitialLoginPage extends StatelessWidget {
                 Text("Aby rozpocząć zaloguj się:", style: Theme.of(context).textTheme.titleLarge,),
                 SizedBox(height: 60),
                 PlainTextIntputDecorationWrapper(LoginWidget(initialLoginProvider)),
-                SizedBox(height: 25),
+                SizedBox(height: 30),
                 MyDivider(indentPercent: 0.2),
+                SizedBox(height: 10),
+                GoogleLogoButton("Zaloguj przez Google"),
+                SizedBox(height: 50),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/register');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text("lub załóż konto", style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).primaryColor)),
+                  ),
+                ),
               ],
             ),
           );
@@ -79,9 +93,11 @@ class LoginWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Text(initialLoginProvider.errorMessage),
-                  )
+                  ),
+                  
                     ],
                   )
                 );
   }
 }
+

@@ -18,6 +18,7 @@ class MyTheme {
     textTheme: MyTextThemes.lightTextTheme,
     elevatedButtonTheme: MyElevatedButtonThemes.lightButtonTheme,
     inputDecorationTheme: MyInputDecorationThemes.lightInputDecorationTheme,
+    appBarTheme: AppBarTheme(backgroundColor: AppColorsLight.background, ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -31,5 +32,6 @@ class MyTheme {
     textTheme: MyTextThemes.darkTextTheme,
     elevatedButtonTheme: MyElevatedButtonThemes.darkButtonTheme,
     inputDecorationTheme: MyInputDecorationThemes.darkInputDecorationTheme,
+    appBarTheme: AppBarTheme(backgroundColor: AppColorsDark.background),
   );
 }
