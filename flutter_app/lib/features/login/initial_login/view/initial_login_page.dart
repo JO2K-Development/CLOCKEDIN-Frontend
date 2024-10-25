@@ -22,14 +22,17 @@ class InitialLoginPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 30),
-                Text("Aby rozpocząć zaloguj się:", style: Theme.of(context).textTheme.titleLarge,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text("Aby rozpocząć zaloguj się:", style: Theme.of(context).textTheme.titleLarge,),
+                ),
                 SizedBox(height: 60),
                 PlainTextIntputDecorationWrapper(LoginWidget(initialLoginProvider)),
                 SizedBox(height: 30),
                 MyDivider(indentPercent: 0.2),
                 SizedBox(height: 10),
                 GoogleLogoButton("Zaloguj przez Google"),
-                SizedBox(height: 50),
+                SizedBox(height: 100),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, '/register');
@@ -55,9 +58,10 @@ class LoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WhiteBeveledContainer(
-                  Column(
+                  radius: 40,
+                  child: Column(
                     children: [
-                      SizedBox(height: 30),
+                      SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:45.0),
                   child: MyTextField(initialLoginProvider.emailController, hintText: "Email"),
@@ -70,21 +74,25 @@ class LoginWidget extends StatelessWidget {
                   child: MyTextField(initialLoginProvider.passwordController, hintText: "Hasło", obscureText: true),
                 ),
                 MyDivider(indentPercent: 0.2),
-                SizedBox(height: 20),
+                SizedBox(height: 7),
                 Align(
                   alignment: Alignment.centerRight,
                   child: initialLoginProvider.isLoading ?
                   CircularProgressIndicator()
                   :
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: SizedBox(
-                      height: 70,
-                      child: ElevatedButton(                        
+                      height: 55,
+                      child: ElevatedButton(                              
                         onPressed: () {
                           initialLoginProvider.login();
                         },
-                        child: Text('Zaloguj'),
+                        child: Text('Zaloguj', style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: Theme.of(context).scaffoldBackgroundColor, 
+                          fontWeight: FontWeight.normal,
+                          )
+                        ),
                       ),
                     ),
                   ),

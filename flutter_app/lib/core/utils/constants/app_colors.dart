@@ -42,8 +42,8 @@ class AppColorsLight {
   static const Color fadedText = Color.fromARGB(255, 91, 91, 91); // #D1D1D6
 
   // Shadow Color (For elevation and depth effects)
-  static const Color shadow = Color(0x29000000); // Black with 16% opacity
-  static const Color dividerColor = Color(0xFFE0E0E0); // #E0E0E0
+  static const Color shadow = Color.fromARGB(97, 0, 0, 0); // Black with 16% opacity
+  static const Color dividerColor = Color.fromARGB(255, 187, 186, 186); // #E0E0E0
 }
 
 

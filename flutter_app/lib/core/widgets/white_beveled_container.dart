@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WhiteBeveledContainer extends StatelessWidget {
-  final Widget? widget;
-  const WhiteBeveledContainer(this.widget, {super.key});
+  final Widget? child;
+  final double radius;
+  const WhiteBeveledContainer({required this.child, this.radius = 50.0, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +25,10 @@ class WhiteBeveledContainer extends StatelessWidget {
         ],
         color: Theme.of(context).scaffoldBackgroundColor,
         // border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.all(Radius.circular(50)),
+        borderRadius: BorderRadius.all(Radius.circular(radius)),
         
       ),
-      child: widget
+      child: child
       
     );
   }

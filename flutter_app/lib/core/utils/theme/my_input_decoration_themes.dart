@@ -46,7 +46,7 @@ class MyInputDecorationThemes {
   errorBorder: InputBorder.none,
   disabledBorder: InputBorder.none,
   
-  hintStyle: TextStyle(fontSize: 24, color: AppColors.inputHintColor), // Customize the hint text style if needed
+  hintStyle: TextStyle(fontSize: 22, color: AppColors.inputHintColor), // Customize the hint text style if needed
   contentPadding: EdgeInsets.all(0), // Optional: Add some padding
 );
 }

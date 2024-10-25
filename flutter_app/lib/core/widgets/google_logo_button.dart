@@ -20,7 +20,8 @@ class GoogleLogoButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(text, style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: Theme.of(context).scaffoldBackgroundColor, // Change to your desired color
+                color: Theme.of(context).scaffoldBackgroundColor, 
+                fontWeight: FontWeight.normal,
               ),),
               SizedBox(width: 20), // Space between text and image
               Padding(
