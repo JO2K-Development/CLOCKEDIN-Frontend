@@ -40,5 +40,5 @@ def remove_description_files(root_dir):
         
         
 # remove_description_files("../")
-# create_description_file("../")
+create_description_file("../")
     

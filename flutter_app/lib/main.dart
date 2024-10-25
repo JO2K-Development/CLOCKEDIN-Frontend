@@ -7,6 +7,8 @@ import 'package:flutter_app/features/common/landing/view/LandingPage.dart';
 import 'package:flutter_app/features/login/data_filling/view/data_filling_page.dart';
 import 'package:flutter_app/features/login/initial_login/controller/initial_login_provider.dart';
 import 'package:flutter_app/features/login/initial_login/view/initial_login_page.dart';
+import 'package:flutter_app/features/login/register/controller/register_provider.dart';
+import 'package:flutter_app/features/login/register/view/register_page.dart';
 import 'package:provider/provider.dart';
 
 
@@ -14,8 +16,8 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-  String initRoute = await NavigationService.prepareInitialAppState();
-  // String initRoute = "/landing";
+  // String initRoute = await NavigationService.prepareInitialAppState();
+  String initRoute = "/register";
   runApp(MyApp(initRoute));
 }
 
@@ -44,6 +46,10 @@ class MyApp extends StatelessWidget {
           '/initial-login': (context) => ChangeNotifierProvider(
             create: (context) => InitialLoginProvider(),
             child: InitialLoginPage(),
+          ),
+          '/register': (context) => ChangeNotifierProvider(
+            create: (context) => RegisterProvider(),
+            child: RegisterPage(),
           ),
           '/data-fill': (context) => DataFillingPage(),
           '/landing': (context) => LandingPage(),
