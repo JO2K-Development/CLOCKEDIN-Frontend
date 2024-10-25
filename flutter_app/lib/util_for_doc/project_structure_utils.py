@@ -39,6 +39,12 @@ def remove_description_files(root_dir):
                     print(f"Error removing {file_path}: {e}")
         
         
-remove_description_files("../")
-# create_description_file("../")
+# Get the script's directory
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Go one directory up
+parent_dir = os.path.dirname(script_dir)
+
+# remove_description_files(prarent_dir)
+create_description_file(parent_dir)
     

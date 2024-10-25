@@ -17,7 +17,8 @@ void main() async{
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
   // String initRoute = await NavigationService.prepareInitialAppState();
-  String initRoute = "/register";
+  String initRoute = "/initial-login";
+  // String initRoute = "/register";  
   runApp(MyApp(initRoute));
 }
 
