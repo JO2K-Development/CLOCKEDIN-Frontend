@@ -18,14 +18,14 @@ class MyElevatedButtonThemes {
       elevation: WidgetStateProperty.all<double>(0.0),
       foregroundColor: WidgetStateProperty.all<Color>(AppColorsLight.background),
       side: WidgetStateProperty.all<BorderSide>(
-        BorderSide(color: AppColorsLight.accent, width: 1.0, style: BorderStyle.solid, strokeAlign: 0.9),
+        BorderSide(color: AppColorsLight.accent, width: 2.0, style: BorderStyle.solid),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
         // MyTextThemes.lightTextTheme.labelLarge!,
         TextStyle(
           fontFamily: 'CascadiaCode',  // Ensure font is applied directly here as a fallback
           fontSize: 18.0,
-          fontWeight: FontWeight.bold,
+          // fontWeight: FontWeight.bold,
         ),
       ),
     ),

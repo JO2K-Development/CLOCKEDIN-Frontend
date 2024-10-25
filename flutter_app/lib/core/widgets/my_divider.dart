@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/utils/constants/dimentions.dart';
 
 class MyDivider extends StatelessWidget {
   final double indentPercent;
-  const MyDivider({super.key, this.indentPercent = 0.0});
+  const MyDivider({super.key, this.indentPercent = Dimentions.defaulftDividerIndentProportion});
 
   @override
   Widget build(BuildContext context) {

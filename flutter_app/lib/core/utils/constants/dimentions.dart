@@ -1,0 +1,39 @@
+class Dimentions {
+  Dimentions._();
+  static const double borderRadius = 8.0;
+  // static double scaleBorderToHeight(double height) => ;
+  static const double defaulftDividerIndentProportion = 0.2;
+  static const double buttonSize = 54.0;
+  static const double size1 = 2;
+  static const double size2 = 4;
+  static const double size3 = 6;
+  static const double size4 = 8;
+  static const double size5 = 10;
+  static const double size6 = 12;
+  static const double size7 = 14;
+  static const double size8 = 16;
+  static const double size9 = 18;
+  static const double size10 = 20;
+  static const double size11 = 22;
+  static const double size12 = 24;
+  static const double size13 = 26;
+  static const double size14 = 28;
+  static const double size15 = 30;
+  static const double size16 = 32;
+  static const double size17 = 34;
+  static const double size18 = 36;
+  static const double size19 = 38;
+  static const double size20 = 40;
+  static const double size21 = 42;
+  static const double size22 = 44;
+  static const double size23 = 46;
+  static const double size24 = 48;
+  static const double size25 = 50;  
+
+  static const double sizeXS = 4;
+  static const double sizeS = 8;
+  static const double sizeM = 16;
+  static const double sizeL = 24;
+  static const double sizeXL = 32;
+  static const double sizeXXL = 48;
+}

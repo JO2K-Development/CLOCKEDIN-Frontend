@@ -15,24 +15,25 @@ class GoogleLogoButton extends StatelessWidget {
             padding: EdgeInsets.only(left: 20),
             textStyle: TextStyle(fontSize: 16),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust alignment as needed
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(text, style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: Theme.of(context).scaffoldBackgroundColor, 
-                fontWeight: FontWeight.normal,
-              ),),
-              SizedBox(width: 20), // Space between text and image
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset(
-                  'assets/images/logos/google-logo.png', // Change to your image path
-                  width: 50, // Adjust the width as needed
-                  // height: 24, // Adjust the height as needed
+          child: FittedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Adjust alignment as needed
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(text, style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Theme.of(context).scaffoldBackgroundColor, 
+                  fontWeight: FontWeight.normal,
+                ),),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    'assets/images/logos/google-logo.png', // Change to your image path
+                    width: 50, // Adjust the width as needed
+                    // height: 24, // Adjust the height as needed
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
   }
