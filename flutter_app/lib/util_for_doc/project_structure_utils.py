@@ -39,6 +39,6 @@ def remove_description_files(root_dir):
                     print(f"Error removing {file_path}: {e}")
         
         
-# remove_description_files("../")
-create_description_file("../")
+remove_description_files("../")
+# create_description_file("../")
     

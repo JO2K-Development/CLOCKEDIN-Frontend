@@ -1,3 +1,0 @@
-Base.lproj
-description:
-dev comments:

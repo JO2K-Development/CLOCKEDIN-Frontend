@@ -1,3 +1,0 @@
-Runner.xcodeproj
-description:
-dev comments:

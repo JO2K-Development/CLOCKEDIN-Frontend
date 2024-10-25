@@ -1,3 +1,0 @@
-AppIcon.appiconset
-description:
-dev comments:
