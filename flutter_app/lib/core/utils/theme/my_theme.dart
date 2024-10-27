@@ -19,12 +19,7 @@ class MyTheme {
     elevatedButtonTheme: MyElevatedButtonThemes.lightButtonTheme,
     inputDecorationTheme: MyInputDecorationThemes.lightInputDecorationTheme,
     appBarTheme: AppBarTheme(backgroundColor: AppColorsLight.background, ),
-    dividerColor: AppColorsLight.dividerColor,
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: AppColorsLight.background,
-      selectedItemColor: AppColorsLight.primary,
-      unselectedItemColor: AppColorsLight.accent,
-    )
+    dividerColor: AppColorsLight.dividerColor
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -39,11 +34,6 @@ class MyTheme {
     elevatedButtonTheme: MyElevatedButtonThemes.darkButtonTheme,
     inputDecorationTheme: MyInputDecorationThemes.darkInputDecorationTheme,
     appBarTheme: AppBarTheme(backgroundColor: AppColorsDark.background),
-    dividerColor: AppColorsDark.dividerColor,
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: AppColorsDark.background,
-      selectedItemColor: AppColorsDark.primary,
-      unselectedItemColor: AppColorsDark.accent,
-    )
+    dividerColor: AppColorsDark.dividerColor
   );
 }

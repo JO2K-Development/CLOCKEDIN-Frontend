@@ -48,7 +48,7 @@ class RegisterPage extends StatelessWidget {
               Text("lub", style: Theme.of(context).textTheme.bodyLarge,),
               // MyDivider(),
               Padding(
-                padding: const EdgeInsets.all(Dimentions.sizeS),
+                padding: const EdgeInsets.all(8.0),
                 child: GoogleLogoButton("Zarejestruj przez Google"),
               ),
             ],

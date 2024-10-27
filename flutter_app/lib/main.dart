@@ -18,9 +18,7 @@ void main() async{
 
   // String initRoute = await NavigationService.prepareInitialAppState();
   String initRoute = "/initial-login";
-  // String initRoute = "/register"; 
-  // String initRoute = "/landing";  
- 
+  // String initRoute = "/register";  
   runApp(MyApp(initRoute));
 }
 
@@ -40,7 +38,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        navigatorKey: NavigationService.navigatorKey,
         title: 'CLOCKED-IN',
         themeMode: ThemeMode.system,
         darkTheme: MyTheme.darkTheme,
