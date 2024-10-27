@@ -13,7 +13,7 @@ import 'package:http/http.dart';
 class NetworkHandler {
   static final client = http.Client();
   static final storage = FlutterSecureStorage();
-  static const String host = 'http://10.0.2.2:5000/';
+  static const String host = 'http://10.0.2.2:8000/';
 
   static Future<http.Response> post (var body, String endPoint) async {
     var response = await client.post(
@@ -115,7 +115,7 @@ class NetworkHandler {
       'email': email,
       'password': password
       }),
-      'login'
+      'api/auth/token/'
     );
     return response;
     }
