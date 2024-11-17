@@ -17,9 +17,7 @@ class MyElevatedButtonThemes {
       ),
       elevation: WidgetStateProperty.all<double>(0.0),
       foregroundColor: WidgetStateProperty.all<Color>(AppColorsLight.background),
-      side: WidgetStateProperty.all<BorderSide>(
-        BorderSide(color: AppColorsLight.accent, width: 2.0, style: BorderStyle.solid),
-      ),
+      side: WidgetsProperties.makeElevatedButtonBorderSide(color: AppColorsLight.accent),
       textStyle: WidgetStateProperty.all<TextStyle>(
         // MyTextThemes.lightTextTheme.labelLarge!,
         TextStyle(
@@ -41,9 +39,7 @@ class MyElevatedButtonThemes {
       ),
       elevation: WidgetStateProperty.all<double>(0.0),
       foregroundColor: WidgetStateProperty.all<Color>(AppColorsDark.background),
-      side: WidgetStateProperty.all<BorderSide>(
-        BorderSide(color: AppColorsDark.accent, width: 1.0, style: BorderStyle.solid, strokeAlign: 0.9),
-      ),
+      side: WidgetsProperties.makeElevatedButtonBorderSide(color: AppColorsDark.accent),
       textStyle: WidgetStateProperty.all<TextStyle>(
         // MyTextThemes.darkTextTheme.labelLarge!,
         TextStyle(

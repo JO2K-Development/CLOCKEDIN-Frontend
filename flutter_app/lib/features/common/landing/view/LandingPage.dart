@@ -24,7 +24,7 @@ class _LandingPageState extends State<LandingPage> {
   void _init() async {
     _childPages = ViewsShownByAccessId.getViewsByAccessId(
       // Provider.of<AppInitUserDataProvider>(context, listen: false).appInitUserData!.accessIdentifiers
-      ['main_admin']
+      ['Employee']
     );
   }
 

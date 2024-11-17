@@ -3,7 +3,8 @@ class Dimentions {
   static const double borderRadius = 8.0;
   // static double scaleBorderToHeight(double height) => ;
   static const double defaulftDividerIndentProportion = 0.2;
-  static const double buttonSize = 54.0;
+  static const double shortButtonHeight = 50.0;
+  static const double shortButtonDefaultWidth = 130.0;
   static const double size1 = 2;
   static const double size2 = 4;
   static const double size3 = 6;
