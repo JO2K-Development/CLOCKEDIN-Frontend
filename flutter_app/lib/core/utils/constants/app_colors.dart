@@ -18,6 +18,8 @@ class AppColors {
   static const Color inputHintColor = Color(0xFF414141); 
   static const Color orange = Color(0xFFFFA500); // Orange color
   static const Color reddish = Color(0xFFB22222); // Firebrick red color
+  static const Color white = Color(0xFFFFFFFF); // White color
+  static const Color blackishPrimary = Color.fromARGB(255, 59, 53, 91); // Dark grey color
 }
 
 class AppColorsLight {

@@ -65,10 +65,10 @@ class ClockInOutPage extends StatelessWidget {
               Gap(Dimentions.sizeXXL * 3.0),
               MyDivider(),
               Gap(Dimentions.sizeL),
-              MyBeveledContainer(child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MyDynamicList()
-              )),
+              Padding(
+                padding: const EdgeInsets.all(Dimentions.sizeM),
+                child: MyBeveledContainer(child: MyDynamicList()),
+              ),
             ],
           ),
         );
@@ -83,7 +83,7 @@ class MyDynamicList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ClockInOutProvider>(builder: (context, provider, child) {
       return SizedBox(
-        height: 300,
+        height: 400,
         child: ListView.builder(
           itemCount: provider.workCycles.length,
           itemBuilder: (context, index) {
@@ -91,7 +91,10 @@ class MyDynamicList extends StatelessWidget {
             return Column(
               children: [
                 Gap(Dimentions.sizeM),
-                MyWorkCyclesTile(workCycle: item, isEditable: true),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MyWorkCyclesTile(workCycle: item, isEditable: true),
+                ),
               ],
             );
           },

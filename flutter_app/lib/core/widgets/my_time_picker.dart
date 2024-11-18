@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/utils/constants/app_colors.dart';
+import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 
 class MyTimePicker extends StatefulWidget {
   final DateTime initialTime;
@@ -39,13 +41,32 @@ class _MyTimePickerState extends State<MyTimePicker> {
 
   Widget _buildTimeField(TextEditingController controller, int max) {
     return SizedBox(
-      width: 60,
+      height: 40,
+      width: 45,
       child: TextFormField(
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: AppColors.white,
+        ),
         controller: controller,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         maxLength: 2,
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(0),
+          fillColor: AppColors.blackishPrimary,
+          filled: true,
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.circular(0),
+          ),
+          enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8), // Small border radius
+      // borderSide: BorderSide(color: Colors.transparent), // No border
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8), // Small border radius
+      // borderSide: BorderSide(color: Colors.blue, width: 2), // Focus border with color
+    ),
           counterText: '',
         ),
         onChanged: (value) {
@@ -60,15 +81,20 @@ class _MyTimePickerState extends State<MyTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildTimeField(_hourController, 23),
-        const Text(':'),
-        _buildTimeField(_minuteController, 59),
-        const Text(':'),
-        _buildTimeField(_secondController, 59),
-      ],
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+          color: AppColors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildTimeField(_hourController, 23),
+          const Text(':'),
+          _buildTimeField(_minuteController, 59),
+          const Text(':'),
+          _buildTimeField(_secondController, 59),
+        ],
+      ),
     );
   }
 
