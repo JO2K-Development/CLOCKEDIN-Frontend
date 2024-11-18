@@ -21,8 +21,8 @@ class WorkCycle {
         required this.endTime,
     });
 
-    set setStartTime(DateTime startTime) => this.startTime = startTime;
-    set setEndTime(DateTime endTime) => this.endTime = endTime;
+    void setStartTime(DateTime startTime) => this.startTime = startTime;
+    void setEndTime(DateTime endTime) => this.endTime = endTime;
 
     Future<void> patchTimesToDb() async {
       var body = jsonEncode({

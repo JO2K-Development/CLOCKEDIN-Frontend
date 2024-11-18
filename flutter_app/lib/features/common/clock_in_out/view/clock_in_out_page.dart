@@ -12,24 +12,29 @@ import 'package:flutter_app/features/common/clock_in_out/view/my_time_counter.da
 import 'package:flutter_app/features/common/clock_in_out/controller/clock_in_out_provider.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:provider/provider.dart';
-
 class ClockInOutPage extends StatelessWidget {
   const ClockInOutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => MyTimeCounterProvider()),
-          ChangeNotifierProvider(create: (context) => ClockInOutProvider()),
-        ],
-        child: SingleChildScrollView(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MyTimeCounterProvider()),
+        ChangeNotifierProvider(create: (context) => ClockInOutProvider()),
+      ],
+      child: Consumer<ClockInOutProvider>(builder: (context, provider, child) {
+        // Directly use the `isLoading` flag from the provider to show loading state
+        if (provider.isLoading) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        // Once loading is done, show the actual content
+        return SingleChildScrollView(
           child: Column(
             children: [
               Gap(Dimentions.sizeXXL),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimentions.sizeXXL * 2.2),
+                padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL * 2.2),
                 child: MyBeveledContainer(
                   isBackGPrimary: true,
                   child: Padding(
@@ -39,12 +44,10 @@ class ClockInOutPage extends StatelessWidget {
                 ),
               ),
               Gap(Dimentions.sizeXXL * 1.5),
-              Text('Twój czas pracy:',
-                  style: Theme.of(context).textTheme.titleLarge),
+              Text('Twój czas pracy:', style: Theme.of(context).textTheme.titleLarge),
               Gap(Dimentions.sizeL),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: Dimentions.sizeXXL * 1.5),
+                padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL * 1.5),
                 child: MyTimeCounter(),
               ),
               Gap(Dimentions.sizeL),
@@ -55,50 +58,45 @@ class ClockInOutPage extends StatelessWidget {
                     otherText: 'Stop',
                     initialIcon: Icons.play_circle_outline,
                     otherIcon: Icons.stop_circle_outlined,
-                    onPressed:
-                        Provider.of<MyTimeCounterProvider>(context).switchTimer,
+                    onPressed: Provider.of<MyTimeCounterProvider>(context).switchTimer,
                   );
                 },
               ),
               Gap(Dimentions.sizeXXL * 3.0),
               MyDivider(),
               Gap(Dimentions.sizeL),
-              MyBeveledContainer(
-                  child: Padding(
+              MyBeveledContainer(child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: MyDynamicList()
               )),
             ],
           ),
-        ));
+        );
+      }),
+    );
   }
 }
+
 
 class MyDynamicList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<ClockInOutProvider>(
-      builder: (context, provider, child) {
-        return ListView.builder(
+    return Consumer<ClockInOutProvider>(builder: (context, provider, child) {
+      return SizedBox(
+        height: 300,
+        child: ListView.builder(
           itemCount: provider.workCycles.length,
           itemBuilder: (context, index) {
             final item = provider.workCycles[index];
             return Column(
               children: [
                 Gap(Dimentions.sizeM),
-                MyWorkCyclesTile(
-                  workCycle: item,
-                  isEditable: AccessIdentifiers.hasIntersection(
-                      [AccessIdentifiers.admin, AccessIdentifiers.manager],
-                      Provider.of<AppInitUserDataProvider>(context, listen: false)
-                          .appInitUserData!
-                          .accessIdentifiers!),
-                ),
+                MyWorkCyclesTile(workCycle: item, isEditable: true),
               ],
             );
           },
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }

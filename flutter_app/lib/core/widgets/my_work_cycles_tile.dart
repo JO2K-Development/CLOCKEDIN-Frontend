@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_time_picker.dart';
+import 'package:flutter_app/features/common/clock_in_out/model/clock_in_out_model.dart';
 
 class MyWorkCyclesTile extends StatefulWidget {
-  final DateTime startTime;
-  final DateTime endTime;
+  final WorkCycle workCycle;
   final bool isEditable;
   const MyWorkCyclesTile(
       {super.key,
-      required this.startTime,
-      required this.endTime,
+      required this.workCycle,
       this.isEditable = false});
 
   @override
@@ -20,8 +19,8 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
   @override
   void initState() {
     super.initState();
-    startTime = widget.startTime;
-    endTime = widget.endTime;
+    startTime = widget.workCycle.startTime;
+    endTime = widget.workCycle.endTime;
   }
 
   bool isInEdit = false;
@@ -37,12 +36,12 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
               MyTimePicker(
                 initialTime:
                     startTime,
-                    onTimeChanged: (e) => {},
+                    onTimeChanged: widget.workCycle.setStartTime,
               ),
               MyTimePicker(
                 initialTime:
                     endTime,
-                    onTimeChanged: (e) => {},
+                    onTimeChanged: widget.workCycle.setEndTime,
               ),
             ],
           )
