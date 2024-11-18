@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/services/storage_handler.dart';
+import 'package:flutter_app/features/common/clock_in_out/model/clock_in_out_model.dart';
 
 class ClockInOutProvider with ChangeNotifier {
   DateTime? cycleBeginning;
-  ClockInOutProvider() { initCycle(); }
+  List<WorkCycle> workCycles = [];
+
+  Future<void> initProvider() async {
+    await initCycle();
+    await initCycles();
+    notifyListeners();
+  }
+
+  Future<void> initCycles() async {
+    workCycles = await getWorkCycles();
+  }
+
+  Future<void> initCycle() async {
+    cycleBeginning = await getCurrentCycle();
+  }
 
   Future<void> switchClockInOut() async {
     // cycleBeginning = (await StorageHandler.retrieveValue('cycleBeginning'));
@@ -36,11 +50,16 @@ class ClockInOutProvider with ChangeNotifier {
     //TODO: implement getCurrentCycle
     // getting it from db: Datetime | null
     return DateTime(1400, 1, 1, 0, 0);
+  }
+  
+  getWorkCycles() {
+    //TODO: implement getWorkCycles
+    return [
+      WorkCycle(id: 1, startTime: DateTime(1400, 1, 1, 0, 0), endTime: DateTime(1400, 1, 1, 0, 0)),
+      WorkCycle(id: 2, startTime: DateTime(1400, 1, 1, 0, 0), endTime: DateTime(1400, 1, 1, 0, 0)),
+      WorkCycle(id: 3, startTime: DateTime(1400, 1, 1, 0, 0), endTime: DateTime(1400, 1, 1, 0, 0)),
+    ];
   } 
 
-  Future<void> initCycle() async {
-    cycleBeginning = await getCurrentCycle();
-    print(cycleBeginning);
-    notifyListeners();
-  }
+  
 }

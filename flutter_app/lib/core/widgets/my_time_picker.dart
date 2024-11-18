@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyTimePicker extends StatefulWidget {
-  final TimeOfDay initialTime;
-  final Function(Duration) onTimeChanged;
+  final DateTime initialTime;
+  final Function(DateTime) onTimeChanged;
 
-  MyTimePicker({required this.initialTime, required this.onTimeChanged});
+  MyTimePicker(
+      {required this.initialTime,
+      required this.onTimeChanged});
 
   @override
   _MyTimePickerState createState() => _MyTimePickerState();
@@ -18,16 +20,21 @@ class _MyTimePickerState extends State<MyTimePicker> {
   @override
   void initState() {
     super.initState();
-    _hourController = TextEditingController(text: widget.initialTime.hour.toString().padLeft(2, '0'));
-  _minuteController = TextEditingController(text: widget.initialTime.minute.toString().padLeft(2, '0'));
-  _secondController = TextEditingController(text: "00");
+    _hourController = TextEditingController(
+        text: widget.initialTime.hour.toString().padLeft(2, '0'));
+    _minuteController = TextEditingController(
+        text: widget.initialTime.minute.toString().padLeft(2, '0'));
+    _secondController = TextEditingController(
+        text: widget.initialTime.second.toString().padLeft(2, '0'));
   }
 
   void _updateTime() {
     final hours = int.parse(_hourController.text);
     final minutes = int.parse(_minuteController.text);
     final seconds = int.parse(_secondController.text);
-    widget.onTimeChanged(Duration(hours: hours, minutes: minutes, seconds: seconds));
+    widget.onTimeChanged(
+        DateTime(widget.initialTime.year, widget.initialTime.month,
+            widget.initialTime.day, hours, minutes, seconds));
   }
 
   Widget _buildTimeField(TextEditingController controller, int max) {

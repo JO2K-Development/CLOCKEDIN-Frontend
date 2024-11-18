@@ -30,17 +30,18 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
 
   @override
   Widget build(BuildContext context) {
+
     Widget beveledContainerContent = widget.isEditable
         ? Column(
             children: [
               MyTimePicker(
                 initialTime:
-                    TimeOfDay(hour: startTime.hour, minute: startTime.minute),
+                    startTime,
                     onTimeChanged: (e) => {},
               ),
               MyTimePicker(
                 initialTime:
-                    TimeOfDay(hour: endTime.hour, minute: endTime.minute),
+                    endTime,
                     onTimeChanged: (e) => {},
               ),
             ],
@@ -56,3 +57,4 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
         child: beveledContainerContent);
   }
 }
+

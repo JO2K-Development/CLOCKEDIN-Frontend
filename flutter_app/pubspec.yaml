@@ -17,6 +17,7 @@ dependencies:
   # flutter_native_splash: ^2.4.0
   stroke_text: ^0.0.3
   http: ^1.2.1
+  flutter_spinkit:
   flutter_secure_storage: ^9.2.2
   image_picker: ^1.1.2
   permission_handler: ^11.3.1

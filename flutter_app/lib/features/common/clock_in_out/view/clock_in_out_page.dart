@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
+import 'package:flutter_app/core/utils/constants/access_identifiers.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider.dart';
@@ -37,11 +39,12 @@ class ClockInOutPage extends StatelessWidget {
                 ),
               ),
               Gap(Dimentions.sizeXXL * 1.5),
-              Text('Twój czas pracy:', style: Theme.of(context).textTheme.titleLarge),
+              Text('Twój czas pracy:',
+                  style: Theme.of(context).textTheme.titleLarge),
               Gap(Dimentions.sizeL),
-              
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL*1.5),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: Dimentions.sizeXXL * 1.5),
                 child: MyTimeCounter(),
               ),
               Gap(Dimentions.sizeL),
@@ -57,54 +60,45 @@ class ClockInOutPage extends StatelessWidget {
                   );
                 },
               ),
-              Gap(Dimentions.sizeXXL*3.0),
+              Gap(Dimentions.sizeXXL * 3.0),
               MyDivider(),
               Gap(Dimentions.sizeL),
               MyBeveledContainer(
-                
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Gap(Dimentions.sizeM),
-                      MyWorkCyclesTile(
-                        startTime: DateTime.now(),
-                        endTime: DateTime.now(),
-                        isEditable: true,
-                      ),
-                      Gap(Dimentions.sizeM),
-                      MyWorkCyclesTile(
-                        startTime: DateTime.now(),
-                        endTime: DateTime.now(),
-                        isEditable: true,
-                      ),
-                      Gap(Dimentions.sizeM),
-                      MyWorkCyclesTile(
-                        startTime: DateTime.now(),
-                        endTime: DateTime.now(),
-                        isEditable: true,
-                      ),
-                      Gap(Dimentions.sizeM),
-                      MyWorkCyclesTile(
-                        startTime: DateTime.now(),
-                        endTime: DateTime.now(),
-                        isEditable: true,
-                      ),
-                    ],
-                  ),
-                )
-              ),
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MyDynamicList()
+              )),
             ],
           ),
         ));
   }
 }
 
-class ClockInOutButton extends StatelessWidget {
-  const ClockInOutButton({super.key});
-
+class MyDynamicList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Consumer<ClockInOutProvider>(
+      builder: (context, provider, child) {
+        return ListView.builder(
+          itemCount: provider.workCycles.length,
+          itemBuilder: (context, index) {
+            final item = provider.workCycles[index];
+            return Column(
+              children: [
+                Gap(Dimentions.sizeM),
+                MyWorkCyclesTile(
+                  workCycle: item,
+                  isEditable: AccessIdentifiers.hasIntersection(
+                      [AccessIdentifiers.admin, AccessIdentifiers.manager],
+                      Provider.of<AppInitUserDataProvider>(context, listen: false)
+                          .appInitUserData!
+                          .accessIdentifiers!),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }
