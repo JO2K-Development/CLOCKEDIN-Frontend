@@ -25,12 +25,15 @@ class WorkCycle {
     void setEndTime(DateTime endTime) => this.endTime = endTime;
 
     Future<void> patchTimesToDb() async {
-      var body = jsonEncode({
-        "start_time": startTime.toIso8601String(),
-        "end_time": endTime.toIso8601String()
-      });
-      var endPoint = '/work_cycles/$id/';
-      NetworkHandler.patch(body, endPoint);
+      print(this.id);
+      print(this.startTime);
+      print(this.endTime);
+      // var body = jsonEncode({
+      //   "start_time": startTime.toIso8601String(),
+      //   "end_time": endTime.toIso8601String()
+      // });
+      // var endPoint = '/work_cycles/$id/';
+      // NetworkHandler.patch(body, endPoint);
     }
 
     Future<void> postToDb() async {

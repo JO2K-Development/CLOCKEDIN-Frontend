@@ -7,9 +7,7 @@ class MyWorkCyclesTile extends StatefulWidget {
   final WorkCycle workCycle;
   final bool isEditable;
   const MyWorkCyclesTile(
-      {super.key,
-      required this.workCycle,
-      this.isEditable = false});
+      {super.key, required this.workCycle, this.isEditable = false});
 
   @override
   State<MyWorkCyclesTile> createState() => _MyCyclesTileState();
@@ -29,20 +27,26 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget beveledContainerContent = widget.isEditable
         ? Column(
             children: [
               MyTimePicker(
-                initialTime:
-                    startTime,
-                    onTimeChanged: widget.workCycle.setStartTime,
+                initialTime: startTime,
+                onTimeChanged: widget.workCycle.setStartTime,
               ),
               MyTimePicker(
-                initialTime:
-                    endTime,
-                    onTimeChanged: widget.workCycle.setEndTime,
+                initialTime: endTime,
+                onTimeChanged: widget.workCycle.setEndTime,
               ),
+              //TODO: customise the send widget
+              /*TODO: take care of the bounds of the selectable time: 
+              shouldnt be able to select a time that is before the
+              endTime of previous cycle or after the startTime of 
+              the next cycle or the current cycle if it exists*/
+
+              ElevatedButton(
+                  onPressed: widget.workCycle.patchTimesToDb,
+                  child: Text('Save'))
             ],
           )
         : Column(
@@ -52,8 +56,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
             ],
           );
     return MyBeveledContainer(
-        // isBackGPrimary: true, 
+        // isBackGPrimary: true,
         child: beveledContainerContent);
   }
 }
-
