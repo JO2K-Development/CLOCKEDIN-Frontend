@@ -1,0 +1,28 @@
+{
+    "@@locale": "en",
+    "login_title": "Login",
+    "login_button": "Login",
+    "login_with_google": "Login with Google",
+    "login_email_hint": "Email",
+    "login_password_hint": "Password",
+    "login_register_option": "or register account",
+
+    "register_title": "Register",
+    "register_button": "Register",
+    "register_or_label": "or",
+    "register_with_google": "Register with Google",
+    "register_email_hint": "Email",
+    "register_password_hint": "Password",
+    "register_confirm_password_hint": "Confirm Password",
+
+    "clocked_in_out_time_label": "Clocked in time",
+    "clocked_in_out_button_on": "Stop",
+    "clocked_in_out_button_off": "Start",
+    "clocked_in_out_cycle_type_office_qr": "Approved by QR code",
+    "clocked_in_out_cycle_type_remote": "Remote Work",
+    "clocked_in_out_cycle_type_office_checked": "Approved by manager", 
+    "clocked_in_out_cycle_type_office_location": "Approved by location",
+    "clocked_in_out_edit_start_time": "start time:",
+    "clocked_in_out_edit_end_time": "end time:"
+
+}

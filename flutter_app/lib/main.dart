@@ -9,7 +9,10 @@ import 'package:flutter_app/features/auth/initial_login/controller/initial_login
 import 'package:flutter_app/features/auth/initial_login/view/initial_login_page.dart';
 import 'package:flutter_app/features/auth/register/controller/register_provider.dart';
 import 'package:flutter_app/features/auth/register/view/register_page.dart';
+import 'package:flutter_app/l10n/l10n.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +42,15 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          supportedLocales: L10n.all,
+          locale: L10n.all[0],
+          localizationsDelegates: const [
+            // ... app-specific localization delegate[s] here
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
           navigatorKey: NavigationService.navigatorKey,
           title: 'CLOCKED-IN',
           themeMode: ThemeMode.system,

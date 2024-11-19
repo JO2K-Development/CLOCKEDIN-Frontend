@@ -6,6 +6,7 @@ import 'package:flutter_app/core/widgets/my_time_picker.dart';
 import 'package:flutter_app/features/common/clock_in_out/model/clock_in_out_model.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyWorkCyclesTile extends StatefulWidget {
   final WorkCycle workCycle;
@@ -67,13 +68,13 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                           ],
                         ),
                       ),
-                      Text("Czas rozpoczęcia:"),
+                      Text(AppLocalizations.of(context).clocked_in_out_edit_start_time),
                       MyTimePicker(
                         initialTime: startTime,
                         onTimeChanged: widget.workCycle.setStartTime,
                       ),
                       Gap(Dimentions.sizeS),
-                      Text("Czas zakończenia:"),
+                      Text(AppLocalizations.of(context).clocked_in_out_edit_end_time),
                       MyTimePicker(
                         initialTime: endTime,
                         onTimeChanged: widget.workCycle.setEndTime,
@@ -133,7 +134,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                             Spacer(),
                             SizedBox(
                               width: MediaQuery.of(context).size.width/2,
-                              child: Text("praca stacjonarna (potwierdzona lokalizacją)", style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              child: Text(widget.workCycle.type.description(context), style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                 color: AppColors.white
                               ),),
                             ),
