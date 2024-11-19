@@ -3,8 +3,6 @@
 //     final workCycle = workCycleFromJson(jsonString);
 
 import 'dart:convert';
-
-import 'package:flutter_app/core/services/network_handler.dart';
 import 'package:flutter_app/core/utils/enums/work_cycles_type.dart';
 
 WorkCycle workCycleFromJson(String str) => WorkCycle.fromJson(json.decode(str));

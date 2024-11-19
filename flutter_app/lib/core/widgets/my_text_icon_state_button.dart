@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/utils/constants/app_colors.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/utils/constants/widget_properties.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';

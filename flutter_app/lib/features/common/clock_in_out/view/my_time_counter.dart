@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/utils/constants/app_colors.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
-import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/features/common/clock_in_out/controller/my_time_counter_provider.dart';
 import 'package:provider/provider.dart';
 

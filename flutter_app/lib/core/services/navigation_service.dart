@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
 import 'package:flutter_app/core/models/app_init_user_model.dart';
 import 'package:flutter_app/core/services/app_state_handler.dart';
 import 'package:flutter_app/core/services/network_handler.dart';
 import 'package:http/http.dart';
-import 'package:provider/provider.dart';
 import 'storage_handler.dart';
 
 class NavigationService {

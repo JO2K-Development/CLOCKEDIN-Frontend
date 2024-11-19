@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
 import 'package:flutter_app/core/services/navigation_service.dart';
 import 'package:flutter_app/core/utils/theme/my_theme.dart';
-import 'package:flutter_app/features/common/landing/view/LandingPage.dart';
+import 'package:flutter_app/features/common/landing/view/landing_page.dart';
 import 'package:flutter_app/features/auth/data_filling/view/data_filling_page.dart';
 import 'package:flutter_app/features/auth/initial_login/controller/initial_login_provider.dart';
 import 'package:flutter_app/features/auth/initial_login/view/initial_login_page.dart';
