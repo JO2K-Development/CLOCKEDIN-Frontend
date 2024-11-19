@@ -17,14 +17,16 @@ dependencies:
   # flutter_native_splash: ^2.4.0
   stroke_text: ^0.0.3
   http: ^1.2.1
-  flutter_spinkit: #?
+  flutter_spinkit: #? for load screen not used?
   flutter_secure_storage: ^9.2.2
   image_picker: ^1.1.2
   permission_handler: ^11.3.1
   flutter_gap: ^1.0.0
   flutter_datetime_picker: #?
   collection: ^1.17.0
-  intl: ^0.18.0
+  flutter_localizations: 
+    sdk: flutter
+  intl: any
 
 
 dev_dependencies:
@@ -36,6 +38,7 @@ dev_dependencies:
   
 
 flutter:
+  generate: true
   uses-material-design: true
   
 

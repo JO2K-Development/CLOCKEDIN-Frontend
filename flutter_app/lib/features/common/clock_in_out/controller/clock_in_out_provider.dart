@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/utils/enums/work_cycles_type.dart';
+import 'package:flutter_app/core/enums/work_cycles_type.dart';
 import 'package:flutter_app/features/common/clock_in_out/model/clock_in_out_model.dart';
 
 class ClockInOutProvider with ChangeNotifier {

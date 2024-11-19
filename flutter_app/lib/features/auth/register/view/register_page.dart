@@ -10,6 +10,7 @@ import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/features/auth/register/controller/register_provider.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -31,18 +32,18 @@ class RegisterPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeL),
-                  child: Text("Rejestracja", style: Theme.of(context).textTheme.titleLarge,),
+                  child: Text(AppLocalizations.of(context).register_title, style: Theme.of(context).textTheme.titleLarge,),
                 )),
               Gap(Dimentions.sizeXXL),
               PlainTextIntputDecorationWrapper(RegisterWidget(registerProvider)),
               Gap(Dimentions.sizeL),
-              MyButtonShort(text: "Zarejestruj się", onPressed: registerProvider.register),
+              MyButtonShort(text: AppLocalizations.of(context).register_button, onPressed: registerProvider.register),
               Gap(Dimentions.sizeXXL*2),
-              Text("lub", style: Theme.of(context).textTheme.bodyLarge,),
+              Text(AppLocalizations.of(context).register_or_label, style: Theme.of(context).textTheme.bodyLarge,),
               // MyDivider(),
               Padding(
                 padding: const EdgeInsets.all(Dimentions.sizeL),
-                child: GoogleLogoButton("Zarejestruj przez Google"),
+                child: GoogleLogoButton(AppLocalizations.of(context).register_with_google),
               ),
             ],
           ),
@@ -70,19 +71,19 @@ class RegisterWidget extends StatelessWidget {
                 Gap(Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL),
-                  child: MyTextField(registerProvider.emailController, hintText: 'Email'),
+                  child: MyTextField(registerProvider.emailController, hintText: AppLocalizations.of(context).register_email_hint),
                 ),
                 MyDivider(),
                 Gap(Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL),
-                  child: MyTextField(registerProvider.passwordController, hintText: 'Hasło', obscureText: true),
+                  child: MyTextField(registerProvider.passwordController, hintText: AppLocalizations.of(context).register_password_hint, obscureText: true),
                 ),  
                 MyDivider(),
                 Gap(Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL),
-                  child: MyTextField(registerProvider.confirmPasswordController, hintText: 'Powtórz hasło', obscureText: true),
+                  child: MyTextField(registerProvider.confirmPasswordController, hintText: AppLocalizations.of(context).register_confirm_password_hint, obscureText: true),
                 ),
                 
               ],

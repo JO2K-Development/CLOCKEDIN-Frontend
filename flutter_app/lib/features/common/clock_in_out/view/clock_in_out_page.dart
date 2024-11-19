@@ -9,6 +9,8 @@ import 'package:flutter_app/features/common/clock_in_out/view/my_time_counter.da
 import 'package:flutter_app/features/common/clock_in_out/controller/clock_in_out_provider.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class ClockInOutPage extends StatelessWidget {
   const ClockInOutPage({super.key});
 
@@ -41,7 +43,7 @@ class ClockInOutPage extends StatelessWidget {
                 ),
               ),
               Gap(Dimentions.sizeXXL * 1.5),
-              Text('Twój czas pracy:', style: Theme.of(context).textTheme.titleLarge),
+              Text(AppLocalizations.of(context).clocked_in_out_time_label, style: Theme.of(context).textTheme.titleLarge),
               Gap(Dimentions.sizeL),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL * 1.5),
@@ -51,8 +53,8 @@ class ClockInOutPage extends StatelessWidget {
               Builder(
                 builder: (context) {
                   return MyTextIconStateButton(
-                    initialText: 'Start',
-                    otherText: 'Stop',
+                    initialText: AppLocalizations.of(context).clocked_in_out_button_off,
+                    otherText: AppLocalizations.of(context).clocked_in_out_button_on,
                     initialIcon: Icons.play_circle_outline,
                     otherIcon: Icons.stop_circle_outlined,
                     onPressed: Provider.of<MyTimeCounterProvider>(context).switchTimer,
