@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/app_colors.dart';
-import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 
 class MyTimePicker extends StatefulWidget {
   final DateTime initialTime;

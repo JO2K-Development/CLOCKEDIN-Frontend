@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
-import 'package:flutter_app/core/services/navigation_service.dart';
 import 'package:flutter_app/core/utils/constants/views_showed_by_access_id.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
-import 'package:provider/provider.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -32,7 +29,6 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(),
-      appBar: MyAppBar(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: [
@@ -52,6 +48,6 @@ class _LandingPageState extends State<LandingPage> {
         // selectedItemColor: AppColors.selectedIconColor,
       ),
       body: _childPages[currentIndex]
-    );;
+    );
   }
 }

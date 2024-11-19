@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/utils/constants/app_colors.dart';
 
 class GoogleLogoButton extends StatelessWidget {
   final String text;

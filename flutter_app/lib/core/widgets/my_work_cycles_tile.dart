@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/app_colors.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
-import 'package:flutter_app/core/utils/constants/widget_properties.dart';
-import 'package:flutter_app/core/utils/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_time_picker.dart';
 import 'package:flutter_app/features/common/clock_in_out/model/clock_in_out_model.dart';
