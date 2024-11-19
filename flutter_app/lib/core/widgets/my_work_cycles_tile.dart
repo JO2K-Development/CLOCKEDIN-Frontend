@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/app_colors.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/utils/constants/widget_properties.dart';
+import 'package:flutter_app/core/utils/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_time_picker.dart';
 import 'package:flutter_app/features/common/clock_in_out/model/clock_in_out_model.dart';
 import 'package:flutter_gap/flutter_gap.dart';
+import 'package:intl/intl.dart';
 
 class MyWorkCyclesTile extends StatefulWidget {
   final WorkCycle workCycle;
@@ -34,92 +36,142 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
     Widget beveledContainerContent = DefaultTextStyle(
       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
           color: AppColors.white,
-          fontWeight: FontWeight.bold,
+          // fontWeight: FontWeight.bold,
           // fontSize: Dimentions.sizeM
           ),
-      child: Builder(
-        builder: (context) {
-          return widget.isEditable
-              ? ( isInEdit ? Column(
-                  children: [
-                    Gap(Dimentions.sizeM),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeM),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            child: Icon(Icons.cancel_outlined, color: AppColors.white, size: Dimentions.sizeXL,),
-                            onTap: () {
-                              setState(() {
-                                isInEdit = !isInEdit;
-                              });
-                            },
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            child: Icon(Icons.delete_outline, color: AppColors.white, size: Dimentions.sizeXL),
-                            onTap: () {
-                              widget.workCycle.deleteFromDb();
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text("Czas rozpoczęcia:"),
-                    MyTimePicker(
-                      initialTime: startTime,
-                      onTimeChanged: widget.workCycle.setStartTime,
-                    ),
-                    Gap(Dimentions.sizeS),
-                    Text("Czas zakończenia:"),
-                    MyTimePicker(
-                      initialTime: endTime,
-                      onTimeChanged: widget.workCycle.setEndTime,
-                    ),
-                    //TODO: customise the send widget
-                    /*TODO: take care of the bounds of the selectable time: 
-                    shouldnt be able to select a time that is before the
-                    endTime of previous cycle or after the startTime of 
-                    the next cycle or the current cycle if it exists*/
-          
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: () {
-                          widget.workCycle.patchTimesToDb();
-                          setState(() {
-                            isInEdit = !isInEdit;
-                          });
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(Dimentions.sizeM),
-                          child: Icon(Icons.check, color: AppColors.white, size: Dimentions.sizeXL),
+      child: Padding(
+        padding: const EdgeInsets.all(Dimentions.sizeM),
+        child: Builder(
+          builder: (context) {
+            return widget.isEditable
+                ? ( isInEdit ? Column(
+                    children: [
+                      Gap(Dimentions.sizeM),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeM),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              child: Icon(Icons.cancel_outlined, color: AppColors.white, size: Dimentions.sizeXL,),
+                              onTap: () {
+                                setState(() {
+                                  isInEdit = !isInEdit;
+                                });
+                              },
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              child: Icon(Icons.delete_outline, color: AppColors.white, size: Dimentions.sizeXL),
+                              onTap: () {
+                                widget.workCycle.deleteFromDb();
+                              },
+                            ),
+                          ],
                         ),
                       ),
+                      Text("Czas rozpoczęcia:"),
+                      MyTimePicker(
+                        initialTime: startTime,
+                        onTimeChanged: widget.workCycle.setStartTime,
+                      ),
+                      Gap(Dimentions.sizeS),
+                      Text("Czas zakończenia:"),
+                      MyTimePicker(
+                        initialTime: endTime,
+                        onTimeChanged: widget.workCycle.setEndTime,
+                      ),
+                      //TODO: customise the send widget
+                      /*TODO: take care of the bounds of the selectable time: 
+                      shouldnt be able to select a time that is before the
+                      endTime of previous cycle or after the startTime of 
+                      the next cycle or the current cycle if it exists*/
+            
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            widget.workCycle.patchTimesToDb();
+                            setState(() {
+                              isInEdit = !isInEdit;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(Dimentions.sizeM),
+                            child: Icon(Icons.check, color: AppColors.white, size: Dimentions.sizeXL),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                  
+                  : 
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isInEdit = !isInEdit;
+                      });
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(DateFormat('HH:mm').format(startTime)),
+                            Text(" - "),
+                            Text(DateFormat('HH:mm').format(endTime)),
+                            Gap(Dimentions.sizeS),
+                            GestureDetector(
+                              child: Icon(Icons.edit_outlined, color: AppColors.white, size: Dimentions.sizeXL),
+                              onTap: () {
+                                setState(() {
+                                  isInEdit = !isInEdit;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        Gap(Dimentions.sizeM),
+                        Row(
+                          children: [
+                            Spacer(),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width/2,
+                              child: Text("praca stacjonarna (potwierdzona lokalizacją)", style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                color: AppColors.white
+                              ),),
+                            ),
+                            widget.workCycle.type.icon,
+                          ],
+                        ),
+                      ],
+                    ),
+                  ))
+                : Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(DateFormat('HH:mm').format(startTime)),
+                        Text(" - "),
+                        Text(DateFormat('HH:mm').format(endTime)),
+                        Gap(Dimentions.sizeS),
+                      ],
+                    ),
+                    Gap(Dimentions.sizeM),
+                    Row(
+                      children: [
+                        Spacer(),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width/2,
+                          child: Text("praca stacjonarna (potwierdzona lokalizacją)", style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: AppColors.white
+                          ),),
+                        ),
+                        widget.workCycle.type.icon,
+                      ],
                     ),
                   ],
-                )
-                
-                : GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isInEdit = !isInEdit;
-                    });
-                  },
-                  child: Column(
-                    children: [
-                      Text('Start Time: ${startTime.toString()}'),
-                      Text('End Time: ${endTime.toString()}'),
-                    ],
-                  ),
-                ))
-              : Column(
-                  children: [
-                    Text('Start Time: ${startTime.toString()}'),
-                    Text('End Time: ${endTime.toString()}'),
-                  ],
                 );
-        }
+          }
+        ),
       ),
     );
     return 

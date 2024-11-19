@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:flutter_app/core/services/network_handler.dart';
+import 'package:flutter_app/core/utils/enums/work_cycles_type.dart';
 
 WorkCycle workCycleFromJson(String str) => WorkCycle.fromJson(json.decode(str));
 
@@ -14,11 +15,13 @@ class WorkCycle {
     int id;
     DateTime startTime;
     DateTime endTime;
+    WorkCycleType type;
 
     WorkCycle({
         required this.id,
         required this.startTime,
         required this.endTime,
+        required this.type,
     });
 
     void setStartTime(DateTime startTime) => this.startTime = startTime;
@@ -56,11 +59,14 @@ class WorkCycle {
         id: json["id"],
         startTime: DateTime.parse(json["start_time"]),
         endTime: DateTime.parse(json["end_time"]),
+        //TODO: handle null correcly
+        type: WorkCycleType.fromJson(json["type"]) ?? WorkCycleType.remoteWork,
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "start_time": "${startTime.year.toString().padLeft(4, '0')}-${startTime.month.toString().padLeft(2, '0')}-${startTime.day.toString().padLeft(2, '0')}",
         "end_time": "${endTime.year.toString().padLeft(4, '0')}-${endTime.month.toString().padLeft(2, '0')}-${endTime.day.toString().padLeft(2, '0')}",
+        "type": type.toString(),
     };
 }

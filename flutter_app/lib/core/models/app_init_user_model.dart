@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_app/core/utils/constants/access_identifiers.dart';
+import 'package:flutter_app/core/utils/enums/access_identifiers.dart';
 
 AppInitUserModel appInitUserModelFromJson(String str) => AppInitUserModel.fromJson(json.decode(str));
 

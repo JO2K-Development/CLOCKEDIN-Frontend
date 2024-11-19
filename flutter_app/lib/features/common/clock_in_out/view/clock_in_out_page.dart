@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
-import 'package:flutter_app/core/utils/constants/access_identifiers.dart';
+import 'package:flutter_app/core/utils/enums/access_identifiers.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider.dart';
@@ -64,7 +64,7 @@ class ClockInOutPage extends StatelessWidget {
               ),
               Gap(Dimentions.sizeXXL * 3.0),
               MyDivider(),
-              Gap(Dimentions.sizeL),
+              Gap(Dimentions.sizeS),
               Padding(
                 padding: const EdgeInsets.all(Dimentions.sizeM),
                 child: MyBeveledContainer(child: MyDynamicList()),
@@ -82,22 +82,25 @@ class MyDynamicList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ClockInOutProvider>(builder: (context, provider, child) {
-      return SizedBox(
-        height: 400,
-        child: ListView.builder(
-          itemCount: provider.workCycles.length,
-          itemBuilder: (context, index) {
-            final item = provider.workCycles[index];
-            return Column(
-              children: [
-                Gap(Dimentions.sizeM),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MyWorkCyclesTile(workCycle: item, isEditable: true),
-                ),
-              ],
-            );
-          },
+      return Padding(
+        padding: const EdgeInsets.all(Dimentions.sizeS),
+        child: SizedBox(
+          height: 400,
+          child: ListView.builder(
+            itemCount: provider.workCycles.length,
+            itemBuilder: (context, index) {
+              final item = provider.workCycles[index];
+              return Column(
+                children: [
+                  // Gap(Dimentions.sizeXS),
+                  Padding(
+                    padding: const EdgeInsets.all(Dimentions.sizeXS),
+                    child: MyWorkCyclesTile(workCycle: item, isEditable: true),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       );
     });

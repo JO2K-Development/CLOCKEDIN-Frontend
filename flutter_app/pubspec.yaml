@@ -24,6 +24,7 @@ dependencies:
   flutter_gap: ^1.0.0
   flutter_datetime_picker: #?
   collection: ^1.17.0
+  intl: ^0.18.0
 
 
 dev_dependencies:

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/utils/enums/work_cycles_type.dart';
 import 'package:flutter_app/features/common/clock_in_out/model/clock_in_out_model.dart';
 
 class ClockInOutProvider with ChangeNotifier {
@@ -25,8 +26,11 @@ class ClockInOutProvider with ChangeNotifier {
 
   Future<bool> validateUpdatedCycle(WorkCycle cycle) async {
     bool _isOverlapping(WorkCycle newCycle, WorkCycle? w1, WorkCycle? w2) {
-      return w1 == null ? true : newCycle.startTime.isBefore(w1.endTime) ||
-          w2 == null ? true : newCycle.endTime.isAfter(w2.startTime);
+      return w1 == null
+          ? true
+          : newCycle.startTime.isBefore(w1.endTime) || w2 == null
+              ? true
+              : newCycle.endTime.isAfter(w2.startTime);
     }
 
     T getOrDefault<T>(List<T> list, int index, dynamic defaultValue) {
@@ -41,13 +45,11 @@ class ClockInOutProvider with ChangeNotifier {
     bool isRemoved =
         !(freshCycleFetch.any((element) => element.id == cycle.id));
     bool isOverlappingOldOrFresh = _isOverlapping(
-        cycle,
-        getOrDefault(workCycles, cycle.id - 1, null),
-        getOrDefault(workCycles, cycle.id + 1, null)) ||
-        _isOverlapping(
-        cycle,
-        getOrDefault(freshCycleFetch, cycle.id - 1, null),
-        getOrDefault(freshCycleFetch, cycle.id + 1, null));
+            cycle,
+            getOrDefault(workCycles, cycle.id - 1, null),
+            getOrDefault(workCycles, cycle.id + 1, null)) ||
+        _isOverlapping(cycle, getOrDefault(freshCycleFetch, cycle.id - 1, null),
+            getOrDefault(freshCycleFetch, cycle.id + 1, null));
 
     // check if the fetched data should replace the old data
     for (var pair in IterableZip([freshCycleFetch, workCycles])) {
@@ -66,15 +68,23 @@ class ClockInOutProvider with ChangeNotifier {
       WorkCycle(
           id: 1,
           startTime: DateTime(1400, 1, 1, 0, 0),
-          endTime: DateTime(1400, 1, 1, 0, 0)),
+          endTime: DateTime(1400, 1, 1, 0, 0),
+          type: WorkCycleType.remoteWork),
       WorkCycle(
           id: 2,
           startTime: DateTime.now(),
-          endTime: DateTime(1400, 1, 1, 0, 0)),
+          endTime: DateTime(1400, 1, 1, 0, 0),
+          type: WorkCycleType.approvedByLocation),
       WorkCycle(
           id: 3,
           startTime: DateTime(1400, 1, 1, 0, 0),
-          endTime: DateTime(1400, 1, 1, 0, 0)),
+          endTime: DateTime(1400, 1, 1, 0, 0),
+          type: WorkCycleType.approvedByManager),
+      WorkCycle(
+          id: 3,
+          startTime: DateTime(1400, 1, 1, 0, 0),
+          endTime: DateTime(1400, 1, 1, 0, 0),
+          type: WorkCycleType.approvedByQr),
     ];
   }
 }
