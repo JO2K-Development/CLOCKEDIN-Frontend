@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/utils/constants/dimentions.dart';
 
-class WhiteBeveledContainer extends StatelessWidget {
+class MyBeveledContainer extends StatelessWidget {
   final Widget? child;
   final double radius;
-  const WhiteBeveledContainer({required this.child, this.radius = 50.0, super.key});
+  final bool isBackGPrimary;
+  final Color? customColor;
+
+  const MyBeveledContainer({required this.child, this.radius = Dimentions.sizeXXL, this.isBackGPrimary = false, this.customColor, super.key});
 
   @override
   Widget build(BuildContext context) {
+    Color bgColor = Theme.of(context).scaffoldBackgroundColor;
+    if (customColor != null) {
+      bgColor = customColor!;
+    } else if (isBackGPrimary) {
+      bgColor = Theme.of(context).primaryColor;
+    }
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -23,12 +34,14 @@ class WhiteBeveledContainer extends StatelessWidget {
           //   offset: Offset(0, 3), // changes position of shadow
           // ),
         ],
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: bgColor,
         // border: Border.all(color: Colors.black),
         borderRadius: BorderRadius.all(Radius.circular(radius)),
         
       ),
-      child: child
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(radius)),
+        child: child)
       
     );
   }

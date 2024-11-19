@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_app/core/utils/enums/access_identifiers.dart';
+
 AppInitUserModel appInitUserModelFromJson(String str) => AppInitUserModel.fromJson(json.decode(str));
 
 String appInitUserModelToJson(AppInitUserModel data) => json.encode(data.toJson());
@@ -13,7 +15,7 @@ class AppInitUserModel {
   String email;
   int? managerId; // Changed to int (nullable)
   String? profilePictureUrl;
-  List<String>? accessIdentifiers;
+  List<AccessIdentifiers>? accessIdentifiers;
 
   AppInitUserModel({
     required this.id, // id as an int
@@ -36,7 +38,7 @@ class AppInitUserModel {
         email: json["email"],
         managerId: json["manager_id"] == null || json["manager_id"] == "" ? null : json["manager_id"],
         profilePictureUrl: json["profile_picture_url"],
-        accessIdentifiers: List<String>.from(json["access_identifiers"].map((x) => x)),
+        accessIdentifiers: List<AccessIdentifiers>.from(json["access_identifiers"].map((x) => AccessIdentifiers.fromString(x))),
       );
 
   Map<String, dynamic> toJson() => {

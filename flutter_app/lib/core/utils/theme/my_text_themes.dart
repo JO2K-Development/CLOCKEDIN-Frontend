@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/app_colors.dart';
 
 class MyTextThemes {
+  
   static const TextTheme lightTextTheme = TextTheme(
     headlineLarge: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold, color: AppColorsLight.text),
     headlineMedium: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold, color: AppColorsLight.text),
