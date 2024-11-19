@@ -3,7 +3,7 @@
 //     final workCycle = workCycleFromJson(jsonString);
 
 import 'dart:convert';
-import 'package:flutter_app/core/utils/enums/work_cycles_type.dart';
+import 'package:flutter_app/core/enums/work_cycles_type.dart';
 
 WorkCycle workCycleFromJson(String str) => WorkCycle.fromJson(json.decode(str));
 

@@ -10,6 +10,8 @@ import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/features/auth/initial_login/controller/initial_login_provider.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class InitialLoginPage extends StatelessWidget {
   @override
@@ -27,14 +29,14 @@ class InitialLoginPage extends StatelessWidget {
                 Gap(Dimentions.sizeXL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeL),
-                  child: Text("Aby rozpocząć zaloguj się:", style: Theme.of(context).textTheme.titleLarge,),
+                  child: Text(AppLocalizations.of(context).login_title, style: Theme.of(context).textTheme.titleLarge,),
                 ),
                 Gap( Dimentions.sizeXXL),
                 PlainTextIntputDecorationWrapper(LoginWidget(initialLoginProvider)),
                 Gap( Dimentions.sizeL),
                 MyDivider(),
                 Gap( Dimentions.sizeS),
-                GoogleLogoButton("Zaloguj przez Google"),
+                GoogleLogoButton(AppLocalizations.of(context).login_with_google),
                 Gap( 100),
                 GestureDetector(
                   onTap: () {
@@ -42,7 +44,7 @@ class InitialLoginPage extends StatelessWidget {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(Dimentions.sizeM),
-                    child: Text("lub załóż konto", style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).primaryColor)),
+                    child: Text(AppLocalizations.of(context).login_register_option, style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).primaryColor)),
                   ),
                 ),
               ],
@@ -67,13 +69,13 @@ class LoginWidget extends StatelessWidget {
                       Gap( Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:Dimentions.sizeXXL),
-                  child: MyTextField(initialLoginProvider.emailController, hintText: "Email"),
+                  child: MyTextField(initialLoginProvider.emailController, hintText: AppLocalizations.of(context).login_email_hint),
                 ),
                 MyDivider(),
                 Gap(Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:Dimentions.sizeXXL),
-                  child: MyTextField(initialLoginProvider.passwordController, hintText: "Hasło", obscureText: true),
+                  child: MyTextField(initialLoginProvider.passwordController, hintText: AppLocalizations.of(context).login_password_hint, obscureText: true),
                 ),
                 MyDivider(),
                 Gap(Dimentions.sizeS),
@@ -84,7 +86,7 @@ class LoginWidget extends StatelessWidget {
                   :
                   Padding(
                     padding: const EdgeInsets.all(Dimentions.size6),
-                    child: MyButtonShort(text: "Zaloguj", onPressed: initialLoginProvider.login,),
+                    child: MyButtonShort(text:  AppLocalizations.of(context).login_button, onPressed: initialLoginProvider.login,),
                   ),
                 ),
                 if (initialLoginProvider.errorMessage.isNotEmpty)
