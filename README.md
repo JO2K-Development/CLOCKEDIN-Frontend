@@ -8,7 +8,8 @@ to measure the employees time at work and to check basic statistics,
 allowing certain features only to users with permissions to use them
 
 ### Idea of how it looks
-![image](https://github.com/user-attachments/assets/52658de0-c069-4976-8340-0431ba911029)
+![image](https://github.com/user-attachments/assets/03592a8b-b241-4639-8926-8654827ca284)
+
 
 
 ## For devs
