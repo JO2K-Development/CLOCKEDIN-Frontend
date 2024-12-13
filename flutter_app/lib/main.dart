@@ -67,6 +67,7 @@ class MyApp extends StatelessWidget {
                 ),
             '/data-fill': (context) => DataFillingPage(),
             '/landing': (context) => LandingPage(),
+
           }),
     );
   }
