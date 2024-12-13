@@ -126,21 +126,18 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                                 });
                               },
                             ),
-                          ],
+                            ],
                         ),
-                        Gap(Dimentions.sizeM),
-                        Row(
-                          children: [
-                            Spacer(),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width/2,
-                              child: Text(widget.workCycle.type.description(context), style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                                color: AppColors.white
-                              ),),
-                            ),
+                        Gap(Dimentions.sizeXL),
+                        Column(
+                              children: [
+                                Text(widget.workCycle.type.description(context), style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                              color: AppColors.white
+                            ),),
                             widget.workCycle.type.icon,
-                          ],
-                        ),
+                              ],
+                            )
+                          
                       ],
                     ),
                   ))
@@ -160,7 +157,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                         Spacer(),
                         SizedBox(
                           width: MediaQuery.of(context).size.width/2,
-                          child: Text("praca stacjonarna (potwierdzona lokalizacją)", style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          child: Text(AppLocalizations.of(context).clocked_in_out_cycle_type_office_checked, style: Theme.of(context).textTheme.bodySmall!.copyWith(
                             color: AppColors.white
                           ),),
                         ),
@@ -175,7 +172,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
     );
     return 
        MyBeveledContainer(
-          radius: Dimentions.sizeL,
+          radius: Dimentions.sizeM,
           isBackGPrimary: true,
           child: beveledContainerContent
     );

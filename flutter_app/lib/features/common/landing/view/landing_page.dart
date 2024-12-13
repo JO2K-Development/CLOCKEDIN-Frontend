@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/views_showed_by_access_id.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -34,9 +36,9 @@ class _LandingPageState extends State<LandingPage> {
         items: [
           // Custom icon
           // BottomNavigationBarItem(icon: SPIcon(assetName: 'logo-big.png', index: 0, currentIndex: currentIndex), label: 'home??'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: 'Kalendarz'),
-          BottomNavigationBarItem(icon: Icon(Icons.watch), label: 'Clock In'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: AppLocalizations.of(context).calendar),
+          BottomNavigationBarItem(icon: Icon(Icons.watch), label: AppLocalizations.of(context).clock_in),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: AppLocalizations.of(context).profile),
           
         ],
         currentIndex: currentIndex,
