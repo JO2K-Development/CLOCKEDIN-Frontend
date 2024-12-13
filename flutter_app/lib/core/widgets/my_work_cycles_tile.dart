@@ -42,8 +42,56 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
         padding: const EdgeInsets.all(Dimentions.sizeM),
         child: Builder(
           builder: (context) {
-            return widget.isEditable
-                ? ( isInEdit ? Column(
+            return  isInEdit ? _inEdit() : _notInEdit(widget.isEditable);
+          }
+        ),
+      ),
+    );
+    return 
+       MyBeveledContainer(
+          radius: Dimentions.sizeM,
+          isBackGPrimary: true,
+          child: beveledContainerContent
+    );
+  }
+
+  Widget _notInEdit(bool isEditable) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(DateFormat('HH:mm').format(startTime)),
+            Text(" - "),
+            Text(DateFormat('HH:mm').format(endTime)),
+            if (isEditable) ...[
+              GestureDetector(
+                child: Icon(Icons.edit_outlined, color: AppColors.white, size: Dimentions.sizeXL),
+                onTap: () {
+                  setState(() {
+                    isInEdit = !isInEdit;
+                  });
+                },
+              ),
+            ],
+            Spacer(),
+            widget.workCycle.type.icon,
+          ],
+        ),
+        Gap(Dimentions.sizeXL),
+        Row(
+          children: [
+            Spacer(),
+            Text(AppLocalizations.of(context).clocked_in_out_cycle_type_office_checked, style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: AppColors.white
+            ),),
+          ],
+        ),
+      ],
+    );
+  }
+  
+  Widget _inEdit() {
+    return Column(
                     children: [
                       Gap(Dimentions.sizeM),
                       Padding(
@@ -101,80 +149,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                         ),
                       ),
                     ],
-                  )
-                  
-                  : 
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isInEdit = !isInEdit;
-                      });
-                    },
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(DateFormat('HH:mm').format(startTime)),
-                            Text(" - "),
-                            Text(DateFormat('HH:mm').format(endTime)),
-                            Gap(Dimentions.sizeS),
-                            GestureDetector(
-                              child: Icon(Icons.edit_outlined, color: AppColors.white, size: Dimentions.sizeXL),
-                              onTap: () {
-                                setState(() {
-                                  isInEdit = !isInEdit;
-                                });
-                              },
-                            ),
-                            ],
-                        ),
-                        Gap(Dimentions.sizeXL),
-                        Column(
-                              children: [
-                                Text(widget.workCycle.type.description(context), style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: AppColors.white
-                            ),),
-                            widget.workCycle.type.icon,
-                              ],
-                            )
-                          
-                      ],
-                    ),
-                  ))
-                : Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(DateFormat('HH:mm').format(startTime)),
-                        Text(" - "),
-                        Text(DateFormat('HH:mm').format(endTime)),
-                        Gap(Dimentions.sizeS),
-                      ],
-                    ),
-                    Gap(Dimentions.sizeM),
-                    Row(
-                      children: [
-                        Spacer(),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width/2,
-                          child: Text(AppLocalizations.of(context).clocked_in_out_cycle_type_office_checked, style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                            color: AppColors.white
-                          ),),
-                        ),
-                        widget.workCycle.type.icon,
-                      ],
-                    ),
-                  ],
-                );
-          }
-        ),
-      ),
-    );
-    return 
-       MyBeveledContainer(
-          radius: Dimentions.sizeM,
-          isBackGPrimary: true,
-          child: beveledContainerContent
-    );
+                  );
   }
 }
+

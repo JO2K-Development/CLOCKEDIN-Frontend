@@ -28,6 +28,12 @@
     "clocked_in_out_cycle_type_office_checked": "Approved by manager", 
     "clocked_in_out_cycle_type_office_location": "Approved by location",
     "clocked_in_out_edit_start_time": "start time:",
-    "clocked_in_out_edit_end_time": "end time:"
+    "clocked_in_out_edit_end_time": "end time:",
+
+    "calendar_statistics": "Statistics",
+    "calendar_statistics_total_hours": "Total hours",
+    "calendar_calculated_earnings": "earnings calculated based on the hourly rate",
+    "calendar_worked_hours_plot": "Worked hours"
+
 
 }
