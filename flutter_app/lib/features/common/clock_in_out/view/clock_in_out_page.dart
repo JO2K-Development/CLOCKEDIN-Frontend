@@ -81,15 +81,15 @@ class MyDynamicList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ClockInOutProvider>(builder: (context, provider, child) {
-      return Padding(
-        padding: const EdgeInsets.all(Dimentions.sizeS),
-        child: SizedBox(
-          height: 400,
-          child: ListView.builder(
-            itemCount: provider.workCycles.length,
-            itemBuilder: (context, index) {
-              final item = provider.workCycles[index];
-              return Column(
+      return SizedBox(
+        height: 400,
+        child: ListView.builder(
+          itemCount: provider.workCycles.length,
+          itemBuilder: (context, index) {
+            final item = provider.workCycles[index];
+            return Padding(
+              padding: EdgeInsets.only(top: index==0 ? Dimentions.sizeL : 0, left: Dimentions.sizeS, right: Dimentions.sizeS),
+              child: Column(
                 children: [
                   // Gap(Dimentions.sizeXS),
                   Padding(
@@ -97,9 +97,9 @@ class MyDynamicList extends StatelessWidget {
                     child: MyWorkCyclesTile(workCycle: item, isEditable: true),
                   ),
                 ],
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       );
     });
