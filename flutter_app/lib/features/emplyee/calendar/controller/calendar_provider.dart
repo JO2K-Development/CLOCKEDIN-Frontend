@@ -6,7 +6,12 @@ class CalendarProvider with ChangeNotifier {
   late List<WorkCycle>? workCycles;
   bool isLoading = true;
 
+  CalendarProvider() {
+    initProvider();
+  }
+
   Future<void> initProvider() async {
+    print("object");
     await Future.delayed(Duration(seconds: 1));
     await initCycles();
     isLoading = false;
@@ -20,9 +25,7 @@ class CalendarProvider with ChangeNotifier {
 
   getEventsForDay(DateTime day) {
     return workCycles!.where((element) {
-      return element.startTime.day == day.day &&
-          element.startTime.month == day.month &&
-          element.startTime.year == day.year;
+      return element.isDayInWorkCycle(day);
     }).toList();
   }
 
@@ -31,24 +34,45 @@ class CalendarProvider with ChangeNotifier {
     // they should be sorted and be like a short list of some
     return [
       WorkCycle(
-          id: 1,
-          startTime: DateTime(1400, 1, 1, 0, 0),
-          endTime: DateTime(1400, 1, 1, 0, 0),
+          id: 6,
+          startTime: DateTime.now().add(Duration(days: 1)),
+          endTime: DateTime.now().add(Duration(days: 1, hours: 8)),
           type: WorkCycleType.remoteWork),
       WorkCycle(
-          id: 2,
-          startTime: DateTime.now(),
-          endTime: DateTime(1400, 1, 1, 0, 0),
+          id: 7,
+          startTime: DateTime.now().subtract(Duration(days: 1)),
+          endTime: DateTime.now().add(Duration(days: 12, hours: -8)),
           type: WorkCycleType.approvedByLocation),
       WorkCycle(
-          id: 3,
-          startTime: DateTime(1400, 1, 1, 0, 0),
-          endTime: DateTime(1400, 1, 1, 0, 0),
+          id: 8,
+          startTime: DateTime.now().subtract(Duration(days: 10)),
+          endTime: DateTime.now().subtract(Duration(days: 10, hours: -8)),
           type: WorkCycleType.approvedByManager),
       WorkCycle(
-          id: 3,
-          startTime: DateTime(1400, 1, 1, 0, 0),
-          endTime: DateTime(1400, 1, 1, 0, 0),
+          id: 9,
+          startTime: DateTime.now().subtract(Duration(days: 4)),
+          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
+          type: WorkCycleType.approvedByQr),
+      WorkCycle(
+          id: 10,
+          startTime: DateTime.now().subtract(Duration(days: 4)),
+          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
+          type: WorkCycleType.approvedByQr),
+      WorkCycle(
+          id: 11,
+          startTime: DateTime.now().subtract(Duration(days: 4)),
+          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
+          type: WorkCycleType.approvedByQr),
+
+      WorkCycle(
+          id: 12,
+          startTime: DateTime.now().subtract(Duration(days: 4)),
+          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
+          type: WorkCycleType.approvedByQr),
+      WorkCycle(
+          id: 13,
+          startTime: DateTime.now().subtract(Duration(days: 4)),
+          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
           type: WorkCycleType.approvedByQr),
     ];
   }

@@ -3,7 +3,7 @@ import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider.dart';
 import 'package:flutter_app/core/widgets/my_text_icon_state_button.dart';
-import 'package:flutter_app/core/widgets/my_work_cycles_tile.dart';
+import 'package:flutter_app/core/widgets/work_cycles_list.dart';
 import 'package:flutter_app/features/common/clock_in_out/controller/my_time_counter_provider.dart';
 import 'package:flutter_app/features/common/clock_in_out/view/my_time_counter.dart';
 import 'package:flutter_app/features/common/clock_in_out/controller/clock_in_out_provider.dart';
@@ -66,7 +66,7 @@ class ClockInOutPage extends StatelessWidget {
               Gap(Dimentions.sizeS),
               Padding(
                 padding: const EdgeInsets.all(Dimentions.sizeM),
-                child: MyBeveledContainer(child: MyDynamicList()),
+                child: MyBeveledContainer(child: WorkCyclesList<ClockInOutProvider>()),
               ),
             ],
           ),
@@ -77,31 +77,3 @@ class ClockInOutPage extends StatelessWidget {
 }
 
 
-class MyDynamicList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<ClockInOutProvider>(builder: (context, provider, child) {
-      return SizedBox(
-        height: 400,
-        child: ListView.builder(
-          itemCount: provider.workCycles.length,
-          itemBuilder: (context, index) {
-            final item = provider.workCycles[index];
-            return Padding(
-              padding: EdgeInsets.only(top: index==0 ? Dimentions.sizeL : 0, left: Dimentions.sizeS, right: Dimentions.sizeS),
-              child: Column(
-                children: [
-                  // Gap(Dimentions.sizeXS),
-                  Padding(
-                    padding: const EdgeInsets.all(Dimentions.sizeXS),
-                    child: MyWorkCyclesTile(workCycle: item, isEditable: true),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      );
-    });
-  }
-}

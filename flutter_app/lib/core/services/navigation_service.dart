@@ -47,7 +47,7 @@ class NavigationService {
   }
 
   /// Push a new route and expect a result back from it
-  static Future<dynamic> push(String routeName) async {
+  static Future<dynamic> pushNamed(String routeName) async {
     return await navigatorKey.currentState?.pushNamed(routeName);
   }
 

@@ -68,4 +68,10 @@ class WorkCycle {
     static WorkCycle workCycleFromJson(String str) => WorkCycle.fromJson(json.decode(str));
 
     static String workCycleToJson(WorkCycle data) => json.encode(data.toJson());
+    
+    bool isDayInWorkCycle(DateTime day) {
+      return startTime.subtract(Duration(days: 1)).isBefore(day) &&
+          DateTime(endTime.year, endTime.month, endTime.day, 23, 59)
+              .isAfter(day);
+    }
 }
