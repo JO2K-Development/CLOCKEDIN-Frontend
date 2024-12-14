@@ -9,6 +9,8 @@ import 'package:flutter_app/features/auth/initial_login/controller/initial_login
 import 'package:flutter_app/features/auth/initial_login/view/initial_login_page.dart';
 import 'package:flutter_app/features/auth/register/controller/register_provider.dart';
 import 'package:flutter_app/features/auth/register/view/register_page.dart';
+import 'package:flutter_app/features/emplyee/calendar/controller/calendar_provider.dart';
+import 'package:flutter_app/features/emplyee/calendar/view/day_of_work.dart';
 import 'package:flutter_app/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,7 +19,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-
+  
   // String initRoute = await NavigationService.prepareInitialAppState();
   // String initRoute = "/initial-login";
   // String initRoute = "/register";
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
       providers: [
         // ChangeNotifierProvider(create: (context) => ...()),
         ChangeNotifierProvider(create: (context) => AppInitUserDataProvider()),
+        ChangeNotifierProvider(create: (context) => CalendarProvider()),
         // ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: MaterialApp(

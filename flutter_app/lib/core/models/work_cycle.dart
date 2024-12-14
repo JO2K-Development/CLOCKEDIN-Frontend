@@ -5,9 +5,6 @@
 import 'dart:convert';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
 
-WorkCycle workCycleFromJson(String str) => WorkCycle.fromJson(json.decode(str));
-
-String workCycleToJson(WorkCycle data) => json.encode(data.toJson());
 
 class WorkCycle {
     int id;
@@ -67,4 +64,14 @@ class WorkCycle {
         "end_time": "${endTime.year.toString().padLeft(4, '0')}-${endTime.month.toString().padLeft(2, '0')}-${endTime.day.toString().padLeft(2, '0')}",
         "type": type.toString(),
     };
+
+    static WorkCycle workCycleFromJson(String str) => WorkCycle.fromJson(json.decode(str));
+
+    static String workCycleToJson(WorkCycle data) => json.encode(data.toJson());
+    
+    bool isDayInWorkCycle(DateTime day) {
+      return startTime.subtract(Duration(days: 1)).isBefore(day) &&
+          DateTime(endTime.year, endTime.month, endTime.day, 23, 59)
+              .isAfter(day);
+    }
 }
