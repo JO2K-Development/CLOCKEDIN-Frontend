@@ -5,6 +5,7 @@ import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider.dart';
+import 'package:flutter_app/core/widgets/section_title.dart';
 import 'package:flutter_app/core/widgets/statistics_list.dart';
 import 'package:flutter_app/core/widgets/work_cycles_scrollable_list.dart';
 import 'package:flutter_app/features/emplyee/calendar/controller/calendar_provider.dart';
@@ -37,12 +38,7 @@ class DayOfWork extends StatelessWidget {
                 padding: const EdgeInsets.all(Dimentions.sizeXS),
                 child: WorkCyclesScrollableList<CalendarProvider>(workCyclesOverwrite: workCycles, scrollable: false, isTopGap: false),
               ),
-              Padding(
-                padding: const EdgeInsets.all(Dimentions.sizeXL),
-                child: Align(              
-                  alignment: Alignment.centerLeft,
-                  child: Text(AppLocalizations.of(context).calendar_statistics, style: Theme.of(context).textTheme.titleLarge,)),
-              ),
+              SectionTitle(AppLocalizations.of(context).calendar_statistics),
               StatisticsList(statisticsDict),
             ],
           ),

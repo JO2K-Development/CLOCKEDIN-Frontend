@@ -95,6 +95,6 @@ class AppColorsDark {
   static const Color text = Color(0xFFF0F0F3); // Light text color for good contrast on dark backgrounds
   static const Color fadedText = Color.fromARGB(255, 164, 164, 164); // #D1D1D6
   // Shadow Color (For elevation and depth effects)
-  static const Color shadow = Color(0x29FFFFFF); // White with 16% opacity
+  static const Color shadow = Color.fromARGB(185, 0, 0, 0); // White with 16% opacity
   static const Color dividerColor = Color(0xFF4C4C4C); // #4C4C4C
 }

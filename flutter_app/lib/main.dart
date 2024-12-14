@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           ],
           navigatorKey: NavigationService.navigatorKey,
           title: 'CLOCKED-IN',
-          themeMode: ThemeMode.system,
+          themeMode: ThemeMode.dark,
           darkTheme: MyTheme.darkTheme,
           theme: MyTheme.lightTheme,
           initialRoute: initialRoute,
