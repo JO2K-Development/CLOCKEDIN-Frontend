@@ -7,6 +7,10 @@ MVP (minimum viable product) state's goal is to give platform for companies
 to measure the employees time at work and to check basic statistics,
 allowing certain features only to users with permissions to use them
 
+### Idea of how it looks
+![image](https://github.com/user-attachments/assets/03592a8b-b241-4639-8926-8654827ca284)
+
+
 
 ## For devs
 
