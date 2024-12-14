@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
+import 'package:flutter_app/core/models/StatisticsDict';
 import 'package:flutter_app/core/models/work_cycle.dart';
 
 class CalendarProvider with ChangeNotifier {
   late List<WorkCycle>? workCycles;
+  late StatisticsDict? statisticsDict;
   bool isLoading = true;
 
   CalendarProvider() {
@@ -14,6 +16,7 @@ class CalendarProvider with ChangeNotifier {
     print("object");
     await Future.delayed(Duration(seconds: 1));
     await initCycles();
+    await initStatistics();
     isLoading = false;
     notifyListeners();
   }
@@ -75,5 +78,32 @@ class CalendarProvider with ChangeNotifier {
           endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
           type: WorkCycleType.approvedByQr),
     ];
+  }
+  
+  initStatistics() {
+    statisticsDict = StatisticsDict(
+      data: {
+        "Statisctic one": 234,
+        "Statisctic two": 123,
+        "Welp Thats a plot": {
+          "label_x": "Time",
+          "label_y": "Value",
+          "data": {
+            "Jan": 35,
+            "Feb": 28,
+            "Mar": 34,
+            "Apr": 32,
+            "May": 40,
+            "Jun": 33,
+            "Jul": 25,
+            "Aug": 28,
+            "Sep": 30,
+            "Oct": 35,
+            "Nov": 38,
+            "Dec": 32,
+          }
+        }
+      }
+    );
   }
 }

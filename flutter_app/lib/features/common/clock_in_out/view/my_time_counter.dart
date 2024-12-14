@@ -23,10 +23,7 @@ class MyTimeCounter extends StatelessWidget {
       child: FittedBox(
         child: Text(
           _formatTime(elapsedSeconds),
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontSize: Dimentions.sizeXXL * 1.5, // Adjust size as needed
-              color: Colors.grey,
-              height: 0),
+          style: Theme.of(context).textTheme.displayLarge,
           textHeightBehavior: const TextHeightBehavior(
             applyHeightToFirstAscent: false,
             applyHeightToLastDescent: false,

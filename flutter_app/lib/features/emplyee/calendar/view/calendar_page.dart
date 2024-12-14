@@ -49,10 +49,8 @@ class CalendarPage extends StatelessWidget {
                     var workCyclesForDay =
                         Provider.of<CalendarProvider>(context, listen: false)
                             .getEventsForDay(selectedDay);
-                    // workCyclesForDay.forEach((element) {
-                    //   print(element.startTime);
-                    // });
-                    print(Provider.of<CalendarProvider>(context, listen: false).workCycles!.length);
+                    // TODO: actually send the statistics for day not for the month
+                    var statisticsDict = Provider.of<CalendarProvider>(context, listen: false).statisticsDict!;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -61,7 +59,7 @@ class CalendarPage extends StatelessWidget {
                           return ChangeNotifierProvider.value(
                             value: Provider.of<CalendarProvider>(context,
                                 listen: false),
-                            child: DayOfWork(workCyclesForDay, null),
+                            child: DayOfWork(workCyclesForDay, statisticsDict),
                           );
                         },
                       ),

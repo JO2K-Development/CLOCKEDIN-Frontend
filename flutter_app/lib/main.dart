@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: MaterialApp(
+          showSemanticsDebugger: false,
           debugShowCheckedModeBanner: false,
           supportedLocales: L10n.all,
           locale: L10n.all[0],

@@ -37,4 +37,7 @@ class Dimentions {
   static const double sizeL = 24;
   static const double sizeXL = 32;
   static const double sizeXXL = 48;
+
+  // custom text sizes
+  static const double textSizeXXL = 50;
 }

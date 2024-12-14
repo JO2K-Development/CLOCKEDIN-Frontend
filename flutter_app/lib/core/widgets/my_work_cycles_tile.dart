@@ -77,13 +77,13 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
             widget.workCycle.type.icon,
           ],
         ),
-        Gap(Dimentions.sizeXL),
+        Gap(Dimentions.sizeM),
         Row(
           children: [
             Spacer(),
-            Text(AppLocalizations.of(context).clocked_in_out_cycle_type_office_checked, style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              color: AppColors.white
-            ),),
+            // Text(AppLocalizations.of(context).clocked_in_out_cycle_type_office_checked, style: Theme.of(context).textTheme.bodySmall!.copyWith(
+            //   color: AppColors.customMaterialColor.shade900
+            // ),),
           ],
         ),
       ],

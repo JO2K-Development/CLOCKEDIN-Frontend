@@ -12,7 +12,7 @@ class ClockInOutProvider with ChangeNotifier {
   }
 
   Future<void> initProvider() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(milliseconds: 400));
     await initCycles();
     isLoading = false;
     notifyListeners();

@@ -3,7 +3,7 @@ import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider.dart';
 import 'package:flutter_app/core/widgets/my_text_icon_state_button.dart';
-import 'package:flutter_app/core/widgets/work_cycles_list.dart';
+import 'package:flutter_app/core/widgets/work_cycles_scrollable_list.dart';
 import 'package:flutter_app/features/common/clock_in_out/controller/my_time_counter_provider.dart';
 import 'package:flutter_app/features/common/clock_in_out/view/my_time_counter.dart';
 import 'package:flutter_app/features/common/clock_in_out/controller/clock_in_out_provider.dart';
@@ -66,7 +66,7 @@ class ClockInOutPage extends StatelessWidget {
               Gap(Dimentions.sizeS),
               Padding(
                 padding: const EdgeInsets.all(Dimentions.sizeM),
-                child: MyBeveledContainer(child: WorkCyclesList<ClockInOutProvider>()),
+                child: MyBeveledContainer(child: WorkCyclesScrollableList<ClockInOutProvider>()),
               ),
             ],
           ),
