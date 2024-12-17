@@ -20,10 +20,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   
-  // String initRoute = await NavigationService.prepareInitialAppState();
+  String initRoute = await NavigationService.prepareInitialAppState();
   // String initRoute = "/initial-login";
   // String initRoute = "/register";
-  String initRoute = "/landing";
+  // String initRoute = "/landing";
 
   runApp(MyApp(initRoute));
 }
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           ],
           navigatorKey: NavigationService.navigatorKey,
           title: 'CLOCKED-IN',
-          themeMode: ThemeMode.dark,
+          themeMode: ThemeMode.light,
           darkTheme: MyTheme.darkTheme,
           theme: MyTheme.lightTheme,
           initialRoute: initialRoute,

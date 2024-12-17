@@ -101,7 +101,20 @@ class NetworkHandler {
 
   static Future<http.Response> getMainUser() async {
     //TODO:
-    return http.Response('full response', 200);
+    String exampleJson = '''
+  {
+    "id": 1,
+    "company_id": 123,
+    "position": "Developer",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@example.com",
+    "manager_id": 456,
+    "profile_picture_url": "https://picsum.photos/200",
+    "access_identifiers": ["employee"]
+  }
+  ''';
+    return http.Response(exampleJson, 200);
   }
   
   static Future<List<String>> getUserAccessIdentifiers() async {

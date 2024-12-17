@@ -6,8 +6,8 @@ class MyBeveledContainer extends StatelessWidget {
   final double radius;
   final bool isBackGPrimary;
   final Color? customColor;
-
-  const MyBeveledContainer({required this.child, this.radius = Dimentions.sizeXXL, this.isBackGPrimary = false, this.customColor, super.key});
+  final bool onlyTop;
+  const MyBeveledContainer({required this.child, this.radius = Dimentions.sizeXXL, this.isBackGPrimary = false, this.customColor, super.key, this.onlyTop = false});
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +36,11 @@ class MyBeveledContainer extends StatelessWidget {
         ],
         color: bgColor,
         // border: Border.all(color: Colors.black),
-        borderRadius: BorderRadius.all(Radius.circular(radius)),
+        borderRadius: onlyTop ? BorderRadius.only(topLeft: Radius.circular(radius), topRight: Radius.circular(radius)) : BorderRadius.all(Radius.circular(radius)),
         
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(radius)),
+        borderRadius: onlyTop ? BorderRadius.only(topLeft: Radius.circular(radius), topRight: Radius.circular(radius)) : BorderRadius.all(Radius.circular(radius)),
         child: child)
       
     );

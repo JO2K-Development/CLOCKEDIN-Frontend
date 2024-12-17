@@ -15,7 +15,7 @@ class AppInitUserModel {
   String email;
   int? managerId; // Changed to int (nullable)
   String? profilePictureUrl;
-  List<AccessIdentifiers>? accessIdentifiers;
+  List<AccessIdentifier>? accessIdentifiers;
 
   AppInitUserModel({
     required this.id, // id as an int
@@ -38,7 +38,7 @@ class AppInitUserModel {
         email: json["email"],
         managerId: json["manager_id"] == null || json["manager_id"] == "" ? null : json["manager_id"],
         profilePictureUrl: json["profile_picture_url"],
-        accessIdentifiers: List<AccessIdentifiers>.from(json["access_identifiers"].map((x) => AccessIdentifiers.fromString(x))),
+        accessIdentifiers: List<AccessIdentifier>.from(json["access_identifiers"].map((x) => AccessIdentifier.fromString(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,3 +62,4 @@ class AppInitUserModel {
         accessIdentifiers != null && accessIdentifiers!.isNotEmpty;
   }
 }
+

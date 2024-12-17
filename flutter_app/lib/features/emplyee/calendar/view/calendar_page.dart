@@ -25,11 +25,11 @@ class CalendarPage extends StatelessWidget {
     currentDay.add(Duration(days: 1));
     return Builder(builder: (context) {
       bool isLoading = Provider.of<CalendarProvider>(context).isLoading;
-    
+
       if (isLoading) {
         return Center(child: CircularProgressIndicator());
       }
-    
+
       return SingleChildScrollView(
         child: Column(
           children: [
@@ -43,21 +43,31 @@ class CalendarPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TableCalendar(
+                        locale: Localizations.localeOf(context).languageCode,
                         firstDay: DateTime.utc(2023, 1, 1),
                         lastDay: DateTime.utc(2024, 12, 31),
                         focusedDay: currentDay,
                         startingDayOfWeek: StartingDayOfWeek.monday,
-            
-                        eventLoader: (day) =>
-                            Provider.of<CalendarProvider>(context, listen: false)
-                                .getEventsForDay(day),
+                        headerStyle: HeaderStyle(
+                            formatButtonVisible:
+                                false, // Hide the button that toggles month/day format
+                            titleCentered: true, // Center the month title
+                            titleTextStyle: Theme.of(context).textTheme.titleSmall!), // Style for the month title
+                        eventLoader: (day) => Provider.of<CalendarProvider>(
+                                context,
+                                listen: false)
+                            .getEventsForDay(day),
                         onDaySelected: (selectedDay, focusedDay) {
                           print(selectedDay);
-                          var workCyclesForDay =
-                              Provider.of<CalendarProvider>(context, listen: false)
-                                  .getEventsForDay(selectedDay);
+                          var workCyclesForDay = Provider.of<CalendarProvider>(
+                                  context,
+                                  listen: false)
+                              .getEventsForDay(selectedDay);
                           // TODO: actually send the statistics for day not for the month
-                          var statisticsDict = Provider.of<CalendarProvider>(context, listen: false).statisticsDict!;
+                          var statisticsDict = Provider.of<CalendarProvider>(
+                                  context,
+                                  listen: false)
+                              .statisticsDict!;
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -66,7 +76,8 @@ class CalendarPage extends StatelessWidget {
                                 return ChangeNotifierProvider.value(
                                   value: Provider.of<CalendarProvider>(context,
                                       listen: false),
-                                  child: DayOfWork(workCyclesForDay, statisticsDict),
+                                  child: DayOfWork(
+                                      workCyclesForDay, statisticsDict),
                                 );
                               },
                             ),
@@ -84,8 +95,8 @@ class CalendarPage extends StatelessWidget {
                             return Container(
                               decoration: BoxDecoration(
                                 gradient: RadialGradient(
-                                  center:
-                                      Alignment.center, // Center of the gradient
+                                  center: Alignment
+                                      .center, // Center of the gradient
                                   radius:
                                       0.8, // Controls how far the gradient spreads
                                   colors: [
@@ -95,7 +106,10 @@ class CalendarPage extends StatelessWidget {
                                         .withOpacity(0.5),
                                     Theme.of(context).colorScheme.primary
                                   ], // Gradient colors
-                                  stops: [0.6, 1.7], // Stops for the gradient colors
+                                  stops: [
+                                    0.6,
+                                    1.7
+                                  ], // Stops for the gradient colors
                                 ),
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -104,20 +118,22 @@ class CalendarPage extends StatelessWidget {
                               child: Text(
                                 day.day.toString(),
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.onPrimary),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
                               ),
                             );
                           },
-                          outsideBuilder:
-                              _weekendColumnsBuilder(weekendColor, outside: true),
-                          disabledBuilder:
-                              _weekendColumnsBuilder(weekendColor, outside: true),
+                          outsideBuilder: _weekendColumnsBuilder(weekendColor,
+                              outside: true),
+                          disabledBuilder: _weekendColumnsBuilder(weekendColor,
+                              outside: true),
                           defaultBuilder: _weekendColumnsBuilder(weekendColor),
                           dowBuilder: (context, day) {
                             if ([DateTime.sunday, DateTime.saturday]
                                 .contains(day.weekday)) {
                               final text = DateFormat.E().format(day);
-                
+
                               return Container(
                                 color: weekendColor,
                                 child: Center(
@@ -138,7 +154,8 @@ class CalendarPage extends StatelessWidget {
               ),
             ),
             SectionTitle(AppLocalizations.of(context).calendar_statistics),
-            StatisticsList(Provider.of<CalendarProvider>(context).statisticsDict!),
+            StatisticsList(
+                Provider.of<CalendarProvider>(context).statisticsDict!),
           ],
         ),
       );
@@ -172,15 +189,15 @@ class CalendarPage extends StatelessWidget {
       );
     };
   }
-  
+
   _buildEventsMarker(List<Object?> events, BuildContext context) {
     return Container(
-    width: 8.0,  // Size of the dot
-    height: 8.0, // Size of the dot
-    decoration: BoxDecoration(
-      color: Theme.of(context).primaryColor, // Dot color
-      shape: BoxShape.circle, // Circular shape
-    ),
-  );
+      width: 8.0, // Size of the dot
+      height: 8.0, // Size of the dot
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor, // Dot color
+        shape: BoxShape.circle, // Circular shape
+      ),
+    );
   }
 }

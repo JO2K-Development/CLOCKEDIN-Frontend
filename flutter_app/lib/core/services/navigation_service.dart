@@ -68,7 +68,8 @@ class NavigationService {
       return "/server-connection-error";
     } else if (response.statusCode == 200) {
       dynamic mainUserJson = jsonDecode(response.body);
-      AppStateHandler.appPreparationUserData = appInitUserModelFromJson(mainUserJson);
+      print(mainUserJson);
+      AppStateHandler.appPreparationUserData = appInitUserModelFromJson(response.body);
       if (!AppStateHandler.appPreparationUserData!.hasNecessaryDataForLanding()) {
         return "/data-fill";
       } else {

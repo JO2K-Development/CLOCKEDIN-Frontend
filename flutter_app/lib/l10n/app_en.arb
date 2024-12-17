@@ -33,7 +33,10 @@
     "calendar_statistics": "Statistics",
     "calendar_statistics_total_hours": "Total hours",
     "calendar_calculated_earnings": "earnings calculated based on the hourly rate",
-    "calendar_worked_hours_plot": "Worked hours"
+    "calendar_worked_hours_plot": "Worked hours",
+
+    "profile_settings": "Profile settings",
+    "profile_privacy": "Privacy policy"
 
 
 }
