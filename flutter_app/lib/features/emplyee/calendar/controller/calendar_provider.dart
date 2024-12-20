@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/models/StatisticsDict';
-import 'package:flutter_app/core/models/work_cycle.dart';
+import 'package:flutter_app/core/models/work_cycle_model.dart';
 
 class CalendarProvider with ChangeNotifier {
-  late List<WorkCycle>? workCycles;
+  late List<WorkCycleModel>? workCycles;
   late StatisticsDict? statisticsDict;
   bool isLoading = true;
 
@@ -32,47 +32,47 @@ class CalendarProvider with ChangeNotifier {
     }).toList();
   }
 
-  Future<List<WorkCycle>> getWorkCycles() async {
+  Future<List<WorkCycleModel>> getWorkCycles() async {
     //TODO: implement getWorkCycles
     // they should be sorted and be like a short list of some
     return [
-      WorkCycle(
+      WorkCycleModel(
           id: 6,
           startTime: DateTime.now().add(Duration(days: 1)),
           endTime: DateTime.now().add(Duration(days: 1, hours: 8)),
           type: WorkCycleType.remoteWork),
-      WorkCycle(
+      WorkCycleModel(
           id: 7,
           startTime: DateTime.now().subtract(Duration(days: 1)),
           endTime: DateTime.now().add(Duration(days: 12, hours: -8)),
           type: WorkCycleType.approvedByLocation),
-      WorkCycle(
+      WorkCycleModel(
           id: 8,
           startTime: DateTime.now().subtract(Duration(days: 10)),
           endTime: DateTime.now().subtract(Duration(days: 10, hours: -8)),
           type: WorkCycleType.approvedByManager),
-      WorkCycle(
+      WorkCycleModel(
           id: 9,
           startTime: DateTime.now().subtract(Duration(days: 4)),
           endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
           type: WorkCycleType.approvedByQr),
-      WorkCycle(
+      WorkCycleModel(
           id: 10,
           startTime: DateTime.now().subtract(Duration(days: 4)),
           endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
           type: WorkCycleType.approvedByQr),
-      WorkCycle(
+      WorkCycleModel(
           id: 11,
           startTime: DateTime.now().subtract(Duration(days: 4)),
           endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
           type: WorkCycleType.approvedByQr),
 
-      WorkCycle(
+      WorkCycleModel(
           id: 12,
           startTime: DateTime.now().subtract(Duration(days: 4)),
           endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
           type: WorkCycleType.approvedByQr),
-      WorkCycle(
+      WorkCycleModel(
           id: 13,
           startTime: DateTime.now().subtract(Duration(days: 4)),
           endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),

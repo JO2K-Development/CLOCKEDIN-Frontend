@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/models/StatisticsDict';
-import 'package:flutter_app/core/models/work_cycle.dart';
+import 'package:flutter_app/core/models/work_cycle_model.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
@@ -15,7 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class DayOfWork extends StatelessWidget {
-  final List<WorkCycle> workCycles;
+  final List<WorkCycleModel> workCycles;
   final StatisticsDict statisticsDict; 
   const DayOfWork(this.workCycles, this.statisticsDict, {super.key});
 

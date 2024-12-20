@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
+import 'package:flutter_app/core/utils/formatters/users_formatters.dart';
 import 'package:flutter_app/core/widgets/my_avatar.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider_with_text.dart';
@@ -15,7 +16,7 @@ class EmployeeProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String name =
-        "${Provider.of<AppInitUserDataProvider>(context).appInitUserData!.firstName!} ${Provider.of<AppInitUserDataProvider>(context).appInitUserData!.lastName!}";
+        UsersFormatter.toFullName(Provider.of<AppInitUserDataProvider>(context).appInitUserData!);
     String picUrl = Provider.of<AppInitUserDataProvider>(context).appInitUserData!.profilePictureUrl!;
     
     return Container(

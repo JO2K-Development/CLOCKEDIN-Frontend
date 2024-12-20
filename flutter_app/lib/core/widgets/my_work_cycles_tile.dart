@@ -3,13 +3,13 @@ import 'package:flutter_app/core/utils/constants/app_colors.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_time_picker.dart';
-import 'package:flutter_app/core/models/work_cycle.dart';
+import 'package:flutter_app/core/models/work_cycle_model.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyWorkCyclesTile extends StatefulWidget {
-  final WorkCycle workCycle;
+  final WorkCycleModel workCycle;
   final bool isEditable;
   const MyWorkCyclesTile(
       {super.key, required this.workCycle, this.isEditable = false});

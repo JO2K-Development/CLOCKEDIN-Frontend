@@ -13,7 +13,7 @@ class AppColors {
     800: Color(0xFF383F7D), // Dark shade
     900: Color(0xFF2E2D60), // Darkest shade
   };
-  static const Color fadedBlack = Color.fromARGB(77, 0, 0, 0);
+  static const Color fadedBlack = Color.fromARGB(40, 0, 0, 0);
   static MaterialColor customMaterialColor = MaterialColor(0xFF5856D6, colorSwatch);
   static const Color inputHintColor = Color(0xFF414141); 
   static const Color orange = Color(0xFFFFA500); // Orange color

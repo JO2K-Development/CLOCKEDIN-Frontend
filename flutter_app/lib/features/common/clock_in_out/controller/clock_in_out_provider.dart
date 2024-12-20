@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
-import 'package:flutter_app/core/models/work_cycle.dart';
+import 'package:flutter_app/core/models/work_cycle_model.dart';
 
 class ClockInOutProvider with ChangeNotifier {
-  List<WorkCycle> workCycles = [];
+  List<WorkCycleModel> workCycles = [];
   bool isLoading = true;
 
   ClockInOutProvider() {
@@ -22,8 +22,8 @@ class ClockInOutProvider with ChangeNotifier {
     workCycles = await getWorkCycles();
   }
 
-  Future<bool> validateUpdatedCycle(WorkCycle cycle) async {
-    bool _isOverlapping(WorkCycle newCycle, WorkCycle? w1, WorkCycle? w2) {
+  Future<bool> validateUpdatedCycle(WorkCycleModel cycle) async {
+    bool _isOverlapping(WorkCycleModel newCycle, WorkCycleModel? w1, WorkCycleModel? w2) {
       return w1 == null
           ? true
           : newCycle.startTime.isBefore(w1.endTime) || w2 == null
@@ -39,7 +39,7 @@ class ClockInOutProvider with ChangeNotifier {
     }
 
     //this has to be future cause there might have been changes in db
-    List<WorkCycle> freshCycleFetch = await getWorkCycles();
+    List<WorkCycleModel> freshCycleFetch = await getWorkCycles();
     bool isRemoved =
         !(freshCycleFetch.any((element) => element.id == cycle.id));
     bool isOverlappingOldOrFresh = _isOverlapping(
@@ -59,26 +59,26 @@ class ClockInOutProvider with ChangeNotifier {
     return !isRemoved && !isOverlappingOldOrFresh;
   }
 
-  Future<List<WorkCycle>> getWorkCycles() async {
+  Future<List<WorkCycleModel>> getWorkCycles() async {
     //TODO: implement getWorkCycles
     // they should be sorted and be like a short list of some
     return [
-      WorkCycle(
+      WorkCycleModel(
           id: 1,
           startTime: DateTime(1400, 1, 1, 0, 0),
           endTime: DateTime(1400, 1, 1, 0, 0),
           type: WorkCycleType.remoteWork),
-      WorkCycle(
+      WorkCycleModel(
           id: 2,
           startTime: DateTime.now(),
           endTime: DateTime(1400, 1, 1, 0, 0),
           type: WorkCycleType.approvedByLocation),
-      WorkCycle(
+      WorkCycleModel(
           id: 3,
           startTime: DateTime(1400, 1, 1, 0, 0),
           endTime: DateTime(1400, 1, 1, 0, 0),
           type: WorkCycleType.approvedByManager),
-      WorkCycle(
+      WorkCycleModel(
           id: 3,
           startTime: DateTime(1400, 1, 1, 0, 0),
           endTime: DateTime(1400, 1, 1, 0, 0),

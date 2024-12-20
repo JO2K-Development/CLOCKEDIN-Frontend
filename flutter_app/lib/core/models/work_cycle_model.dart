@@ -6,13 +6,13 @@ import 'dart:convert';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
 
 
-class WorkCycle {
+class WorkCycleModel {
     int id;
     DateTime startTime;
     DateTime endTime;
     WorkCycleType type;
 
-    WorkCycle({
+    WorkCycleModel({
         required this.id,
         required this.startTime,
         required this.endTime,
@@ -50,7 +50,7 @@ class WorkCycle {
       // NetworkHandler.delete(endPoint);
     }
 
-    factory WorkCycle.fromJson(Map<String, dynamic> json) => WorkCycle(
+    factory WorkCycleModel.fromJson(Map<String, dynamic> json) => WorkCycleModel(
         id: json["id"],
         startTime: DateTime.parse(json["start_time"]),
         endTime: DateTime.parse(json["end_time"]),
@@ -65,9 +65,9 @@ class WorkCycle {
         "type": type.toString(),
     };
 
-    static WorkCycle workCycleFromJson(String str) => WorkCycle.fromJson(json.decode(str));
+    static WorkCycleModel workCycleModelFromJson(String str) => WorkCycleModel.fromJson(json.decode(str));
 
-    static String workCycleToJson(WorkCycle data) => json.encode(data.toJson());
+    static String workCycleModelToJson(WorkCycleModel data) => json.encode(data.toJson());
     
     bool isDayInWorkCycle(DateTime day) {
       return startTime.subtract(Duration(days: 1)).isBefore(day) &&

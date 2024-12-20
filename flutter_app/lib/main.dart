@@ -9,6 +9,7 @@ import 'package:flutter_app/features/auth/initial_login/controller/initial_login
 import 'package:flutter_app/features/auth/initial_login/view/initial_login_page.dart';
 import 'package:flutter_app/features/auth/register/controller/register_provider.dart';
 import 'package:flutter_app/features/auth/register/view/register_page.dart';
+import 'package:flutter_app/features/common/org_members_managment/controller/org_members_managment_provider.dart';
 import 'package:flutter_app/features/emplyee/calendar/controller/calendar_provider.dart';
 import 'package:flutter_app/features/emplyee/calendar/view/day_of_work.dart';
 import 'package:flutter_app/l10n/l10n.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider(create: (context) => ...()),
         ChangeNotifierProvider(create: (context) => AppInitUserDataProvider()),
         ChangeNotifierProvider(create: (context) => CalendarProvider()),
+        ChangeNotifierProvider(create: (context) => OrgMembersManagmentProvider())
         // ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: MaterialApp(
