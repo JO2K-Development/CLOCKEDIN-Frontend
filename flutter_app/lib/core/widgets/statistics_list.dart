@@ -42,7 +42,7 @@ class _SimpleTile extends StatelessWidget {
         children: [
           Text(value, style: Theme.of(context).textTheme.displayLarge),
           
-          Text(title, style: Theme.of(context).textTheme.labelLarge),
+          Text(title, style: Theme.of(context).textTheme.labelMedium),
           Gap(Dimentions.sizeS),
           MyDivider(indentPercent: 0,),
         ],
@@ -73,7 +73,7 @@ class _PlotTile extends StatelessWidget {
         primaryXAxis: CategoryAxis(),
         series: <CartesianSeries<ChartData, String>>[
           LineSeries<ChartData, String>(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary,
             dataSource: chartData,
             xValueMapper: (ChartData data, _) => data.category,
             yValueMapper: (ChartData data, _) => data.value,

@@ -14,7 +14,7 @@ class MyElevatedButtonThemes {
         ),
       ),
       elevation: WidgetStateProperty.all<double>(0.0),
-      foregroundColor: WidgetStateProperty.all<Color>(AppColorsLight.background),
+      foregroundColor: WidgetStateProperty.all<Color>(AppColorsLight.scaffoldBackground),
       side: WidgetsProperties.makeElevatedButtonBorderSide(color: AppColorsLight.accent),
       textStyle: WidgetStateProperty.all<TextStyle>(
         // MyTextThemes.lightTextTheme.labelLarge!,

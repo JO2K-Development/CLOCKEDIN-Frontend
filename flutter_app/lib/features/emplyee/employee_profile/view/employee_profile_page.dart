@@ -38,7 +38,7 @@ class EmployeeProfilePage extends StatelessWidget {
             },
             child: Text(name, style: Theme.of(context).textTheme.titleLarge),
           )),
-          Gap(Dimentions.sizeXL),
+          Gap(Dimentions.sizeXXL),
           Flexible(
             child: MyBeveledContainer(
               onlyTop: true,

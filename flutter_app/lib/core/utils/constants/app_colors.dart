@@ -13,7 +13,7 @@ class AppColors {
     800: Color(0xFF383F7D), // Dark shade
     900: Color(0xFF2E2D60), // Darkest shade
   };
-
+  static const Color fadedBlack = Color.fromARGB(77, 0, 0, 0);
   static MaterialColor customMaterialColor = MaterialColor(0xFF5856D6, colorSwatch);
   static const Color inputHintColor = Color(0xFF414141); 
   static const Color orange = Color(0xFFFFA500); // Orange color
@@ -26,12 +26,12 @@ class AppColorsLight {
   static const ColorScheme lightColorScheme = ColorScheme(
     primary: primary,
     secondary: accent,
-    surface: background,
+    surface: scaffoldBackground,
     error: complementary,
     onPrimary: text,
     onSecondary: text,
     onSurface: text,
-    onError: background,
+    onError: scaffoldBackground,
     brightness: Brightness.light,
   );
   // Primary Color
@@ -51,7 +51,7 @@ class AppColorsLight {
   static const Color analogous2 = Color(0xFF56D6C1); // #56D6C1
 
   // Neutral Colors
-  static const Color background = Color.fromARGB(255, 255, 255, 255); // #F0F0F3
+  static const Color scaffoldBackground = Color.fromARGB(255, 255, 255, 255); // #F0F0F3
   static const Color text = Color.fromARGB(255, 0, 0, 0); // #333333
   static const Color fadedText = Color.fromARGB(255, 120, 120, 120); // #D1D1D6
 

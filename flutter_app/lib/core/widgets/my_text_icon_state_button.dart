@@ -65,7 +65,7 @@ class _MyTextIconStateButtonState extends State<MyTextIconStateButton> {
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             color: Colors.white,
                             shadows: [
-                              WidgetsProperties.lightBottomRightShadow(),
+                              WidgetsProperties.lightBottomRightShadow,
                             ]
                       ),
                     )))),

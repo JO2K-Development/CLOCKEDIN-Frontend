@@ -63,9 +63,16 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
             Text(DateFormat('HH:mm').format(startTime)),
             Text(" - "),
             Text(DateFormat('HH:mm').format(endTime)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: widget.workCycle.type.icon,
+            ),
+            Spacer(),            
             if (isEditable) ...[
               GestureDetector(
-                child: Icon(Icons.edit_outlined, color: AppColors.white, size: Dimentions.sizeXL),
+                child: Icon(Icons.edit_outlined, color: AppColors.white, 
+                // size: Dimentions.sizeXL
+                ),
                 onTap: () {
                   setState(() {
                     isInEdit = !isInEdit;
@@ -73,8 +80,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                 },
               ),
             ],
-            Spacer(),
-            widget.workCycle.type.icon,
+            
           ],
         ),
         Gap(Dimentions.sizeM),
