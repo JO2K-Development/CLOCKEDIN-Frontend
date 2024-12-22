@@ -36,7 +36,13 @@
     "calendar_worked_hours_plot": "Worked hours",
 
     "profile_settings": "Profile settings",
-    "profile_privacy": "Privacy policy"
+    "profile_privacy": "Privacy policy",
+
+    "org_members_management": "Members management",
+    "org_members_management_your_members": "Members of your organization:",
+    "org_members_management_brief": "Click on the member to manage their data and handle their state",
+    "org_members_management_add_member": "Add member",
+    "org_members_management_hint_text": "Search"
 
 
 }

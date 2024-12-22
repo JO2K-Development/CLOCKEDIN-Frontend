@@ -23,9 +23,9 @@ class MyBeveledContainer extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).shadowColor,
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 3), // changes position of shadow
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: Offset(2, 4), // changes position of shadow
           ),
           // BoxShadow(
           //   color: Theme.of(context).shadowColor,

@@ -12,6 +12,7 @@ class EmployeeBriefModel {
   String? position;
   String firstName;
   String lastName;
+  String? additionalInfo;
   // String email;
   int? managerId; // Changed to int (nullable)
   String? profilePictureUrl;
@@ -23,6 +24,7 @@ class EmployeeBriefModel {
     required this.position,
     required this.firstName,
     required this.lastName,
+    this.additionalInfo,
     // required this.email,
     this.managerId, // Optional and int
     this.profilePictureUrl,
@@ -38,6 +40,7 @@ class EmployeeBriefModel {
         // email: json["email"],
         managerId: json["manager_id"] == null || json["manager_id"] == "" ? null : json["manager_id"],
         profilePictureUrl: json["profile_picture_url"],
+        additionalInfo: json["additional_info"] == "" ? null : json["additional_info"],
         // accessIdentifiers: List<AccessIdentifier>.from(json["access_identifiers"].map((x) => AccessIdentifier.fromString(x))),
       );
 
@@ -47,6 +50,7 @@ class EmployeeBriefModel {
         "position": position,
         "first_name": firstName,
         "last_name": lastName,
+        "additional_info": additionalInfo,
         // "email": email,
         "manager_id": managerId, // Output as int (nullable)
         "profile_picture_url": profilePictureUrl,
