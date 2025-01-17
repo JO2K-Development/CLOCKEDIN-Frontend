@@ -15,7 +15,7 @@ class MyTheme {
     scaffoldBackgroundColor: AppColorsLight.scaffoldBackground,
     shadowColor: AppColorsLight.shadow,
     brightness: Brightness.light,
-    fontFamily: 'CascadiaCode',
+    // fontFamily: 'CascadiaCode',
     textTheme: MyTextThemes.lightTextTheme,
     elevatedButtonTheme: MyElevatedButtonThemes.lightButtonTheme,
     inputDecorationTheme: MyInputDecorationThemes.lightInputDecorationTheme,

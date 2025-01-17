@@ -102,7 +102,8 @@ class CalendarProvider with ChangeNotifier {
             "Nov": 38,
             "Dec": 32,
           }
-        }
+        },
+        "Maciek Robi pieniądze": 23903,
       }
     );
   }

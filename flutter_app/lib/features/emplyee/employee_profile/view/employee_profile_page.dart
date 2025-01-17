@@ -16,7 +16,7 @@ class EmployeeProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String name =
-        UsersFormatter.toFullName(Provider.of<AppInitUserDataProvider>(context).appInitUserData!);
+        UsersFormatter.toFullName(Provider.of<AppInitUserDataProvider>(context).appInitUserData!  );
     String picUrl = Provider.of<AppInitUserDataProvider>(context).appInitUserData!.profilePictureUrl!;
     
     return Container(

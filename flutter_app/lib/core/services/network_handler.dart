@@ -111,7 +111,7 @@ class NetworkHandler {
     "email": "john.doe@example.com",
     "manager_id": 456,
     "profile_picture_url": "https://picsum.photos/200",
-    "access_identifiers": ["admin"]
+    "access_identifiers": ["employee"]
   }
   ''';
     return http.Response(exampleJson, 200);

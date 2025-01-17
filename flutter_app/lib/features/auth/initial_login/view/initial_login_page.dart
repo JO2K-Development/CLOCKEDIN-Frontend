@@ -58,6 +58,7 @@ class InitialLoginPage extends StatelessWidget {
 
 class LoginWidget extends StatelessWidget {
   final InitialLoginProvider initialLoginProvider;
+
   const LoginWidget(this.initialLoginProvider, {super.key});
 
   @override
@@ -81,7 +82,8 @@ class LoginWidget extends StatelessWidget {
                 Gap(Dimentions.sizeS),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: initialLoginProvider.isLoading ?
+                  child: initialLoginProvider.isLoading 
+                  ?
                   CircularProgressIndicator()
                   :
                   Padding(

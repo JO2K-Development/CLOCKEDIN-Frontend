@@ -25,11 +25,10 @@ class CalendarPage extends StatelessWidget {
     currentDay.add(Duration(days: 1));
     return Builder(builder: (context) {
       bool isLoading = Provider.of<CalendarProvider>(context).isLoading;
-
+      
       if (isLoading) {
         return Center(child: CircularProgressIndicator());
       }
-
       return SingleChildScrollView(
         child: Column(
           children: [
@@ -45,7 +44,7 @@ class CalendarPage extends StatelessWidget {
                       TableCalendar(
                         locale: Localizations.localeOf(context).languageCode,
                         firstDay: DateTime.utc(2023, 1, 1),
-                        lastDay: DateTime.utc(2024, 12, 31),
+                        lastDay: DateTime.utc(2025, 12, 31),
                         focusedDay: currentDay,
                         startingDayOfWeek: StartingDayOfWeek.monday,
                         headerStyle: HeaderStyle(

@@ -58,8 +58,8 @@ class OrgMembersManagmentPage extends StatelessWidget {
         //       left: Dimentions.sizeM, top: Dimentions.sizeS),
         //   child: searchBarRow(provider, context),
         // ),
-        SizedBox(
-          height: 380,
+         SizedBox(
+          height: 385,
           child: ListView.builder(
             itemCount: provider.employeeBriefModels.length,
             itemBuilder: (context, index) {
