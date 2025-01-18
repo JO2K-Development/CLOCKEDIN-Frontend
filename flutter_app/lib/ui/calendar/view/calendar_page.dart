@@ -6,7 +6,7 @@ import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/section_title.dart';
 import 'package:flutter_app/core/widgets/statistics_list.dart';
-import 'package:flutter_app/ui/calendar/controller/calendar_provider.dart';
+import 'package:flutter_app/ui/calendar/view_model/calendar_provider.dart';
 import 'package:flutter_app/ui/calendar/view/day_of_work.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';

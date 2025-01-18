@@ -8,7 +8,7 @@ import 'package:flutter_app/core/widgets/my_divider.dart';
 import 'package:flutter_app/core/widgets/section_title.dart';
 import 'package:flutter_app/core/widgets/statistics_list.dart';
 import 'package:flutter_app/core/widgets/work_cycles_scrollable_list.dart';
-import 'package:flutter_app/ui/calendar/controller/calendar_provider.dart';
+import 'package:flutter_app/ui/calendar/view_model/calendar_provider.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
