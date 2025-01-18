@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/services/app_state_handler.dart';
+import 'package:flutter_app/data/repositories/current_user.dart';
 
 import '../../domain/model_classes/app_init_user.dart';
 

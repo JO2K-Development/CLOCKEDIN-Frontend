@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
-import 'package:flutter_app/core/models/StatisticsDict';
+import 'package:flutter_app/domain/model_classes/statistics_dict.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle.dart';
 
 class CalendarProvider with ChangeNotifier {

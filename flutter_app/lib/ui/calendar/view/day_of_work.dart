@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/models/StatisticsDict';
+import 'package:flutter_app/domain/model_classes/statistics_dict.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';

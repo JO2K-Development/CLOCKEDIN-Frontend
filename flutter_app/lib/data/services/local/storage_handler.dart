@@ -30,38 +30,15 @@ class StorageHandler {
     await storage.delete(key: "refresh");
   }
 
-  static Future<Map<String, String?>> getTokens() async {
-    String? access = await storage.read(key: "access");
-    String? refresh = await storage.read(key: "refresh");
-    return {"access": access, "refresh": refresh};
-  }
-
-  static Future<String> getAccessTokenOrLogOut() async {
-    String? token = await storage.read(key: "access");
-    if (token == null) {
-      NavigationHandler.logout();
-    }
-    return token!;
-  }
-
-  static Future<Map<String, String?>> getTokensOrLogOut() async {
+  static Future<Map<String, String>?> getTokens() async {
     String? access = await storage.read(key: "access");
     String? refresh = await storage.read(key: "refresh");
     if (access == null || refresh == null) {
-      NavigationHandler.logout();
+      return null;
     }
     return {"access": access, "refresh": refresh};
   }
 
-  static Future<bool> isLoggedIn() async {
-    bool isLogged = true;
-    (await getTokens()).forEach((key, value) {
-      if (value == null) {
-        isLogged = false;
-      }
-    });
-    return isLogged;
-  }
 
   //      *NOT TO BE IMPLEMENTED IN CURRENT VERSION*
   //

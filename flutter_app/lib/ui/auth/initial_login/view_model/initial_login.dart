@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/navigation/navigation_handler.dart';
-import 'package:flutter_app/core/services/network_handler.dart';
-import 'package:flutter_app/core/services/storage_handler.dart';
+import 'package:flutter_app/data/services/remote/network_handler.dart';
+import 'package:flutter_app/data/services/local/storage_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

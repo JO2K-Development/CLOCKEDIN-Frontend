@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/services/network_handler.dart';
+import 'package:flutter_app/data/services/remote/network_handler.dart';
 
 class MyTimeCounterProvider with ChangeNotifier {
   Timer? _timer;
