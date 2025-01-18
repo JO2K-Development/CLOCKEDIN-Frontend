@@ -1,6 +1,6 @@
+import 'package:flutter_app/core/navigation/navigation_handler.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'app_state_handler.dart';
 //TODO: HANDLE TOKEN EXPIRED
 //TODO: HANDLE TOKEN EXPIRED
 //TODO: HANDLE TOKEN EXPIRED
@@ -39,7 +39,7 @@ class StorageHandler {
   static Future<String> getAccessTokenOrLogOut() async {
     String? token = await storage.read(key: "access");
     if (token == null) {
-      AppStateHandler.logout();
+      NavigationHandler.logout();
     }
     return token!;
   }
@@ -48,7 +48,7 @@ class StorageHandler {
     String? access = await storage.read(key: "access");
     String? refresh = await storage.read(key: "refresh");
     if (access == null || refresh == null) {
-      AppStateHandler.logout();
+      NavigationHandler.logout();
     }
     return {"access": access, "refresh": refresh};
   }

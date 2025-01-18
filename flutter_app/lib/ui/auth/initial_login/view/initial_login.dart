@@ -7,7 +7,7 @@ import 'package:flutter_app/core/widgets/my_app_bar.dart';
 import 'package:flutter_app/core/widgets/my_text_input.dart';
 import 'package:flutter_app/core/widgets/plain_text_intput_decoration_wrapper.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
-import 'package:flutter_app/ui/auth/initial_login/controller/initial_login_provider.dart';
+import 'package:flutter_app/ui/auth/initial_login/view_model/initial_login.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

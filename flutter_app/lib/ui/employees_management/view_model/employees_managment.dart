@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/model_classes/employee_brief_model.dart';
+import 'package:flutter_app/domain/model_classes/employee_brief.dart';
 
 class OrgMembersManagmentProvider with ChangeNotifier {
   late List<EmployeeBriefModel> employeeBriefModels;

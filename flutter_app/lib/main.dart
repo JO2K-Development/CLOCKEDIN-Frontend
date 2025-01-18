@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
-import 'package:flutter_app/core/services/navigation_service.dart';
+import 'package:flutter_app/core/navigation/navigation_handler.dart';
 import 'package:flutter_app/core/utils/theme/my_theme.dart';
 import 'package:flutter_app/ui/app_scaffold/view/landing_page.dart';
 import 'package:flutter_app/ui/auth/data_filling/view/data_filling_page.dart';
-import 'package:flutter_app/ui/auth/initial_login/controller/initial_login_provider.dart';
-import 'package:flutter_app/ui/auth/initial_login/view/initial_login_page.dart';
-import 'package:flutter_app/ui/auth/register/controller/register_provider.dart';
-import 'package:flutter_app/ui/auth/register/view/register_page.dart';
-import 'package:flutter_app/ui/org_members_managment/view_model/org_members_managment_provider.dart';
+import 'package:flutter_app/ui/auth/initial_login/view_model/initial_login.dart';
+import 'package:flutter_app/ui/auth/initial_login/view/initial_login.dart';
+import 'package:flutter_app/ui/auth/register/view_model/register.dart';
+import 'package:flutter_app/ui/auth/register/view/register.dart';
+import 'package:flutter_app/ui/employees_management/view_model/employees_managment.dart';
 import 'package:flutter_app/ui/calendar/view_model/calendar_provider.dart';
-import 'package:flutter_app/ui/calendar/view/day_of_work.dart';
 import 'package:flutter_app/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,7 +20,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   
-  String initRoute = await NavigationService.prepareInitialAppState();
+  String initRoute = await NavigationHandler.prepareInitialAppState();
   // String initRoute = "/initial-login";
   // String initRoute = "/register";
   // String initRoute = "/landing";
@@ -56,7 +55,7 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          navigatorKey: NavigationService.navigatorKey,
+          navigatorKey: NavigationHandler.navigatorKey,
           title: 'CLOCKED-IN',
           themeMode: ThemeMode.system,
           darkTheme: MyTheme.darkTheme,

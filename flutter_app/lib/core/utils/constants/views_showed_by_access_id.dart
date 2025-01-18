@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/core/enums/access_identifiers.dart';
-import 'package:flutter_app/ui/org_members_managment/view/org_members_managment_page.dart';
+import 'package:flutter_app/ui/employees_management/view/employees_managment.dart';
 import 'package:flutter_app/ui/org_statistics/view/org_statistics.dart';
 import 'package:flutter_app/ui/profile_and_organization/view/profile_and_organization_page.dart';
 import 'package:flutter_app/ui/calendar/view/calendar_page.dart';

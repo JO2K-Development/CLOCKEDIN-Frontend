@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/services/navigation_service.dart';
+import 'package:flutter_app/core/navigation/navigation_handler.dart';
 import 'package:flutter_app/core/services/network_handler.dart';
 import 'package:flutter_app/core/services/storage_handler.dart';
 import 'package:http/http.dart' as http;
@@ -40,7 +40,7 @@ class InitialLoginProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         StorageHandler.storeTokens(body['access'], body['refresh']);
         print(123);
-        NavigationService.pushReplacement('/landing');
+        NavigationHandler.pushReplacement('/landing');
         _errorMessage = '';
       } else {
         //TODO: HANDLE TOKEN EXPIRED

@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/model_classes/app_init_user_model.dart';
+import 'package:flutter_app/domain/model_classes/app_init_user.dart';
 import 'package:flutter_app/core/services/app_state_handler.dart';
 import 'package:flutter_app/core/services/network_handler.dart';
 import 'package:http/http.dart';
-import 'storage_handler.dart';
+import '../services/storage_handler.dart';
 
-class NavigationService {
+class NavigationHandler {
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
 
@@ -79,8 +79,16 @@ class NavigationService {
 
     // safety net
     else {
-      AppStateHandler.logout();
+      logout();
       return "/initial-login";
     }
+  }
+
+  static logout() async {
+    // catch for safety
+    try {
+      StorageHandler.discardTokens();
+    } on Exception catch (e) {}
+    NavigationHandler.goToAndRemoveUntil('/login');
   }
 }
