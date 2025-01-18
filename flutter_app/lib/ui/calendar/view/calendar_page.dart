@@ -6,8 +6,8 @@ import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/section_title.dart';
 import 'package:flutter_app/core/widgets/statistics_list.dart';
-import 'package:flutter_app/features/emplyee/calendar/controller/calendar_provider.dart';
-import 'package:flutter_app/features/emplyee/calendar/view/day_of_work.dart';
+import 'package:flutter_app/ui/calendar/controller/calendar_provider.dart';
+import 'package:flutter_app/ui/calendar/view/day_of_work.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -31,7 +31,7 @@ class CalendarPage extends StatelessWidget {
       }
       return SingleChildScrollView(
         child: Column(
-          children: [
+          children:[
             Padding(
               padding: const EdgeInsets.all(Dimentions.sizeS),
               child: MyBeveledContainer(

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
-import 'package:flutter_app/core/models/work_cycle_model.dart';
+import 'package:flutter_app/domain/model_classes/work_cycle_model.dart';
 
 class ClockInOutProvider with ChangeNotifier {
   List<WorkCycleModel> workCycles = [];

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
-import 'package:flutter_app/features/common/clock_in_out/controller/my_time_counter_provider.dart';
+import 'package:flutter_app/ui/clock_in_out/controller/my_time_counter_provider.dart';
 import 'package:provider/provider.dart';
 
 class MyTimeCounter extends StatelessWidget {

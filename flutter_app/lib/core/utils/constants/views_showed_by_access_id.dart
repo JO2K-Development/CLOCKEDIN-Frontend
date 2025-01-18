@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/core/enums/access_identifiers.dart';
-import 'package:flutter_app/features/common/org_members_managment/view/org_members_managment_page.dart';
-import 'package:flutter_app/features/common/org_statistics/view/org_statistics.dart';
-import 'package:flutter_app/features/main_admin/profile_and_organization/view/profile_and_organization_page.dart';
-import 'package:flutter_app/features/emplyee/calendar/view/calendar_page.dart';
-import 'package:flutter_app/features/common/clock_in_out/view/clock_in_out_page.dart';
-import 'package:flutter_app/features/emplyee/employee_profile/view/employee_profile_page.dart';
+import 'package:flutter_app/ui/org_members_managment/view/org_members_managment_page.dart';
+import 'package:flutter_app/ui/org_statistics/view/org_statistics.dart';
+import 'package:flutter_app/ui/profile_and_organization/view/profile_and_organization_page.dart';
+import 'package:flutter_app/ui/calendar/view/calendar_page.dart';
+import 'package:flutter_app/ui/clock_in_out/view/clock_in_out_page.dart';
+import 'package:flutter_app/ui/employee_profile/view/employee_profile_page.dart';
 import 'package:provider/provider.dart';
 
 class ViewsShownByAccessId {

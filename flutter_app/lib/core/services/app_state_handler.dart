@@ -1,4 +1,4 @@
-import 'package:flutter_app/core/models/app_init_user_model.dart';
+import 'package:flutter_app/domain/model_classes/app_init_user_model.dart';
 import 'package:flutter_app/core/services/storage_handler.dart';
 import 'navigation_service.dart';
 
