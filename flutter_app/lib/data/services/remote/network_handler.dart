@@ -47,38 +47,38 @@ class NetworkHandler {
     return response;
   }
 
-  static Future<http.Response> patch(var body, String endPoint) async {
-    String token = await StorageHandler.getAccessTokenOrLogOut();
+  // static Future<http.Response> patch(var body, String endPoint) async {
+  //   String token = await StorageHandler.();
 
-    var response = await client.patch(
-      buildUrl(endPoint),
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": "Bearer $token"
-        },
-      body: body,
-    );
-    return response;
-  }
+  //   var response = await client.patch(
+  //     buildUrl(endPoint),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "authorization": "Bearer $token"
+  //       },
+  //     body: body,
+  //   );
+  //   return response;
+  // }
 
-  static Future<http.Response> patchImage(String filepath, String endPoint) async {
-    String token = await StorageHandler.getAccessTokenOrLogOut();
-    var request = http.MultipartRequest('PATCH', buildUrl(endPoint));
-    request.files.add(await http.MultipartFile.fromPath('imageUrl', filepath));
-    request.headers.addAll({
-      "Content-type": "multipart/form-data",
-      "Authorization": "Bearer $token"
-    });
-    var responseStream = await request.send();
-          // print((await http.Response.fromStream(response)).body);
-    var response = await http.Response.fromStream(responseStream);
-    return response;
-  }
+  // static Future<http.Response> patchImage(String filepath, String endPoint) async {
+  //   String token = await StorageHandler.getAccessTokenOrLogOut();
+  //   var request = http.MultipartRequest('PATCH', buildUrl(endPoint));
+  //   request.files.add(await http.MultipartFile.fromPath('imageUrl', filepath));
+  //   request.headers.addAll({
+  //     "Content-type": "multipart/form-data",
+  //     "Authorization": "Bearer $token"
+  //   });
+  //   var responseStream = await request.send();
+  //         // print((await http.Response.fromStream(response)).body);
+  //   var response = await http.Response.fromStream(responseStream);
+  //   return response;
+  // }
 
-  static Uri buildUrl(String endPoint) {
-    final apiPath = host + endPoint;
-    return Uri.parse(apiPath);
-  }
+  // static Uri buildUrl(String endPoint) {
+  //   final apiPath = host + endPoint;
+  //   return Uri.parse(apiPath);
+  // }
 
   
   // static Future<void> switchLinkage(String observatorId, String observedId) async {

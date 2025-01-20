@@ -6,8 +6,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_app/core/utils/result.dart';
-import 'package:flutter_app/data/services/remote/models/login_request/login_request.dart';
-import 'package:flutter_app/data/services/remote/models/login_response/login_response.dart';
+import 'package:flutter_app/data/services/models/login_request/login_request.dart';
+import 'package:flutter_app/data/services/models/login_response/login_response.dart';
 
 class AuthApiClient {
   AuthApiClient({

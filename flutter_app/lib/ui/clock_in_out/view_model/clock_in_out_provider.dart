@@ -7,7 +7,9 @@ class ClockInOutProvider with ChangeNotifier {
   List<WorkCycleModel> workCycles = [];
   bool isLoading = true;
 
-  ClockInOutProvider() {
+  ClockInOutProvider(
+
+  ) {
     initProvider();
   }
 

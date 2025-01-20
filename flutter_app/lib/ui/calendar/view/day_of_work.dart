@@ -17,7 +17,9 @@ import 'package:intl/intl.dart';
 class DayOfWork extends StatelessWidget {
   final List<WorkCycleModel> workCycles;
   final StatisticsDict statisticsDict; 
-  const DayOfWork(this.workCycles, this.statisticsDict, {super.key});
+  const DayOfWork(this.workCycles, this.statisticsDict, {super.key, required this.viewModel});
+
+  final CalendarProvider viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class DayOfWork extends StatelessWidget {
               MyDivider(),
               Padding(
                 padding: const EdgeInsets.all(Dimentions.sizeXS),
-                child: WorkCyclesScrollableList<CalendarProvider>(workCyclesOverwrite: workCycles, scrollable: false, isTopGap: false),
+                child: WorkCyclesScrollableList<CalendarProvider>(workCycles: workCycles, scrollable: false, isTopGap: false, viewModel: viewModel,),
               ),
               SectionTitle(AppLocalizations.of(context).calendar_statistics),
               StatisticsList(statisticsDict),

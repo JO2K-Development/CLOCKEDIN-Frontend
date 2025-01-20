@@ -5,15 +5,15 @@ import 'package:flutter_app/core/widgets/my_work_cycles_tile.dart';
 import 'package:provider/provider.dart';
 
 class WorkCyclesScrollableList<T> extends StatelessWidget {
-  final List<WorkCycleModel>? workCyclesOverwrite;
+  final List<WorkCycleModel> workCycles;
   final bool scrollable;
   final bool isTopGap;
-  const WorkCyclesScrollableList({this.workCyclesOverwrite, super.key, this.scrollable=true, this.isTopGap=true});
-  // duck typing used for provider generics
+  const WorkCyclesScrollableList({required this.workCycles, super.key, this.scrollable=true, this.isTopGap=true, required this.viewModel});
+  
+  final T viewModel;
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<T>(builder: (context, provider, child) {
-      List<WorkCycleModel> workCycles = workCyclesOverwrite ?? (provider as dynamic).workCycles;
       return scrollable ? SizedBox(
         height: 400,
         child: ListView.builder(
@@ -26,7 +26,7 @@ class WorkCyclesScrollableList<T> extends StatelessWidget {
           (index) => _itemBuildersMethod(context, index, workCycles),
         ),
       );
-    });
+
   }
   
   _itemBuildersMethod(context, index, workCycles) {
@@ -38,7 +38,7 @@ class WorkCyclesScrollableList<T> extends StatelessWidget {
                   // Gap(Dimentions.sizeXS),
                   Padding(
                     padding: const EdgeInsets.all(Dimentions.sizeXS),
-                    child: MyWorkCyclesTile(workCycle: item, isEditable: true),
+                    child: MyWorkCyclesTile(workCycle: item, isEditable: true, viewModel: viewModel,),
                   ),
                 ],
               ),

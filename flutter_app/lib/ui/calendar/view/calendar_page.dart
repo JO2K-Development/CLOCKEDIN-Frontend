@@ -15,8 +15,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CalendarPage extends StatelessWidget {
-  const CalendarPage({super.key});
-
+  const CalendarPage({super.key, required this.viewModel});
+  
+  final CalendarProvider viewModel;
+  
   @override
   Widget build(BuildContext context) {
     final weekendColor =
@@ -24,11 +26,11 @@ class CalendarPage extends StatelessWidget {
     var currentDay = DateTime.now();
     currentDay.add(Duration(days: 1));
     return Builder(builder: (context) {
-      bool isLoading = Provider.of<CalendarProvider>(context).isLoading;
       
-      if (isLoading) {
+      if (viewModel.isLoading) {
         return Center(child: CircularProgressIndicator());
       }
+
       return SingleChildScrollView(
         child: Column(
           children:[
@@ -52,36 +54,15 @@ class CalendarPage extends StatelessWidget {
                                 false, // Hide the button that toggles month/day format
                             titleCentered: true, // Center the month title
                             titleTextStyle: Theme.of(context).textTheme.titleSmall!), // Style for the month title
-                        eventLoader: (day) => Provider.of<CalendarProvider>(
-                                context,
-                                listen: false)
-                            .getEventsForDay(day),
+                        eventLoader: (day) => viewModel.getEventsForDay(day),
                         onDaySelected: (selectedDay, focusedDay) {
                           print(selectedDay);
-                          var workCyclesForDay = Provider.of<CalendarProvider>(
-                                  context,
-                                  listen: false)
-                              .getEventsForDay(selectedDay);
+                          var workCyclesForDay = viewModel.getEventsForDay(selectedDay);
                           // TODO: actually send the statistics for day not for the month
-                          var statisticsDict = Provider.of<CalendarProvider>(
-                                  context,
-                                  listen: false)
-                              .statisticsDict!;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                // Ensure that the provider is available in the new screen's context
-                                return ChangeNotifierProvider.value(
-                                  value: Provider.of<CalendarProvider>(context,
-                                      listen: false),
-                                  child: DayOfWork(
-                                      workCyclesForDay, statisticsDict),
-                                );
-                              },
-                            ),
-                          );
-                          print(workCyclesForDay.toString());
+                          var statisticsDict = viewModel.statisticsDict!;
+
+                              DayOfWork(workCyclesForDay, statisticsDict, viewModel: viewModel);
+                        
                         },
                         daysOfWeekHeight: 50,
                         calendarBuilders: CalendarBuilders(
@@ -154,7 +135,7 @@ class CalendarPage extends StatelessWidget {
             ),
             SectionTitle(AppLocalizations.of(context).calendar_statistics),
             StatisticsList(
-                Provider.of<CalendarProvider>(context).statisticsDict!),
+                viewModel.statisticsDict!),
           ],
         ),
       );

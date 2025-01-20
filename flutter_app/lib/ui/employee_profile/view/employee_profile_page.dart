@@ -5,19 +5,22 @@ import 'package:flutter_app/core/utils/formatters/users_formatters.dart';
 import 'package:flutter_app/core/widgets/my_avatar.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider_with_text.dart';
+import 'package:flutter_app/ui/employee_profile/view_model/employee_profile_provider.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EmployeeProfilePage extends StatelessWidget {
-  const EmployeeProfilePage({super.key});
+  const EmployeeProfilePage({super.key, required this.viewModel});
 
+  final EmployeeProfileProvider viewModel;
+  
   @override
   Widget build(BuildContext context) {
     String name =
-        UsersFormatter.toFullName(Provider.of<AppInitUserDataProvider>(context).appInitUserData!  );
-    String picUrl = Provider.of<AppInitUserDataProvider>(context).appInitUserData!.profilePictureUrl!;
+        UsersFormatter.toFullName(viewModel.currentUser);
+    String picUrl = viewModel.picUrl;
     
     return Container(
       width: MediaQuery.of(context).size.width,

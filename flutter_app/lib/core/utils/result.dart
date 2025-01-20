@@ -31,7 +31,7 @@ final class Ok<T> extends Result<T> {
 
   /// Returned value in result
   final T value;
-
+  
   @override
   String toString() => 'Result<$T>.ok($value)';
 }

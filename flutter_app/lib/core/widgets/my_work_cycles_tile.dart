@@ -8,11 +8,13 @@ import 'package:flutter_gap/flutter_gap.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MyWorkCyclesTile extends StatefulWidget {
+class MyWorkCyclesTile<T> extends StatefulWidget {
   final WorkCycleModel workCycle;
   final bool isEditable;
   const MyWorkCyclesTile(
-      {super.key, required this.workCycle, this.isEditable = false});
+      {super.key, required this.workCycle, this.isEditable = false, required this.viewModel});
+
+  final T viewModel;
 
   @override
   State<MyWorkCyclesTile> createState() => _MyCyclesTileState();
@@ -22,13 +24,10 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
   @override
   void initState() {
     super.initState();
-    startTime = widget.workCycle.startTime;
-    endTime = widget.workCycle.endTime;
   }
 
   bool isInEdit = false;
-  late DateTime startTime;
-  late DateTime endTime;
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +59,9 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
       children: [
         Row(
           children: [
-            Text(DateFormat('HH:mm').format(startTime)),
+            Text(DateFormat('HH:mm').format(widget.workCycle.startTime)),
             Text(" - "),
-            Text(DateFormat('HH:mm').format(endTime)),
+            Text(DateFormat('HH:mm').format(widget.workCycle.endTime)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: widget.workCycle.type.icon,
@@ -116,7 +115,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                             GestureDetector(
                               child: Icon(Icons.delete_outline, color: AppColors.white, size: Dimentions.sizeXL),
                               onTap: () {
-                                widget.workCycle.deleteFromDb();
+                                widget.viewModel.deleteWorkCycle(widget.workCycle.id);
                               },
                             ),
                           ],
@@ -124,14 +123,14 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                       ),
                       Text(AppLocalizations.of(context).clocked_in_out_edit_start_time),
                       MyTimePicker(
-                        initialTime: startTime,
-                        onTimeChanged: widget.workCycle.setStartTime,
+                        initialTime: widget.workCycle.startTime,
+                        onTimeChanged: (DateTime date) => widget.viewModel.setStartTime(widget.workCycle.id, date),
                       ),
                       Gap(Dimentions.sizeS),
                       Text(AppLocalizations.of(context).clocked_in_out_edit_end_time),
                       MyTimePicker(
-                        initialTime: endTime,
-                        onTimeChanged: widget.workCycle.setEndTime,
+                        initialTime: widget.workCycle.endTime,
+                        onTimeChanged: (DateTime date) => widget.viewModel.setEndTime(widget.workCycle.id, date),
                       ),
                       //TODO: customise the send widget
                       /*TODO: take care of the bounds of the selectable time: 
@@ -143,7 +142,7 @@ class _MyCyclesTileState extends State<MyWorkCyclesTile> {
                         alignment: Alignment.centerRight,
                         child: GestureDetector(
                           onTap: () {
-                            widget.workCycle.patchTimesToDb();
+                            widget.viewModel.patchWorkCycle();
                             setState(() {
                               isInEdit = !isInEdit;
                             });

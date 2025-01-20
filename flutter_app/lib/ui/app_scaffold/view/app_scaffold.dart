@@ -7,27 +7,22 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 
-class LandingPage extends StatefulWidget {
-  const LandingPage({super.key});
+class BottomBarShell extends StatefulWidget {
+  final Widget child;
+  const BottomBarShell({super.key, required this.child});
   
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<BottomBarShell> createState() => _BottomBarShellState();
 }
 
-class _LandingPageState extends State<LandingPage> {
-  List<Widget> _childPages = [];
+class _BottomBarShellState extends State<BottomBarShell> {
   int currentIndex = 1;
   @override
   void initState() {
     super.initState();    
-    _init();
   }
 
-  void _init() async {
-    List<AccessIdentifier> accessIdList = Provider.of<AppInitUserDataProvider>(context, listen: false).appInitUserData!.accessIdentifiers!;
-    this._childPages = ViewsShownByAccessId.getViewsByAccessId(List.from(accessIdList));
-    
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +46,7 @@ class _LandingPageState extends State<LandingPage> {
         },
         // selectedItemColor: AppColors.selectedIconColor,
       ),
-      body: _childPages[currentIndex]
+      body: widget.child
     );
   }
 }

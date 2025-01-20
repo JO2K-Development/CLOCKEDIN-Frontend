@@ -56,39 +56,11 @@ class NavigationHandler {
     navigatorKey.currentState?.pushReplacementNamed(routeName);
   }
 
-  static Future<String> prepareInitialAppState() async{
-    //PROBLEM: could Potentially be null and is unsafe
-    if (!(await StorageHandler.isLoggedIn())) {
-      return "/initial-login";
-    }
-    Response response = await NetworkHandler.getMainUser();
-    if (response.statusCode == 404) {
-      return "/initial-login";
-    } else if (response.statusCode == 500) {
-      return "/server-connection-error";
-    } else if (response.statusCode == 200) {
-      dynamic mainUserJson = jsonDecode(response.body);
-      print(mainUserJson);
-      AppStateHandler.appPreparationUserData = appInitUserModelFromJson(response.body);
-      if (!AppStateHandler.appPreparationUserData!.hasNecessaryDataForLanding()) {
-        return "/data-fill";
-      } else {
-        return "/landing";
-      }
-    }
-
-    // safety net
-    else {
-      logout();
-      return "/initial-login";
-    }
-  }
-
   static logout() async {
     // catch for safety
     try {
       StorageHandler.discardTokens();
     } on Exception catch (e) {}
-    NavigationHandler.goToAndRemoveUntil('/login');
+    NavigationHandler.goToAndRemoveUntil('/initial-login');
   }
 }

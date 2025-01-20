@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter_app/core/enums/access_identifiers.dart';
 
-AppInitUserModel appInitUserModelFromJson(String str) => AppInitUserModel.fromJson(json.decode(str));
+CurrentUserModel appInitUserModelFromJson(String str) => CurrentUserModel.fromJson(json.decode(str));
 
-String appInitUserModelToJson(AppInitUserModel data) => json.encode(data.toJson());
+String appInitUserModelToJson(CurrentUserModel data) => json.encode(data.toJson());
 
-class AppInitUserModel {
+class CurrentUserModel {
   int id; // Changed to int
   int? companyId; // Changed to int (nullable)
   String? position;
@@ -17,7 +17,7 @@ class AppInitUserModel {
   String? profilePictureUrl;
   List<AccessIdentifier>? accessIdentifiers;
 
-  AppInitUserModel({
+  CurrentUserModel({
     required this.id, // id as an int
     this.companyId,   // companyId as an int (nullable)
     this.position,
@@ -29,7 +29,7 @@ class AppInitUserModel {
     required this.accessIdentifiers,
   });
 
-  factory AppInitUserModel.fromJson(Map<String, dynamic> json) => AppInitUserModel(
+  factory CurrentUserModel.fromJson(Map<String, dynamic> json) => CurrentUserModel(
         id: json["id"], // Treat as int
         companyId: json["company_id"] == null || json["company_id"] == "" ? null : json["company_id"],
         position: json["position"] == "" ? null : json["position"],

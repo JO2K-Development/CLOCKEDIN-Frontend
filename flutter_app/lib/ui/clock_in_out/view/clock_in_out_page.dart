@@ -12,67 +12,65 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClockInOutPage extends StatelessWidget {
-  const ClockInOutPage({super.key});
-
+  const ClockInOutPage({super.key, required this.viewModel});
+  
+  final ClockInOutProvider viewModel;
+  
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => MyTimeCounterProvider()),
-        ChangeNotifierProvider(create: (context) => ClockInOutProvider()),
-      ],
-      child: Consumer<ClockInOutProvider>(builder: (context, provider, child) {
-        // Directly use the `isLoading` flag from the provider to show loading state
-        if (provider.isLoading) {
-          return Center(child: CircularProgressIndicator());
-        }
-
-        // Once loading is done, show the actual content
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              Gap(Dimentions.sizeXXL),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL * 2.2),
-                child: MyBeveledContainer(
-                  isBackGPrimary: true,
-                  child: Padding(
-                    padding: const EdgeInsets.all(Dimentions.sizeXXL * 1.3),
-                    child: Image.asset('assets/images/qr-code-for-tile.png'),
-                  ),
+    return ListenableBuilder(
+      listenable: viewModel,
+      builder: (context, child) {
+      // Directly use the `isLoading` flag from the provider to show loading state
+      if (viewModel.isLoading) {
+        return Center(child: CircularProgressIndicator());
+      }
+    
+      // Once loading is done, show the actual content
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            Gap(Dimentions.sizeXXL),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL * 2.2),
+              child: MyBeveledContainer(
+                isBackGPrimary: true,
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimentions.sizeXXL * 1.3),
+                  child: Image.asset('assets/images/qr-code-for-tile.png'),
                 ),
               ),
-              Gap(Dimentions.sizeXXL * 1.5),
-              Text(AppLocalizations.of(context).clocked_in_out_time_label, style: Theme.of(context).textTheme.titleLarge),
-              Gap(Dimentions.sizeL),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL * 1.5),
-                child: MyTimeCounter(),
-              ),
-              Gap(Dimentions.sizeL),
-              Builder(
-                builder: (context) {
-                  return MyTextIconStateButton(
-                    initialText: AppLocalizations.of(context).clocked_in_out_button_off,
-                    otherText: AppLocalizations.of(context).clocked_in_out_button_on,
-                    initialIcon: Icons.play_circle_outline,
-                    otherIcon: Icons.stop_circle_outlined,
-                    onPressed: Provider.of<MyTimeCounterProvider>(context).switchTimer,
-                  );
-                },
-              ),
-              Gap(Dimentions.sizeXXL * 3.0),
-              MyDivider(),
-              Gap(Dimentions.sizeS),
-              Padding(
-                padding: const EdgeInsets.all(Dimentions.sizeM),
-                child: MyBeveledContainer(child: WorkCyclesScrollableList<ClockInOutProvider>()),
-              ),
-            ],
-          ),
-        );
-      }),
-    );
+            ),
+            Gap(Dimentions.sizeXXL * 1.5),
+            Text(AppLocalizations.of(context).clocked_in_out_time_label, style: Theme.of(context).textTheme.titleLarge),
+            Gap(Dimentions.sizeL),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL * 1.5),
+              child: MyTimeCounter(),
+            ),
+            Gap(Dimentions.sizeL),
+            Builder(
+              builder: (context) {
+                return MyTextIconStateButton(
+                  initialText: AppLocalizations.of(context).clocked_in_out_button_off,
+                  otherText: AppLocalizations.of(context).clocked_in_out_button_on,
+                  initialIcon: Icons.play_circle_outline,
+                  otherIcon: Icons.stop_circle_outlined,
+                  onPressed: Provider.of<MyTimeCounterProvider>(context).switchTimer,
+                );
+              },
+            ),
+            Gap(Dimentions.sizeXXL * 3.0),
+            MyDivider(),
+            Gap(Dimentions.sizeS),
+            Padding(
+              padding: const EdgeInsets.all(Dimentions.sizeM),
+              child: MyBeveledContainer(child: WorkCyclesScrollableList<ClockInOutProvider>(workCycles: viewModel.workCycles, viewModel: viewModel,)),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
 
