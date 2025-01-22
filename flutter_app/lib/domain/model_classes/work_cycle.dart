@@ -19,36 +19,8 @@ class WorkCycleModel {
         required this.type,
     });
 
-    void setStartTime(DateTime startTime) => this.startTime = startTime;
-    void setEndTime(DateTime endTime) => this.endTime = endTime;
 
-    Future<void> patchTimesToDb() async {
-      print(this.id);
-      print(this.startTime);
-      print(this.endTime);
-      // var body = jsonEncode({
-      //   "start_time": startTime.toIso8601String(),
-      //   "end_time": endTime.toIso8601String()
-      // });
-      // var endPoint = '/work_cycles/$id/';
-      // NetworkHandler.patch(body, endPoint);
-    }
 
-    Future<void> postToDb() async {
-      //TODO: Add full body
-      // var body = jsonEncode({
-      //   "start_time": startTime.toIso8601String(),
-      //   "end_time": endTime.toIso8601String()
-      // });
-      // var endPoint = '/work_cycles/';
-      // NetworkHandler.post(body, endPoint);
-    }
-
-    Future<void> deleteFromDb() async {
-      var endPoint = '/work_cycles/$id/';
-      //TODO: NetworkHandler.delete
-      // NetworkHandler.delete(endPoint);
-    }
 
     factory WorkCycleModel.fromJson(Map<String, dynamic> json) => WorkCycleModel(
         id: json["id"],
@@ -68,10 +40,4 @@ class WorkCycleModel {
     static WorkCycleModel workCycleModelFromJson(String str) => WorkCycleModel.fromJson(json.decode(str));
 
     static String workCycleModelToJson(WorkCycleModel data) => json.encode(data.toJson());
-    
-    bool isDayInWorkCycle(DateTime day) {
-      return startTime.subtract(Duration(days: 1)).isBefore(day) &&
-          DateTime(endTime.year, endTime.month, endTime.day, 23, 59)
-              .isAfter(day);
-    }
 }

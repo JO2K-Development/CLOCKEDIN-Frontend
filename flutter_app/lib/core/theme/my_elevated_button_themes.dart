@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/app_colors.dart';
-import '../constants/widget_properties.dart';
+import '../utils/constants/widget_properties.dart';
 
 
 

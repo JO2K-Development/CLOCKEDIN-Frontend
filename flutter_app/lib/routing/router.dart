@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/data/repositories/auth_repository.dart';
 import 'package:flutter_app/routing/routes.dart';
 import 'package:flutter_app/ui/app_scaffold/view/app_scaffold.dart';
+import 'package:flutter_app/ui/auth/initial_login/view/initial_login.dart';
+import 'package:flutter_app/ui/auth/initial_login/view_model/initial_login.dart';
 import 'package:flutter_app/ui/calendar/view/calendar_page.dart';
 import 'package:flutter_app/ui/calendar/view_model/calendar_provider.dart';
 import 'package:flutter_app/ui/clock_in_out/view/clock_in_out_page.dart';
@@ -12,56 +14,69 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 GoRouter router(
-  AuthRepository authRepository,
+  // AuthRepository authRepository,
 ) => GoRouter(
-  initialLocation: Routes.clockInOut,
-  refreshListenable: authRepository,
-  redirect: _redirect,
+  initialLocation: Routes.employeeProfile,
+  // refreshListenable: authRepository,
+  // redirect: _redirect,
 
   routes: [
+    GoRoute(
+      path: Routes.initialLogin,
+      builder: (context, state) => InitialLoginPage(),
+      ),
     // Home
-    StatefulShellRoute.indexedStack(branches: 
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, child) => BottomBarShell(
+        child: child!,
+      ),
+      branches: 
     [
      StatefulShellBranch(
       routes: [
         GoRoute(
           path: Routes.clockInOut,
-          pageBuilder: (context, state) => ClockInOutPage(
+          builder: (context, state) => ClockInOutPage(
             viewModel: ClockInOutProvider(
-
+              
             ),
-          ) as Page<dynamic>,
+          ),
         ),
       ]
      ),
       StatefulShellBranch(
         routes: [
           GoRoute(
+            // path: ":id",
             path: Routes.calendar,
-            pageBuilder: (context, state) => CalendarPage(
-              viewModel: CalendarProvider(
-                
-              ),
-            ) as Page<dynamic>,
+            builder: (context, state) { 
+            // final int id = int.parse(state.pathParameters["id"]!);
+            final CalendarProvider viewModel = CalendarProvider(
+                usersRepository: context.read(),
+                // userId: id,
+              );
+            viewModel.load.execute();
+
+            return CalendarPage(
+              viewModel: viewModel,
+            );}
           ),
         ],
       ),
       StatefulShellBranch(routes: [
         GoRoute(
           path: Routes.employeeProfile,
-          pageBuilder: (context, state) => EmployeeProfilePage(
+          builder: (context, state) => EmployeeProfilePage(
             viewModel: EmployeeProfileProvider(
-              
+              currentUserRepository: context.read(),
             ),
-          ) as Page<dynamic>,
+          ),
         ),
       ]),
       ])
-    ])
+    ]);
 
-        
-      ]
-    ) 
+  
 
     // From https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/redirection.dart
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {

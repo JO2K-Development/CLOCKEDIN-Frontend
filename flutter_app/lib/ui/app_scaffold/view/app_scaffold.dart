@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
 import 'package:flutter_app/core/enums/access_identifiers.dart';
-import 'package:flutter_app/core/utils/constants/views_showed_by_access_id.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';

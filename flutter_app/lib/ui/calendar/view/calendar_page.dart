@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/navigation/navigation_handler.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
+import 'package:flutter_app/core/widgets/my_error.dart';
 import 'package:flutter_app/core/widgets/section_title.dart';
 import 'package:flutter_app/core/widgets/statistics_list.dart';
 import 'package:flutter_app/ui/calendar/view_model/calendar_provider.dart';
@@ -27,8 +28,12 @@ class CalendarPage extends StatelessWidget {
     currentDay.add(Duration(days: 1));
     return Builder(builder: (context) {
       
-      if (viewModel.isLoading) {
+      if (viewModel.load.running) {
         return Center(child: CircularProgressIndicator());
+      }
+
+      if (viewModel.load.error) {
+        return ErrorMessage(title: AppLocalizations.of(context).calendar_errorTitle);
       }
 
       return SingleChildScrollView(
@@ -59,9 +64,9 @@ class CalendarPage extends StatelessWidget {
                           print(selectedDay);
                           var workCyclesForDay = viewModel.getEventsForDay(selectedDay);
                           // TODO: actually send the statistics for day not for the month
-                          var statisticsDict = viewModel.statisticsDict!;
+                          var statisticsModel = viewModel.statisticsModel!;
 
-                              DayOfWork(workCyclesForDay, statisticsDict, viewModel: viewModel);
+                              DayOfWork(workCyclesForDay, statisticsModel, viewModel: viewModel);
                         
                         },
                         daysOfWeekHeight: 50,
@@ -135,7 +140,7 @@ class CalendarPage extends StatelessWidget {
             ),
             SectionTitle(AppLocalizations.of(context).calendar_statistics),
             StatisticsList(
-                viewModel.statisticsDict!),
+                viewModel.statisticsModel!),
           ],
         ),
       );

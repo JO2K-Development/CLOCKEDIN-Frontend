@@ -40,12 +40,12 @@ class MyTimeCounterProvider with ChangeNotifier {
   }
   
   Future<void> sendToDb() async {
-    var body = {
-      'endTime': DateTime.now(),
-      'elapsedSeconds': _elapsedSeconds
-    };
-    String endPoint = '/api/user/switch-work-status';
-    await NetworkHandler.post(body, endPoint);
+    // var body = {
+    //   'endTime': DateTime.now(),
+    //   'elapsedSeconds': _elapsedSeconds
+    // };
+    // String endPoint = '/api/user/switch-work-status';
+    // await NetworkHandler.post(body, endPoint);
   }
 
   

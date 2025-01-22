@@ -1,34 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
+import 'package:flutter_app/core/utils/command.dart';
+import 'package:flutter_app/core/utils/functions/time.dart';
+import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/current_user.dart';
+import 'package:flutter_app/data/repositories/users_repository.dart';
 import 'package:flutter_app/domain/model_classes/statistics_dict.dart';
+import 'package:flutter_app/domain/model_classes/statistics_model/statistics_model.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle.dart';
 
 class CalendarProvider with ChangeNotifier {
   late List<WorkCycleModel>? workCycles;
-  late StatisticsDict? statisticsDict;
-  bool isLoading = true;
+  late StatisticsModel? statisticsModel;
+  late int _userId;
 
-  CalendarProvider() {
-    initProvider();
+  CalendarProvider({
+   required UsersRepository usersRepository,
+   int? userId,
+   }) :
+    _usersRepository = usersRepository {
+    load = Command0(_load);
+    if (userId != null) {
+     _userId = userId;
+    }
   }
 
-  Future<void> initProvider() async {
-    print("object");
+  final UsersRepository _usersRepository;
+  late Command0 load; 
+
+  Future<Result<void>> _load() async {
     await Future.delayed(Duration(seconds: 1));
-    await initCycles();
-    await initStatistics();
-    isLoading = false;
-    notifyListeners();
+
+    try{
+      final result = await _usersRepository.getStatistics(_userId);
+      switch(result){
+        case Ok<StatisticsModel>():
+          statisticsModel = result.value;
+          return Result.ok(null);
+        case Error<StatisticsModel>():
+          return Result.error(result.error);
+      }
+    }finally{
+      notifyListeners();
+    }
   }
 
-  Future<void> initCycles() async {
-    workCycles = await getWorkCycles();
-  }
-
+ 
 
   getEventsForDay(DateTime day) {
     return workCycles!.where((element) {
-      return element.isDayInWorkCycle(day);
+      return TimeUtils.isDayInWorkCycle(day, element.startTime, element.endTime);
     }).toList();
   }
 
@@ -80,31 +101,5 @@ class CalendarProvider with ChangeNotifier {
     ];
   }
   
-  initStatistics() {
-    statisticsDict = StatisticsDict(
-      data: {
-        "Statisctic one": 234,
-        "Statisctic two": 123,
-        "Welp Thats a plot": {
-          "label_x": "Time",
-          "label_y": "Value",
-          "data": {
-            "Jan": 35,
-            "Feb": 28,
-            "Mar": 34,
-            "Apr": 32,
-            "May": 40,
-            "Jun": 33,
-            "Jul": 25,
-            "Aug": 28,
-            "Sep": 30,
-            "Oct": 35,
-            "Nov": 38,
-            "Dec": 32,
-          }
-        },
-        "Maciek Robi pieniądze": 23903,
-      }
-    );
-  }
+
 }

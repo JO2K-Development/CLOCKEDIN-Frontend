@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/model_classes/statistics_dict.dart';
+import 'package:flutter_app/domain/model_classes/statistics_model/statistics_model.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
@@ -16,8 +16,8 @@ import 'package:intl/intl.dart';
 
 class DayOfWork extends StatelessWidget {
   final List<WorkCycleModel> workCycles;
-  final StatisticsDict statisticsDict; 
-  const DayOfWork(this.workCycles, this.statisticsDict, {super.key, required this.viewModel});
+  final StatisticsModel statisticsModel; 
+  const DayOfWork(this.workCycles, this.statisticsModel, {super.key, required this.viewModel});
 
   final CalendarProvider viewModel;
 
@@ -41,7 +41,7 @@ class DayOfWork extends StatelessWidget {
                 child: WorkCyclesScrollableList<CalendarProvider>(workCycles: workCycles, scrollable: false, isTopGap: false, viewModel: viewModel,),
               ),
               SectionTitle(AppLocalizations.of(context).calendar_statistics),
-              StatisticsList(statisticsDict),
+              StatisticsList(statisticsModel),
             ],
           ),
         ),

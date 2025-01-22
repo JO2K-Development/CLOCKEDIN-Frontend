@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_app/core/utils/result.dart';
 import 'package:flutter_app/data/services/models/user_api_model/user_api_model.dart';
+import 'package:flutter_app/domain/model_classes/statistics_model/statistics_model.dart';
 
 /// Adds the `Authentication` header to a header configuration.
 typedef AuthHeaderProvider = String? Function();
@@ -73,4 +74,48 @@ class ApiClient {
     }
   }
 
+  Future<Result<StatisticsModel>> getStatisticsForUser(int id) async {
+
+    return Result.ok(StatisticsModel.fromJson({"result" : [
+        {"simple" : {"Statisctic one": 234}},
+        {"simple" : {"Statisctic one": 234}},
+        {"plot": {
+          "title": "Example plot",
+          "x_label": "Time",
+          "y_label": "Value",
+          "data": {
+            "Jan": 35,
+            "Feb": 28,
+            "Mar": 34,
+            "Apr": 32,
+            "May": 40,
+            "Jun": 33,
+            "Jul": 25,
+            "Aug": 28,
+            "Sep": 30,
+            "Oct": 35,
+            "Nov": 38,
+            "Dec": 32,
+          }
+        }
+  }]}));
+
+    final client = _clientFactory();
+    try{
+      final request = await client.get(_host, _port, '/statistics/$id');
+      await _authHeader(request.headers);
+      final response = await request.close();
+      if (response.statusCode == 200) {
+        final stringData = await response.transform(utf8.decoder).join();
+        final json = jsonDecode(stringData) as Map<String, dynamic>;
+        return Result.ok(StatisticsModel.fromJson(json));
+      } else {
+        return Result.error(HttpException(response.reasonPhrase));
+      }
+    } on Exception catch (e) {
+      return Result.error(e);
+    } finally {
+      client.close();
+    }
+  }
 }

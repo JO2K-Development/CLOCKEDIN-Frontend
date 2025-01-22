@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/core/controllers/app_init_user_data_provider.dart';
+import 'package:flutter_app/config/dependencies.dart';
 import 'package:flutter_app/core/navigation/navigation_handler.dart';
-import 'package:flutter_app/core/utils/theme/my_theme.dart';
+import 'package:flutter_app/core/theme/my_theme.dart';
 import 'package:flutter_app/data/repositories/auth_repository.dart';
+import 'package:flutter_app/routing/router.dart';
 import 'package:flutter_app/ui/app_scaffold/view/app_scaffold.dart';
 import 'package:flutter_app/ui/auth/data_filling/view/data_filling_page.dart';
 import 'package:flutter_app/ui/auth/initial_login/view_model/initial_login.dart';
@@ -22,7 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   
-  runApp(MyApp());
+  runApp(MultiProvider(providers: providers, child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
           showSemanticsDebugger: false,
           debugShowCheckedModeBanner: false,
           supportedLocales: L10n.all,
@@ -42,11 +43,14 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          navigatorKey: NavigationHandler.navigatorKey,
+          // navigatorKey: NavigationHandler.navigatorKey,
           title: 'CLOCKED-IN',
           themeMode: ThemeMode.system,
           darkTheme: MyTheme.darkTheme,
           theme: MyTheme.lightTheme,
+          routerConfig: router(
+            // context.read()
+          ),
     );
   }
 }

@@ -23,36 +23,36 @@ class InitialLoginProvider with ChangeNotifier {
   }
 
   Future<void> login() async {
-    final email = emailController.text;
-    final password = passwordController.text;
+    // final email = emailController.text;
+    // final password = passwordController.text;
 
-    if (email.isEmpty || password.isEmpty) {
-      _errorMessage = 'Email i hasło są wymagane';
-      notifyListeners();
-      return;
-    }
+    // if (email.isEmpty || password.isEmpty) {
+    //   _errorMessage = 'Email i hasło są wymagane';
+    //   notifyListeners();
+    //   return;
+    // }
 
-    _isLoading = true;
-    notifyListeners();
-    try {
-      http.Response response = await NetworkHandler.postUserLogin(email, password);
-      dynamic body = json.decode(response.body);
-      if (response.statusCode == 200) {
-        StorageHandler.storeTokens(body['access'], body['refresh']);
-        print(123);
-        NavigationHandler.pushReplacement('/landing');
-        _errorMessage = '';
-      } else {
-        //TODO: HANDLE TOKEN EXPIRED
-        //TODO: get how the error is displayed
-        _errorMessage = 'Login failed: ${response.body}';
-      }
-    } catch (error) {
-      //TODO: Handle error (logout?, reload app?)
-      _errorMessage = 'An error occurred: $error';
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    // _isLoading = true;
+    // notifyListeners();
+    // try {
+    //   http.Response response = await NetworkHandler.postUserLogin(email, password);
+    //   dynamic body = json.decode(response.body);
+    //   if (response.statusCode == 200) {
+    //     StorageHandler.storeTokens(body['access'], body['refresh']);
+    //     print(123);
+    //     NavigationHandler.pushReplacement('/landing');
+    //     _errorMessage = '';
+    //   } else {
+    //     //TODO: HANDLE TOKEN EXPIRED
+    //     //TODO: get how the error is displayed
+    //     _errorMessage = 'Login failed: ${response.body}';
+    //   }
+    // } catch (error) {
+    //   //TODO: Handle error (logout?, reload app?)
+    //   _errorMessage = 'An error occurred: $error';
+    // } finally {
+    //   _isLoading = false;
+    //   notifyListeners();
+    // }
   }
 }
