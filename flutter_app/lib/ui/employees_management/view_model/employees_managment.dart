@@ -1,34 +1,40 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/model_classes/employee_brief.dart';
-
-class OrgMembersManagmentProvider with ChangeNotifier {
-  late List<EmployeeBriefModel> employeeBriefModels;
+import 'package:flutter_app/core/utils/command.dart';
+import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/domain/model_classes/employee_brief_model/employee_brief_model.dart';
+import 'package:flutter_app/data/repositories/management_repository.dart';
+class EmployeesManagmentProvider with ChangeNotifier {
+  List<EmployeeBriefModel>? employeeBriefModels;
   final TextEditingController searchController = TextEditingController();
-  bool isLoading = true;
   bool _isSearchActive = false;
 
-  OrgMembersManagmentProvider() {
-    initProvider();
+  EmployeesManagmentProvider({
+    required ManagementRepository managmentRepository,
+  }) : _managmentRepository = managmentRepository 
+  {
+    load = Command0(_load)..execute();
   }
 
-  Future<void> initProvider() async {
-    await Future.delayed(Duration(milliseconds: 400));
-    await initEmployees();
-    isLoading = false;
-    notifyListeners();
-  }
-  
-  initEmployees() {
-    Random random = Random();
-    employeeBriefModels = [
-      EmployeeBriefModel(id: 123, companyId: 21, position: "Developer", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${90234234901}"),
-      EmployeeBriefModel(id: 123, companyId: 21, position: "Developer", firstName: "Maroo", lastName: "Frankfurt", profilePictureUrl: "https://picsum.photos/200"),
-      EmployeeBriefModel(id: 123, companyId: 21, position: "Senior Chad", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${3}", additionalInfo: "Here u can send info like 'is at work' or 'to be fired' etc."),
-      EmployeeBriefModel(id: 123, companyId: 21, position: "Senior Chad", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${4}"),
-      EmployeeBriefModel(id: 123, companyId: 21, position: "Developer", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${5}", additionalInfo: "At work or whatever"),
-    ]..sort((a, b) => a.firstName.compareTo(b.position!));
+  final ManagementRepository _managmentRepository;
+  late Command0 load;
+
+  Future<Result<void>> _load() async {
+    await Future.delayed(Duration(seconds: 1));
+    try {
+      final result = await _managmentRepository.getManagedUsers();
+      print(result);
+      switch (result) {
+        case Ok<List<EmployeeBriefModel>>():
+          employeeBriefModels = result.value;
+          return Result.ok(null);
+        case Error<List<EmployeeBriefModel>>():
+          return Result.error(result.error);
+      }
+    } finally {
+      notifyListeners();
+    }
   }
 
   bool get isSearchActive => _isSearchActive;

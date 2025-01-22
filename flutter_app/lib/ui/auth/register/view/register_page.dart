@@ -7,13 +7,17 @@ import 'package:flutter_app/core/widgets/my_app_bar.dart';
 import 'package:flutter_app/core/widgets/my_text_input.dart';
 import 'package:flutter_app/core/widgets/plain_text_intput_decoration_wrapper.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
-import 'package:flutter_app/ui/auth/register/view_model/register.dart';
+import 'package:flutter_app/routing/routes.dart';
+import 'package:flutter_app/ui/auth/register/view_model/register_provider.dart';
 import 'package:flutter_gap/flutter_gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  const RegisterPage({super.key, required this.viewModel});
+
+  final RegisterProvider viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +25,14 @@ class RegisterPage extends StatelessWidget {
       appBar: MyAppBar(
         // title: 'Register',
       ),
-      body: Consumer<RegisterProvider>(
-      builder: (context, registerProvider, child) {
+      body: ListenableBuilder(
+      listenable: viewModel.register,
+      builder: (context, child) {
+        if (viewModel.register.completed) {
+          viewModel.register.clearResult();
+          context.push(Routes.dataFill);
+        }
+
         return Padding(
           padding: const EdgeInsets.all(Dimentions.sizeXL),
           child: Column(
@@ -35,9 +45,9 @@ class RegisterPage extends StatelessWidget {
                   child: Text(AppLocalizations.of(context).register_title, style: Theme.of(context).textTheme.titleLarge,),
                 )),
               Gap(Dimentions.sizeXXL),
-              PlainTextIntputDecorationWrapper(RegisterWidget(registerProvider)),
+              PlainTextIntputDecorationWrapper(RegisterWidget(viewModel)),
               Gap(Dimentions.sizeL),
-              MyButtonShort(text: AppLocalizations.of(context).register_button, onPressed: registerProvider.register),
+              MyButtonShort(text: AppLocalizations.of(context).register_button, onPressed: viewModel.register.execute),
               Gap(Dimentions.sizeXXL*2),
               Text(AppLocalizations.of(context).register_or_label, style: Theme.of(context).textTheme.bodyLarge,),
               // MyDivider(),
@@ -55,9 +65,9 @@ class RegisterPage extends StatelessWidget {
 }
 
 class RegisterWidget extends StatelessWidget {
-  final RegisterProvider registerProvider;
+  final RegisterProvider viewModel;
 
-  const RegisterWidget(this.registerProvider, {super.key});
+  const RegisterWidget(this.viewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -71,19 +81,19 @@ class RegisterWidget extends StatelessWidget {
                 Gap(Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL),
-                  child: MyTextField(registerProvider.emailController, hintText: AppLocalizations.of(context).register_email_hint),
+                  child: MyTextField(viewModel.emailController, hintText: AppLocalizations.of(context).register_email_hint),
                 ),
                 MyDivider(),
                 Gap(Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL),
-                  child: MyTextField(registerProvider.passwordController, hintText: AppLocalizations.of(context).register_password_hint, obscureText: true),
+                  child: MyTextField(viewModel.passwordController, hintText: AppLocalizations.of(context).register_password_hint, obscureText: true),
                 ),  
                 MyDivider(),
                 Gap(Dimentions.sizeL),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXXL),
-                  child: MyTextField(registerProvider.confirmPasswordController, hintText: AppLocalizations.of(context).register_confirm_password_hint, obscureText: true),
+                  child: MyTextField(viewModel.confirmPasswordController, hintText: AppLocalizations.of(context).register_confirm_password_hint, obscureText: true),
                 ),
                 
               ],

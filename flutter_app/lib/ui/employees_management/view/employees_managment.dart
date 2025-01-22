@@ -5,25 +5,29 @@ import 'package:flutter_app/core/widgets/my_avatar.dart';
 import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_divider.dart';
 import 'package:flutter_app/core/widgets/section_title.dart';
+import 'package:flutter_app/domain/model_classes/employee_brief_model/employee_brief_model.dart';
 import 'package:flutter_app/ui/employees_management/view_model/employees_managment.dart';
-import 'package:flutter_app/domain/model_classes/employee_brief.dart';
 import 'package:flutter_gap/flutter_gap.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class OrgMembersManagmentPage extends StatelessWidget {
-  const OrgMembersManagmentPage({super.key});
+class EmployeesManagmentPage extends StatelessWidget {
+  const EmployeesManagmentPage({super.key, required this.viewModel});
 
+  final EmployeesManagmentProvider viewModel;
+  
   @override
   Widget build(BuildContext context) {
-    OrgMembersManagmentProvider provider =
-        Provider.of<OrgMembersManagmentProvider>(context);
-    if (provider.isLoading) {
+    
+    return ListenableBuilder(
+      listenable: viewModel.load,
+      builder: (context, child) {
+
+    if (viewModel.load.running) {
       return Center(child: CircularProgressIndicator());
     }
 
-    provider.employeeBriefModels.forEach((element) => print(element.firstName));
     return Column(
       children: [
         SectionTitle(
@@ -37,17 +41,18 @@ class OrgMembersManagmentPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeM),
           child: Column(
             children: [
-              searchBarRow(provider, context),
+              searchBarRow(viewModel, context),
               Gap(Dimentions.sizeM),
-              employeeList(provider)
+              employeeList(viewModel)
             ],
           ),
         ),
       ],
     );
+    });
   }
 
-  MyBeveledContainer employeeList(OrgMembersManagmentProvider provider) {
+  MyBeveledContainer employeeList(EmployeesManagmentProvider provider) {
     return MyBeveledContainer(
       onlyTop: true,
         child: Column(
@@ -61,11 +66,11 @@ class OrgMembersManagmentPage extends StatelessWidget {
          SizedBox(
           height: 385,
           child: ListView.builder(
-            itemCount: provider.employeeBriefModels.length,
+            itemCount: provider.employeeBriefModels!.length,
             itemBuilder: (context, index) {
               if (index == 0 ||
-                  (provider.employeeBriefModels[index].position !=
-                      provider.employeeBriefModels[index - 1].position)) {
+                  (provider.employeeBriefModels![index].position !=
+                      provider.employeeBriefModels![index - 1].position)) {
                 return Column(
                   children: [
                     Padding(
@@ -74,16 +79,16 @@ class OrgMembersManagmentPage extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child:
-                            Text(provider.employeeBriefModels[index].position!, style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            Text(provider.employeeBriefModels![index].position!, style: Theme.of(context).textTheme.labelSmall!.copyWith(
                               color: Theme.of(context).colorScheme.primary
                             ),),
                       ),
                     ),
-                    EmployeeBrief(provider.employeeBriefModels[index]),
+                    EmployeeBrief(provider.employeeBriefModels![index]),
                   ],
                 );
               }
-              return EmployeeBrief(provider.employeeBriefModels[index]);
+              return EmployeeBrief(provider.employeeBriefModels![index]);
             },
           ),
         ),
@@ -91,7 +96,7 @@ class OrgMembersManagmentPage extends StatelessWidget {
     ));
   }
 
-  Row searchBarRow(OrgMembersManagmentProvider provider, BuildContext context) {
+  Row searchBarRow(EmployeesManagmentProvider provider, BuildContext context) {
     return Row(
       children: [
         SearchBar(

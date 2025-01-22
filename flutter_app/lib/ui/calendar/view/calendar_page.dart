@@ -7,8 +7,10 @@ import 'package:flutter_app/core/widgets/my_beveled_container.dart';
 import 'package:flutter_app/core/widgets/my_error.dart';
 import 'package:flutter_app/core/widgets/section_title.dart';
 import 'package:flutter_app/core/widgets/statistics_list.dart';
+import 'package:flutter_app/routing/routes.dart';
 import 'package:flutter_app/ui/calendar/view_model/calendar_provider.dart';
-import 'package:flutter_app/ui/calendar/view/day_of_work.dart';
+import 'package:flutter_app/ui/day_of_work/view/day_of_work_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -26,7 +28,10 @@ class CalendarPage extends StatelessWidget {
         Theme.of(context).colorScheme.secondary.withOpacity(0.3);
     var currentDay = DateTime.now();
     currentDay.add(Duration(days: 1));
-    return Builder(builder: (context) {
+
+    return ListenableBuilder(
+      listenable: viewModel.load,
+      builder: (context, child) {
       
       if (viewModel.load.running) {
         return Center(child: CircularProgressIndicator());
@@ -61,12 +66,11 @@ class CalendarPage extends StatelessWidget {
                             titleTextStyle: Theme.of(context).textTheme.titleSmall!), // Style for the month title
                         eventLoader: (day) => viewModel.getEventsForDay(day),
                         onDaySelected: (selectedDay, focusedDay) {
-                          print(selectedDay);
                           var workCyclesForDay = viewModel.getEventsForDay(selectedDay);
                           // TODO: actually send the statistics for day not for the month
                           var statisticsModel = viewModel.statisticsModel!;
 
-                              DayOfWork(workCyclesForDay, statisticsModel, viewModel: viewModel);
+                          context.push("${Routes.dayOfWork}/${selectedDay.toIso8601String()}");
                         
                         },
                         daysOfWeekHeight: 50,

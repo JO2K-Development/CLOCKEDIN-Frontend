@@ -7,8 +7,8 @@
  class PlotStatisticModel with _$PlotStatisticModel {
    const factory PlotStatisticModel({
       required String title,
-      required String x_axis,
-      required String y_axis,
+      required String x_label,
+      required String y_label,
       required Map<String, double> data,
    }) = _PlotStatisticModel;
    factory PlotStatisticModel.fromJson(Map<String, dynamic> json) => _$PlotStatisticModelFromJson(json);

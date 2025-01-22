@@ -35,7 +35,7 @@ class EmployeeProfilePage extends StatelessWidget {
 
         final String name = UsersFormatter.toFullName(viewModel.currentUser);
         final String picUrl = viewModel.currentUser!.profilePictureUrl ?? '';
-
+        print(picUrl);
         return Container(
         width: MediaQuery.of(context).size.width,
         child: Column(

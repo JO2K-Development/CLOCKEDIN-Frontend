@@ -1,4 +1,5 @@
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
+import 'package:flutter_app/core/utils/functions/time.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'work_cycle_model.freezed.dart';
 part 'work_cycle_model.g.dart';
@@ -19,4 +20,10 @@ class WorkCycleModel with _$WorkCycleModel {
         //TODO: handle null correcly
         type: WorkCycleType.fromJson(json["type"]) ?? WorkCycleType.remoteWork,
     );
+
+    static filterEventsForDay(List<WorkCycleModel> workCycles, DateTime day) {
+    return workCycles.where((element) {
+      return TimeUtils.isDayInWorkCycle(day, element.startTime, element.endTime);
+    }).toList();
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/domain/model_classes/work_cycle.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
 import 'package:flutter_app/core/widgets/my_work_cycles_tile.dart';
+import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
 import 'package:provider/provider.dart';
 
 class WorkCyclesScrollableList<T> extends StatelessWidget {

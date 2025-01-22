@@ -3,15 +3,14 @@ import 'package:flutter_app/core/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/utils/command.dart';
 import 'package:flutter_app/core/utils/functions/time.dart';
 import 'package:flutter_app/core/utils/result.dart';
-import 'package:flutter_app/data/repositories/current_user.dart';
+import 'package:flutter_app/data/repositories/current_user_repository.dart';
 import 'package:flutter_app/data/repositories/users_repository.dart';
-import 'package:flutter_app/domain/model_classes/statistics_dict.dart';
 import 'package:flutter_app/domain/model_classes/statistics_model/statistics_model.dart';
-import 'package:flutter_app/domain/model_classes/work_cycle.dart';
+import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
 
 class CalendarProvider with ChangeNotifier {
-  late List<WorkCycleModel>? workCycles;
-  late StatisticsModel? statisticsModel;
+  List<WorkCycleModel>? workCycles;
+  StatisticsModel? statisticsModel;
   late int _userId;
 
   CalendarProvider({
@@ -20,9 +19,7 @@ class CalendarProvider with ChangeNotifier {
    }) :
     _usersRepository = usersRepository {
     load = Command0(_load);
-    if (userId != null) {
-     _userId = userId;
-    }
+    userId != null ? _userId = userId : _userId = 0;
   }
 
   final UsersRepository _usersRepository;
@@ -30,19 +27,31 @@ class CalendarProvider with ChangeNotifier {
 
   Future<Result<void>> _load() async {
     await Future.delayed(Duration(seconds: 1));
-
     try{
       final result = await _usersRepository.getStatistics(_userId);
       switch(result){
         case Ok<StatisticsModel>():
           statisticsModel = result.value;
-          return Result.ok(null);
+          break;
         case Error<StatisticsModel>():
           return Result.error(result.error);
       }
-    }finally{
+
+      final workCycleResult = await _usersRepository.getWorkCycles(_userId);
+      
+      switch(workCycleResult){
+        case Ok<List<WorkCycleModel>>():
+          workCycles = workCycleResult.value;
+          break;
+        case Error<List<WorkCycleModel>>():
+          return Result.error(workCycleResult.error);
+      }
+      
+    } finally{
       notifyListeners();
     }
+
+    return Result.ok(null);
   }
 
  
@@ -53,53 +62,7 @@ class CalendarProvider with ChangeNotifier {
     }).toList();
   }
 
-  Future<List<WorkCycleModel>> getWorkCycles() async {
-    //TODO: implement getWorkCycles
-    // they should be sorted and be like a short list of some
-    return [
-      WorkCycleModel(
-          id: 6,
-          startTime: DateTime.now().add(Duration(days: 1)),
-          endTime: DateTime.now().add(Duration(days: 1, hours: 8)),
-          type: WorkCycleType.remoteWork),
-      WorkCycleModel(
-          id: 7,
-          startTime: DateTime.now().subtract(Duration(days: 1)),
-          endTime: DateTime.now().add(Duration(days: 12, hours: -8)),
-          type: WorkCycleType.approvedByLocation),
-      WorkCycleModel(
-          id: 8,
-          startTime: DateTime.now().subtract(Duration(days: 10)),
-          endTime: DateTime.now().subtract(Duration(days: 10, hours: -8)),
-          type: WorkCycleType.approvedByManager),
-      WorkCycleModel(
-          id: 9,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-      WorkCycleModel(
-          id: 10,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-      WorkCycleModel(
-          id: 11,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-
-      WorkCycleModel(
-          id: 12,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-      WorkCycleModel(
-          id: 13,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-    ];
-  }
+  
   
 
 }

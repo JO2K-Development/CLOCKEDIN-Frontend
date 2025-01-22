@@ -1,5 +1,6 @@
 import 'package:flutter_app/data/repositories/auth_repository.dart';
-import 'package:flutter_app/data/repositories/current_user.dart';
+import 'package:flutter_app/data/repositories/current_user_repository.dart';
+import 'package:flutter_app/data/repositories/management_repository.dart';
 import 'package:flutter_app/data/repositories/users_repository.dart';
 import 'package:flutter_app/data/services/local/local_storage_service.dart';
 import 'package:flutter_app/data/services/remote/api_client.dart';
@@ -37,11 +38,11 @@ List<SingleChildWidget> get providers {
         apiClient: context.read(),
       ),
     ),
-    // Provider(
-    //   create: (context) => UsersRepository(
-    //     localDataService: context.read(),
-    //     apiClient: context.read(),
-    //   ),
-    // ),
+    Provider(
+      create: (context) => ManagementRepository(
+        localDataService: context.read(),
+        apiClient: context.read(),
+      ),
+    ),
   ];
 } 

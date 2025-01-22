@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/utils/command.dart';
+import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/auth_repository.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterProvider with ChangeNotifier {
@@ -7,50 +10,36 @@ class RegisterProvider with ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
-  // Loading state
-  bool _isLoading = false;
+  RegisterProvider({
+    required AuthRepository authRepository,
+  }) : _authRepository = authRepository {
+    register = Command0(_register);
+  }
 
-  // Getter for loading state
-  bool get isLoading => _isLoading;
+  final AuthRepository _authRepository;
+  late Command0 register;
 
-  // Registration logic
-  Future<void> register() async {
-    // Validate fields
+  Future<Result<void>> _register() async {
     if (passwordController.text != confirmPasswordController.text) {
       throw Exception("Passwords do not match");
     }
 
-    _setLoading(true);
-
     try {
-      // Example HTTP POST request
-      final response = await http.post(
-        Uri.parse('https://yourapi.com/register'),
-        body: {
-          'email': emailController.text,
-          'password': passwordController.text,
-        },
+      final result = await _authRepository.register(
+        email: emailController.text,
+        password: passwordController.text,
       );
 
-      if (response.statusCode == 200) {
-        // Registration successful
-        // Handle success (e.g., navigate to another page)
-      } else {
-        // Handle error
-        throw Exception("Registration failed");
-      }
+      return result;
     } catch (e) {
       // Handle network or other errors
       print("Error: $e");
+      return Result.error(e as Exception);
     } finally {
-      _setLoading(false);
+      notifyListeners();
     }
   }
 
-  void _setLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
 
   // Dispose controllers when not needed
   @override

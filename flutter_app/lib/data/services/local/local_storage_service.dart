@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter_app/core/utils/result.dart';
 import 'package:flutter_app/data/services/models/user_api_model/user_api_model.dart';
+import 'package:flutter_app/domain/model_classes/current_user_model/current_user_model.dart';
+import 'package:flutter_app/domain/model_classes/employee_brief_model/employee_brief_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 
-enum AvailableTokens { access, refresh, currentUserJsonString }
+enum AvailableTokens { access, refresh, currentUser, managedUsers }
 
 class LocalDataService {
   LocalDataService({
@@ -80,15 +82,25 @@ class LocalDataService {
     return Result.ok(token);
   }
 
-  Future<Result<UserApiModel?>> getMainUserJson() async {
+  Future<Result<CurrentUserModel>> getCurrentUser() async {
     try {
       String? data = await _storage.read(
-          key: AvailableTokens.currentUserJsonString.toString());
+          key: AvailableTokens.currentUser.toString());
       if (data == null) {
         return Result.error(Exception(
-            "The key: ${AvailableTokens.currentUserJsonString.toString()} wasn't found in the _storage"));
+            "The key: ${AvailableTokens.currentUser.toString()} wasn't found in the _storage"));
       }
-      return Result.ok(UserApiModel.fromJson(jsonDecode(data)));
+      return Result.ok(CurrentUserModel.fromJson(jsonDecode(data)));
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  Future<Result<void>> storeMainUserJson(CurrentUserModel user) async {
+    try {
+      await _storage.write(
+          key: AvailableTokens.currentUser.toString(), value: jsonEncode(user));
+      return Result.ok(null);
     } on Exception catch (e) {
       return Result.error(e);
     }
@@ -101,6 +113,39 @@ class LocalDataService {
       for (var token in tokens) {
         await discardStored(token.toString());
       }
+      return Result.ok(null);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  Future<Result<List<EmployeeBriefModel>>> getManagedUsers() async {
+    try {
+      String? data = await _storage.read(
+          key: AvailableTokens.managedUsers.toString());
+      if (data == null) {
+        return Result.error(Exception(
+            "The key: ${AvailableTokens.managedUsers.toString()} wasn't found in the _storage"));
+      }
+      List<EmployeeBriefModel> managedUsers = [];
+      for (var userJson in jsonDecode(data)) {
+        managedUsers.add(EmployeeBriefModel.fromJson(userJson));
+      }
+      return Result.ok(managedUsers);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  Future<Result<void>> storeManagedUsers(List<EmployeeBriefModel> employees) async {
+    try {
+      List<Map<String, dynamic>> employeesJson = [];
+      for (var employee in employees) {
+        employeesJson.add(employee.toJson());
+      }
+      await _storage.write(
+          key: AvailableTokens.managedUsers.toString(),
+          value: jsonEncode(employeesJson));
       return Result.ok(null);
     } on Exception catch (e) {
       return Result.error(e);

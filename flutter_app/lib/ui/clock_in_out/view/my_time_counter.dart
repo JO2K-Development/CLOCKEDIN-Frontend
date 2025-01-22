@@ -1,15 +1,56 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/constants/dimentions.dart';
-import 'package:flutter_app/ui/clock_in_out/view_model/my_time_counter_provider.dart';
 import 'package:provider/provider.dart';
+// class MyTimeCounter extends StatefulWidget {
+//   const MyTimeCounter({super.key, this.initialElapsed = 0});
+//   final int initialElapsed;
 
+//   @override
+//   State<MyTimeCounter> createState() => _MyTimeCounterState();
+// }
+
+// class _MyTimeCounterState extends State<MyTimeCounter> {
+//   Timer? _timer;
+//   late int _elapsedSeconds;
+//   DateTime? _startTime;
+
+//   int get elapsedSeconds => _elapsedSeconds;
+
+ 
+//   @override
+//   Widget build(BuildContext context) {
+//     String _formatTime(int seconds) {
+//       int minutes = seconds ~/ 60;
+//       final int hours = minutes ~/ 60;
+//       minutes %= 60;
+//       final int remainingSeconds = seconds % 60;
+//       return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+//     }
+
+//     return Center(
+//       child: FittedBox(
+//         child: Text(
+//           _formatTime(elapsedSeconds),
+//           style: Theme.of(context).textTheme.displayLarge,
+//           textHeightBehavior: const TextHeightBehavior(
+//             applyHeightToFirstAscent: false,
+//             applyHeightToLastDescent: false,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+  
+// }
 class MyTimeCounter extends StatelessWidget {
-  const MyTimeCounter({super.key});
+  final int elapsedSeconds;
+  const MyTimeCounter(this.elapsedSeconds, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final timerProvider = Provider.of<MyTimeCounterProvider>(context);
-    final elapsedSeconds = timerProvider.elapsedSeconds;
+
 
     String _formatTime(int seconds) {
       int minutes = seconds ~/ 60;

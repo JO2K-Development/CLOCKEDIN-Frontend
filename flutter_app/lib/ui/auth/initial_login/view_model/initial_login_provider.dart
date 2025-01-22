@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/navigation/navigation_handler.dart';
+import 'package:flutter_app/core/utils/command.dart';
+import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/auth_repository.dart';
 import 'package:flutter_app/data/services/remote/network_handler.dart';
 import 'package:flutter_app/data/services/local/storage_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class InitialLoginProvider with ChangeNotifier {
+  InitialLoginProvider({
+    required AuthRepository authRepository,
+  }) : _authRepository = authRepository {
+    login = Command0(_login);
+  }
+
+  final AuthRepository _authRepository;
   // Text controllers for the email and password fields
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool _isLoading = false;
   String _errorMessage = '';
+  late Command0 login;
 
-  bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
 
   // Disposing controllers when they are no longer needed
@@ -22,7 +31,9 @@ class InitialLoginProvider with ChangeNotifier {
     passwordController.dispose();
   }
 
-  Future<void> login() async {
+  Future<Result<void>> _login() async {
+    final result = await _authRepository.login(email: emailController.text, password: passwordController.text);
+    return result;
     // final email = emailController.text;
     // final password = passwordController.text;
 

@@ -15,7 +15,7 @@ class StatisticsList extends StatelessWidget {
         case KVStatisticModel():
           _tiles.add(_SimpleTile(element.name, element.value.toString()));
         case PlotStatisticModel():
-          _tiles.add(_PlotTile(title: element.title, x_label: element.x_axis, y_label: element.y_axis, data: element.data));
+          _tiles.add(_PlotTile(title: element.title, x_label: element.x_label, y_label: element.y_label, data: element.data));
 
       }
     _tiles.add(Gap(Dimentions.sizeL),);

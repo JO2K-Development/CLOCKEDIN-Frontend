@@ -29,5 +29,7 @@ required List<AccessIdentifier>? accessIdentifiers,
         profilePictureUrl: json["profile_picture_url"],
         accessIdentifiers: List<AccessIdentifier>.from(json["access_identifiers"].map((x) => AccessIdentifier.fromString(x))),
   );
- 
+ static bool isProfileFilled(CurrentUserModel currentUser) {
+    return currentUser.firstName != null && currentUser.lastName != null;
+  }
 }

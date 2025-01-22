@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/result.dart';
 import 'package:flutter_app/data/services/local/local_storage_service.dart';
-import 'package:flutter_app/data/services/models/login_request/login_request.dart';
-import 'package:flutter_app/data/services/models/login_response/login_response.dart';
+import 'package:flutter_app/data/services/models/auth_request/auth_request.dart';
+import 'package:flutter_app/data/services/models/auth_response/auth_response.dart';
 import 'package:flutter_app/data/services/remote/api_client.dart';
 import 'package:flutter_app/data/services/remote/auth_client.dart';
 
@@ -46,26 +46,27 @@ class AuthRepository with ChangeNotifier{
     return _isAuthenticated ?? false;
   }
 
+
   Future<Result<void>> login({
     required String email,
     required String password,
   }) async {
     try {
-      final Result<LoginResponse> result = await _authApiClient.login(
-        LoginRequest(
+      final Result<AuthResponse> result = await _authApiClient.login(
+        AuthRequest(
           email: email,
           password: password,
         ),
       );
       switch (result) {
-        case Ok<LoginResponse>():
+        case Ok<AuthResponse>():
           // Set auth status
           _isAuthenticated = true;
           _authToken = result.value.access;
           _refreshToken = result.value.refresh;
           // Store in Safe Storage
           return await _localDataService.storeAuthTokens(result.value.access, result.value.refresh);
-        case Error<LoginResponse>():
+        case Error<AuthResponse>():
           // _log.warning('Error logging in: ${result.error}');
           return Result.error(result.error);
       }
@@ -96,4 +97,32 @@ class AuthRepository with ChangeNotifier{
 
   String? _authHeaderProvider() =>
       _authToken != null ? 'Bearer $_authToken' : null;
+
+  Future<Result<void>> register({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final Result<AuthResponse> result = await _authApiClient.register(
+        AuthRequest(
+          email: email,
+          password: password,
+        ),
+      );
+      switch (result) {
+        case Ok<AuthResponse>():
+          // Set auth status
+          _isAuthenticated = true;
+          _authToken = result.value.access;
+          _refreshToken = result.value.refresh;
+          // Store in Safe Storage
+          return await _localDataService.storeAuthTokens(result.value.access, result.value.refresh);
+        case Error<AuthResponse>():
+          // _log.warning('Error logging in: ${result.error}');
+          return Result.error(result.error);
+      }
+    } finally {
+      notifyListeners();
+    }
+  }
 }

@@ -21,8 +21,8 @@ PlotStatisticModel _$PlotStatisticModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PlotStatisticModel {
   String get title => throw _privateConstructorUsedError;
-  String get x_axis => throw _privateConstructorUsedError;
-  String get y_axis => throw _privateConstructorUsedError;
+  String get x_label => throw _privateConstructorUsedError;
+  String get y_label => throw _privateConstructorUsedError;
   Map<String, double> get data => throw _privateConstructorUsedError;
 
   /// Serializes this PlotStatisticModel to a JSON map.
@@ -42,7 +42,7 @@ abstract class $PlotStatisticModelCopyWith<$Res> {
       _$PlotStatisticModelCopyWithImpl<$Res, PlotStatisticModel>;
   @useResult
   $Res call(
-      {String title, String x_axis, String y_axis, Map<String, double> data});
+      {String title, String x_label, String y_label, Map<String, double> data});
 }
 
 /// @nodoc
@@ -61,8 +61,8 @@ class _$PlotStatisticModelCopyWithImpl<$Res, $Val extends PlotStatisticModel>
   @override
   $Res call({
     Object? title = null,
-    Object? x_axis = null,
-    Object? y_axis = null,
+    Object? x_label = null,
+    Object? y_label = null,
     Object? data = null,
   }) {
     return _then(_value.copyWith(
@@ -70,13 +70,13 @@ class _$PlotStatisticModelCopyWithImpl<$Res, $Val extends PlotStatisticModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      x_axis: null == x_axis
-          ? _value.x_axis
-          : x_axis // ignore: cast_nullable_to_non_nullable
+      x_label: null == x_label
+          ? _value.x_label
+          : x_label // ignore: cast_nullable_to_non_nullable
               as String,
-      y_axis: null == y_axis
-          ? _value.y_axis
-          : y_axis // ignore: cast_nullable_to_non_nullable
+      y_label: null == y_label
+          ? _value.y_label
+          : y_label // ignore: cast_nullable_to_non_nullable
               as String,
       data: null == data
           ? _value.data
@@ -95,7 +95,7 @@ abstract class _$$PlotStatisticModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String title, String x_axis, String y_axis, Map<String, double> data});
+      {String title, String x_label, String y_label, Map<String, double> data});
 }
 
 /// @nodoc
@@ -112,8 +112,8 @@ class __$$PlotStatisticModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? x_axis = null,
-    Object? y_axis = null,
+    Object? x_label = null,
+    Object? y_label = null,
     Object? data = null,
   }) {
     return _then(_$PlotStatisticModelImpl(
@@ -121,13 +121,13 @@ class __$$PlotStatisticModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      x_axis: null == x_axis
-          ? _value.x_axis
-          : x_axis // ignore: cast_nullable_to_non_nullable
+      x_label: null == x_label
+          ? _value.x_label
+          : x_label // ignore: cast_nullable_to_non_nullable
               as String,
-      y_axis: null == y_axis
-          ? _value.y_axis
-          : y_axis // ignore: cast_nullable_to_non_nullable
+      y_label: null == y_label
+          ? _value.y_label
+          : y_label // ignore: cast_nullable_to_non_nullable
               as String,
       data: null == data
           ? _value._data
@@ -142,8 +142,8 @@ class __$$PlotStatisticModelImplCopyWithImpl<$Res>
 class _$PlotStatisticModelImpl implements _PlotStatisticModel {
   const _$PlotStatisticModelImpl(
       {required this.title,
-      required this.x_axis,
-      required this.y_axis,
+      required this.x_label,
+      required this.y_label,
       required final Map<String, double> data})
       : _data = data;
 
@@ -153,9 +153,9 @@ class _$PlotStatisticModelImpl implements _PlotStatisticModel {
   @override
   final String title;
   @override
-  final String x_axis;
+  final String x_label;
   @override
-  final String y_axis;
+  final String y_label;
   final Map<String, double> _data;
   @override
   Map<String, double> get data {
@@ -166,7 +166,7 @@ class _$PlotStatisticModelImpl implements _PlotStatisticModel {
 
   @override
   String toString() {
-    return 'PlotStatisticModel(title: $title, x_axis: $x_axis, y_axis: $y_axis, data: $data)';
+    return 'PlotStatisticModel(title: $title, x_label: $x_label, y_label: $y_label, data: $data)';
   }
 
   @override
@@ -175,14 +175,14 @@ class _$PlotStatisticModelImpl implements _PlotStatisticModel {
         (other.runtimeType == runtimeType &&
             other is _$PlotStatisticModelImpl &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.x_axis, x_axis) || other.x_axis == x_axis) &&
-            (identical(other.y_axis, y_axis) || other.y_axis == y_axis) &&
+            (identical(other.x_label, x_label) || other.x_label == x_label) &&
+            (identical(other.y_label, y_label) || other.y_label == y_label) &&
             const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, x_axis, y_axis,
+  int get hashCode => Object.hash(runtimeType, title, x_label, y_label,
       const DeepCollectionEquality().hash(_data));
 
   /// Create a copy of PlotStatisticModel
@@ -205,8 +205,8 @@ class _$PlotStatisticModelImpl implements _PlotStatisticModel {
 abstract class _PlotStatisticModel implements PlotStatisticModel {
   const factory _PlotStatisticModel(
       {required final String title,
-      required final String x_axis,
-      required final String y_axis,
+      required final String x_label,
+      required final String y_label,
       required final Map<String, double> data}) = _$PlotStatisticModelImpl;
 
   factory _PlotStatisticModel.fromJson(Map<String, dynamic> json) =
@@ -215,9 +215,9 @@ abstract class _PlotStatisticModel implements PlotStatisticModel {
   @override
   String get title;
   @override
-  String get x_axis;
+  String get x_label;
   @override
-  String get y_axis;
+  String get y_label;
   @override
   Map<String, double> get data;
 

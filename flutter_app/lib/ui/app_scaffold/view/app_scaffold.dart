@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/access_identifiers.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
+import 'package:flutter_app/routing/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 
@@ -40,6 +42,18 @@ class _BottomBarShellState extends State<BottomBarShell> {
         onTap: (index) {
           setState(() {
             currentIndex = index;
+            switch (index) {
+              case 0:
+                GoRouter.of(context).go(Routes.calendar);
+                break;
+              case 1:
+                GoRouter.of(context).go(Routes.clockInOut);
+                break;
+              case 2:
+                GoRouter.of(context).go(Routes.employeeProfile);
+                break;
+              default:
+            }
           });
         },
         // selectedItemColor: AppColors.selectedIconColor,
