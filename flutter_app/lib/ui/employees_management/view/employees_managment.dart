@@ -16,140 +16,174 @@ class EmployeesManagmentPage extends StatelessWidget {
   const EmployeesManagmentPage({super.key, required this.viewModel});
 
   final EmployeesManagmentProvider viewModel;
-  
+
   @override
   Widget build(BuildContext context) {
-    
     return ListenableBuilder(
-      listenable: viewModel.load,
-      builder: (context, child) {
+        listenable: viewModel.load,
+        builder: (context, child) {
+          if (viewModel.load.running) {
+            return Center(child: CircularProgressIndicator());
+          }
 
-    if (viewModel.load.running) {
-      return Center(child: CircularProgressIndicator());
-    }
-
-    return Column(
-      children: [
-        Column(
-          children: [
-            SectionTitle(
-              AppLocalizations.of(context).org_members_management_your_members,
-              description:
-                  AppLocalizations.of(context).org_members_management_brief,
-              // style: Theme.of(context).textTheme.titleMedium!
-            ),
-            
-          ],
-        ),
-        // Gap(Dimentions.sizeM),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXS),
-            child: MyBeveledContainer(
-              radius: 30,
-              onlyTop: true,
-              isBackGPrimary: true,
-              child: Padding(
-                padding: const EdgeInsets.only(top: Dimentions.sizeXS, left: Dimentions.sizeXS, right: Dimentions.sizeXS),
-                child: Column(
-                  children: [
-                    searchBarRow(viewModel, context),
-                    Gap(Dimentions.sizeXL),
-                    Expanded(
-                      child: MyBeveledContainer(radius: 5, onlyTop: true, child: Expanded(child: employeeList(viewModel))),
+          return Column(
+            children: [
+              Column(
+                children: [
+                  SectionTitle(
+                    AppLocalizations.of(context)
+                        .org_members_management_your_members,
+                    description: AppLocalizations.of(context)
+                        .org_members_management_brief,
+                    // style: Theme.of(context).textTheme.titleMedium!
+                  ),
+                ],
+              ),
+              // Gap(Dimentions.sizeM),
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: Dimentions.size1),
+                  child: MyBeveledContainer(
+                    radius: 30,
+                    onlyTop: true,
+                    isBackGPrimary: true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: Dimentions.sizeXS,
+                          left: Dimentions.sizeXS,
+                          right: Dimentions.sizeXS),
+                      child: Column(
+                        children: [
+                          searchBarRow(viewModel, context),
+                          Gap(Dimentions.sizeM),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: Dimentions.sizeS),
+                              child: MyBeveledContainer(
+                                  radius: 30,
+                                  onlyTop: true,
+                                  child:
+                                      Expanded(child: employeeList(viewModel))),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-      ],
-    );
-    });
+            ],
+          );
+        });
   }
 
   Widget employeeList(EmployeesManagmentProvider provider) {
     return ListView.builder(
-       itemCount: provider.employeeBriefModels!.length,
-       itemBuilder: (context, index) {
+      itemCount: provider.employeeBriefModels!.length,
+      itemBuilder: (context, index) {
         Widget wrapped;
-
-         if (index == 0 ||
-             (provider.employeeBriefModels![index].position !=
-                 provider.employeeBriefModels![index - 1].position)) {
-           wrapped = Column(
-             children: [
+        // divides into sections of positions
+        if (index == 0 ||
+            (provider.employeeBriefModels![index].position !=
+                provider.employeeBriefModels![index - 1].position)) {
+          wrapped = Column(
+            children: [
               Gap(Dimentions.sizeXL),
-
-               Padding(
-                 padding: const EdgeInsets.symmetric(
-                     horizontal: Dimentions.sizeXL),
-                 child: Align(
-                   alignment: Alignment.centerLeft,
-                   child:
-                       Text(provider.employeeBriefModels![index].position!, style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                         color: Theme.of(context).colorScheme.primary
-                       ),),
-                 ),
-               ),
-               EmployeeBrief(provider.employeeBriefModels![index]),
-             ],
-           );
-         } else {
-           wrapped = EmployeeBrief(provider.employeeBriefModels![index]);
-         }
-         return Column(
-           children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: Dimentions.sizeXL),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    provider.employeeBriefModels![index].position!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelSmall!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
+                ),
+              ),
+              EmployeeBrief(provider.employeeBriefModels![index]),
+            ],
+          );
+        } else {
+          wrapped = EmployeeBrief(provider.employeeBriefModels![index]);
+        }
+        return Column(
+          children: [
             // MyDivider(indentPercent: 0.07,),
             wrapped,
-           ],
-         );
-       },
-     );
+          ],
+        );
+      },
+    );
   }
 
-  Row searchBarRow(EmployeesManagmentProvider provider, BuildContext context) {
-    return Row(
+  Widget searchBarRow(EmployeesManagmentProvider provider, BuildContext context) {
+    return Stack(
       children: [
-        SearchBar(
-          constraints: BoxConstraints(maxWidth: 330, minHeight: 50),
-          hintText: provider.isSearchActive
-              ? ""
-              : " ${AppLocalizations.of(context).org_members_management_hint_text}",
-          padding:
-              WidgetStateProperty.all(EdgeInsets.only(left: Dimentions.sizeM)),
-          hintStyle: WidgetStatePropertyAll<TextStyle>(
-            Theme.of(context).textTheme.bodySmall!,
+        ClipRRect(
+          borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(25)) ,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+                width: 300,
+                height: 50,
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: Dimentions.sizeS),
+                    child: Icon(
+                      Icons.filter_alt_outlined,
+                      size: Dimentions.sizeL,
+                      color: Theme.of(context).textTheme.titleLarge!.color,
+                    ),
+                  ),
+                )),
           ),
-          trailing: [
-            InkWell(
-                onTap: () {
-                  provider.searchController.clear();
-                },
-                child: IconButton(
-                    onPressed: () {
-                      provider.searchController.clear();
-                    },
-                    icon: Icon(Icons.clear)))
-          ],
-          controller: provider.searchController,
-          onTap: () {
-            provider.setSearchActive(true);
-          },
-          onTapOutside: (event) {
-            FocusScope.of(context).unfocus();
-            provider.setSearchActive(false);
-          },
         ),
-        Flexible(
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
           child: Container(
-              alignment: Alignment.center,
-              child: Icon(
-                Icons.filter_alt_outlined,
-                size: Dimentions.sizeXL,
-              )),
-        )
+            color: Theme.of(context).colorScheme.secondary,
+            child: Padding(
+              padding: const EdgeInsets.only(right: Dimentions.sizeS),
+              child: SearchBar(
+                constraints: BoxConstraints(maxWidth: 330, minHeight: 50),
+                hintText: provider.isSearchActive
+                    ? ""
+                    : " ${AppLocalizations.of(context).org_members_management_hint_text}",
+                padding:
+                    WidgetStateProperty.all(EdgeInsets.only(left: Dimentions.sizeM)),
+                hintStyle: WidgetStatePropertyAll<TextStyle>(
+                  Theme.of(context).textTheme.bodySmall!,
+                ),
+                trailing: [
+                  InkWell(
+                      onTap: () {
+                        provider.searchController.clear();
+                      },
+                      child: IconButton(
+                          onPressed: () {
+                            provider.searchController.clear();
+                          },
+                          icon: Icon(Icons.clear)))
+                ],
+                controller: provider.searchController,
+                onTap: () {
+                  provider.setSearchActive(true);
+                },
+                onTapOutside: (event) {
+                  FocusScope.of(context).unfocus();
+                  provider.setSearchActive(false);
+                },
+              ),
+            ),
+          ),
+        ),
+        
       ],
     );
   }
@@ -161,7 +195,6 @@ class EmployeeBrief extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(employeeBriefModel.lastName);
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -186,14 +219,21 @@ class EmployeeBrief extends StatelessWidget {
 
   Column textContent(BuildContext context) {
     return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(UsersFormatter.toFullName(employeeBriefModel), style: Theme.of(context).textTheme.labelMedium!),
-                  // Gap(Dimentions.sizeS),
-                  Text(employeeBriefModel.additionalInfo ?? "", style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.primary
-                  ),),
-                ],
-              );
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(UsersFormatter.toFullName(employeeBriefModel),
+            style: Theme.of(context).textTheme.labelMedium!),
+        // Gap(Dimentions.sizeS),
+        Text(
+          employeeBriefModel.additionalInfo ?? "",
+          style: Theme.of(context)
+              .textTheme
+              .labelSmall!
+              .copyWith(color: Theme.of(context).colorScheme.primary),
+        ),
+      ],
+    );
   }
 }
+
+
