@@ -184,6 +184,10 @@ class ApiClient {
       EmployeeBriefModel(id: 123, companyId: 21, position: "Senior Chad", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${3}", additionalInfo: "Here u can send info like 'is at work' or 'to be fired' etc.", managerId: null),
       EmployeeBriefModel(id: 123, companyId: 21, position: "Senior Chad", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${4}", additionalInfo: '', managerId: null),
       EmployeeBriefModel(id: 123, companyId: 21, position: "Developer", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${5}", additionalInfo: "At work or whatever", managerId: null),
+      
+      EmployeeBriefModel(id: 123, companyId: 21, position: "Senior Chad", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${3}", additionalInfo: "Here u can send info like 'is at work' or 'to be fired' etc.", managerId: null),
+      EmployeeBriefModel(id: 123, companyId: 21, position: "Senior Chad", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${4}", additionalInfo: '', managerId: null),
+      EmployeeBriefModel(id: 123, companyId: 21, position: "Developer", firstName: "Maciek", lastName: "Frankfurt", profilePictureUrl: "https://thispersondoesnotexist.com/?${5}", additionalInfo: "At work or whatever", managerId: null),
     ]..sort((a, b) => a.firstName.compareTo(b.position!));
     }
     return Future.value(Result.ok(dummyManagedUsers()));

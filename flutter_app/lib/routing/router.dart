@@ -23,7 +23,7 @@ import 'package:provider/provider.dart';
 GoRouter router(
   // AuthRepository authRepository,
 ) => GoRouter(
-  initialLocation: Routes.employeeProfile,
+  initialLocation: Routes.employeesManagement,
   // refreshListenable: authRepository,
   // redirect: _redirect,
 

@@ -30,21 +30,38 @@ class EmployeesManagmentPage extends StatelessWidget {
 
     return Column(
       children: [
-        SectionTitle(
-          AppLocalizations.of(context).org_members_management_your_members,
-          description:
-              AppLocalizations.of(context).org_members_management_brief,
-          // style: Theme.of(context).textTheme.titleMedium!
+        Column(
+          children: [
+            SectionTitle(
+              AppLocalizations.of(context).org_members_management_your_members,
+              description:
+                  AppLocalizations.of(context).org_members_management_brief,
+              // style: Theme.of(context).textTheme.titleMedium!
+            ),
+            
+          ],
         ),
         // Gap(Dimentions.sizeM),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeM),
-          child: Column(
-            children: [
-              searchBarRow(viewModel, context),
-              Gap(Dimentions.sizeM),
-              employeeList(viewModel)
-            ],
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Dimentions.sizeXS),
+            child: MyBeveledContainer(
+              radius: 30,
+              onlyTop: true,
+              isBackGPrimary: true,
+              child: Padding(
+                padding: const EdgeInsets.only(top: Dimentions.sizeXS, left: Dimentions.sizeXS, right: Dimentions.sizeXS),
+                child: Column(
+                  children: [
+                    searchBarRow(viewModel, context),
+                    Gap(Dimentions.sizeXL),
+                    Expanded(
+                      child: MyBeveledContainer(radius: 5, onlyTop: true, child: Expanded(child: employeeList(viewModel))),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -52,48 +69,44 @@ class EmployeesManagmentPage extends StatelessWidget {
     });
   }
 
-  MyBeveledContainer employeeList(EmployeesManagmentProvider provider) {
-    return MyBeveledContainer(
-      onlyTop: true,
-        child: Column(
-      children: [
-        Gap(Dimentions.sizeM),
-        // Padding(
-        //   padding: const EdgeInsets.only(
-        //       left: Dimentions.sizeM, top: Dimentions.sizeS),
-        //   child: searchBarRow(provider, context),
-        // ),
-         SizedBox(
-          height: 385,
-          child: ListView.builder(
-            itemCount: provider.employeeBriefModels!.length,
-            itemBuilder: (context, index) {
-              if (index == 0 ||
-                  (provider.employeeBriefModels![index].position !=
-                      provider.employeeBriefModels![index - 1].position)) {
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: Dimentions.sizeXL),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child:
-                            Text(provider.employeeBriefModels![index].position!, style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                              color: Theme.of(context).colorScheme.primary
-                            ),),
-                      ),
-                    ),
-                    EmployeeBrief(provider.employeeBriefModels![index]),
-                  ],
-                );
-              }
-              return EmployeeBrief(provider.employeeBriefModels![index]);
-            },
-          ),
-        ),
-      ],
-    ));
+  Widget employeeList(EmployeesManagmentProvider provider) {
+    return ListView.builder(
+       itemCount: provider.employeeBriefModels!.length,
+       itemBuilder: (context, index) {
+        Widget wrapped;
+
+         if (index == 0 ||
+             (provider.employeeBriefModels![index].position !=
+                 provider.employeeBriefModels![index - 1].position)) {
+           wrapped = Column(
+             children: [
+              Gap(Dimentions.sizeXL),
+
+               Padding(
+                 padding: const EdgeInsets.symmetric(
+                     horizontal: Dimentions.sizeXL),
+                 child: Align(
+                   alignment: Alignment.centerLeft,
+                   child:
+                       Text(provider.employeeBriefModels![index].position!, style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                         color: Theme.of(context).colorScheme.primary
+                       ),),
+                 ),
+               ),
+               EmployeeBrief(provider.employeeBriefModels![index]),
+             ],
+           );
+         } else {
+           wrapped = EmployeeBrief(provider.employeeBriefModels![index]);
+         }
+         return Column(
+           children: [
+            // MyDivider(indentPercent: 0.07,),
+            wrapped,
+           ],
+         );
+       },
+     );
   }
 
   Row searchBarRow(EmployeesManagmentProvider provider, BuildContext context) {
