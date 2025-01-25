@@ -4,6 +4,7 @@
     "calendar": "Calendar",
     "clock_in": "Clock In",
     "profile": "Profile",
+    "company": "Company",
 
     "login_title": "Login",
     "login_button": "Login",
