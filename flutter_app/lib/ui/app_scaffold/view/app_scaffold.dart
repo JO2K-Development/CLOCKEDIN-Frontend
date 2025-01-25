@@ -35,8 +35,8 @@ class _AppScaffoldingState extends State<AppScaffolding> {
       Routes.employeeProfile: AppLocalizations.of(context).profile,
     };
     List<BottomNavigationBarItem> bottomIcons = List.generate(widget.numberOfBottomIcons, (index) => BottomNavigationBarItem(
-      icon: Icon(Routes.routesIcons[AliasedRoutes.additionalFeatures[index].path]),
-      label: routeToLocalizedText[AliasedRoutes.additionalFeatures[index].path],
+      icon: Icon(Routes.routesIcons[AliasedRoutes.appScaffoldFeatures[index].path]),
+      label: routeToLocalizedText[AliasedRoutes.appScaffoldFeatures[index].path],
     ));
 
     return Scaffold(
@@ -51,11 +51,11 @@ class _AppScaffoldingState extends State<AppScaffolding> {
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            ...List.generate(AliasedRoutes.additionalFeatures.length - widget.numberOfBottomIcons, (index) {
+            ...List.generate(AliasedRoutes.appScaffoldFeatures.length - widget.numberOfBottomIcons, (index) {
               return ListTile(
-                title: Text(AliasedRoutes.additionalFeatures[index + widget.numberOfBottomIcons].path),
+                title: Text(AliasedRoutes.appScaffoldFeatures[index + widget.numberOfBottomIcons].path),
                 onTap: () {
-                  GoRouter.of(context).go(AliasedRoutes.additionalFeatures[index + widget.numberOfBottomIcons].path);
+                  GoRouter.of(context).go(AliasedRoutes.appScaffoldFeatures[index + widget.numberOfBottomIcons].path);
                   Navigator.pop(context);
                 },
               );
@@ -71,7 +71,7 @@ class _AppScaffoldingState extends State<AppScaffolding> {
         onTap: (index) {
           setState(() {
             currentIndex = index;
-            GoRouter.of(context).go(AliasedRoutes.additionalFeatures[index].path);
+            GoRouter.of(context).go(AliasedRoutes.appScaffoldFeatures[index].path);
           });
         },
         // selectedItemColor: AppColors.selectedIconColor,

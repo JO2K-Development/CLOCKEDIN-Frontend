@@ -21,56 +21,27 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 GoRouter router(
-  // AuthRepository authRepository,
+  AuthRepository authRepository,
 ) {
   
   return GoRouter(
-  initialLocation: AliasedRoutes.additionalFeatures[1].path,
-  // refreshListenable: authRepository,
-  // redirect: _redirect,
+  initialLocation: AliasedRoutes.appScaffoldFeatures[1].path,
+  refreshListenable: authRepository,
+  redirect: _redirect,
 
   routes: [
-    GoRoute(
-      path: "${Routes.dayOfWork}/:date", 
-      builder: (context, state) {
-      final DateTime date = DateTime.parse(state.pathParameters["date"]!);
-      final DayOfWorkProvider viewModel = DayOfWorkProvider(
-        usersRepository: context.read(),
-        day: date,
-      );
-      viewModel.load.execute();
-      return DayOfWorkPage(
-        viewModel: viewModel,
-      );
-    }),
-    GoRoute(
-      path: Routes.initialLogin,
-      builder: (context, state) => InitialLoginPage(
-        viewModel: InitialLoginProvider(
-          authRepository: context.read(),
-        ),
-      ),
-      ),
-    // GoRoute(
-    //   path: Routes.dataFill,
-    //   builder: (context, state) => DataFillingPage(),
-    // ),
-    GoRoute(
-      path: Routes.register,
-      builder: (context, state) => RegisterPage(
-        viewModel: RegisterProvider(
-          authRepository: context.read(),
-        ),
-      ),
-    ),
+    
+    AliasedRoutes.dayOfWeek,
+    
+    ...AliasedRoutes.authFeatures,
     //This takes care of adding the features in a parametric way
     StatefulShellRoute.indexedStack(
       builder: (context, state, child) => AppScaffolding(
         child: child!,
       ),
-      branches: List.generate(AliasedRoutes.additionalFeatures.length, 
+      branches: List.generate(AliasedRoutes.appScaffoldFeatures.length, 
         (index) => StatefulShellBranch(routes: [
-          AliasedRoutes.additionalFeatures[index]
+          AliasedRoutes.appScaffoldFeatures[index]
         ]))
 
       ),
@@ -85,21 +56,33 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   final loggedIn = await context.read<AuthRepository>().isAuthenticated;
   final profileFilled = await context.read<CurrentUserRepository>().isProfileFilled;
   final chosenCompany = await context.read<CurrentUserRepository>().isCompanyChosen;
-  if (!loggedIn && state.matchedLocation != Routes.register) {
+
+  // handles situations when the user is in the auth layer
+  if ([AliasedRoutes.initLogin, AliasedRoutes.registerPage].any((el) => el.path == state.matchedLocation)){
+    if (loggedIn){
+      return AliasedRoutes.appScaffoldFeatures[1].path;
+    }
+    return null;
+  }
+
+  // handles not logged in
+  if (!loggedIn) {
     return Routes.initialLogin;
   }
 
-
+  // handles incomplete user profile
   if (!profileFilled) {
     return Routes.dataFill;
   }
 
+  // handles not chosen company
   if (!chosenCompany) {
     return Routes.companyChoosing;
   }
+
   // if the user is logged in but still in the auth layer of the pages, send them to
   // the home page
-  final inAuthLayerPages = [Routes.initialLogin, Routes.dataFill, Routes.companyChoosing].any((route) => state.matchedLocation == route);
+  final inAuthLayerPages = AliasedRoutes.authFeatures.any((route) => state.matchedLocation == route);
   if (inAuthLayerPages) {
     return Routes.clockInOut;
   }
@@ -155,12 +138,50 @@ class AliasedRoutes {
             ),
           ),
         );
-
-  static List<GoRoute> additionalFeatures = [
+  
+  static GoRoute dayOfWeek = GoRoute(
+      path: "${Routes.dayOfWork}/:date", 
+      builder: (context, state) {
+      final DateTime date = DateTime.parse(state.pathParameters["date"]!);
+      final DayOfWorkProvider viewModel = DayOfWorkProvider(
+        usersRepository: context.read(),
+        day: date,
+      );
+      viewModel.load.execute();
+      return DayOfWorkPage(
+        viewModel: viewModel,);
+          });
+  static GoRoute initLogin = GoRoute(
+      path: Routes.initialLogin,
+      builder: (context, state) => InitialLoginPage(
+        viewModel: InitialLoginProvider(
+          authRepository: context.read(),
+        ),
+      ),
+      );
+  static GoRoute registerPage = GoRoute(
+      path: Routes.register,
+      builder: (context, state) => RegisterPage(
+        viewModel: RegisterProvider(
+          authRepository: context.read(),
+        ),
+      ),
+    );
+   // GoRoute(
+    //   path: Routes.dataFill,
+    //   builder: (context, state) => DataFillingPage(),
+    // ),
+  static List<GoRoute> appScaffoldFeatures = [
     employeesManagement,
     clockInOut,
     calendar,
     employeeProfile,
   ];
+
+  static List<GoRoute> authFeatures = [
+    initLogin,
+    registerPage,
+  ];
+  
 }
 

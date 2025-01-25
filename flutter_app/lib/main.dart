@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           darkTheme: MyTheme.darkTheme,
           theme: MyTheme.lightTheme,
           routerConfig: router(
-            // context.read()
+            context.read()
           ),
     );
   }

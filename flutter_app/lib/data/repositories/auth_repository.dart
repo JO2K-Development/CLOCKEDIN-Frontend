@@ -43,6 +43,7 @@ class AuthRepository with ChangeNotifier{
     }
     // No status cached, fetch from storage
     await _fetch();
+
     return _isAuthenticated ?? false;
   }
 

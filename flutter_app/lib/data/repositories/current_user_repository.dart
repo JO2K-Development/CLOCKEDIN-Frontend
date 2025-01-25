@@ -46,6 +46,7 @@ class CurrentUserRepository {
       final Result<CurrentUserModel> result = await getCurrentUser();
       switch (result){
         case Ok<CurrentUserModel>():
+        _currentUserCache = result.value;
           return _currentUserCache!.companyId != null;
         case Error<CurrentUserModel>():
           return false;
