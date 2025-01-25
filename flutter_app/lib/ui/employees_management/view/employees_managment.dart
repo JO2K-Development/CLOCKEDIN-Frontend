@@ -47,7 +47,6 @@ class EmployeesManagmentPage extends StatelessWidget {
                   child: MyBeveledContainer(
                     radius: 30,
                     onlyTop: true,
-                    isBackGPrimary: true,
                     child: Padding(
                       padding: const EdgeInsets.only(
                           top: Dimentions.sizeXS,
@@ -147,7 +146,7 @@ class EmployeesManagmentPage extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).highlightColor,
             child: Padding(
               padding: const EdgeInsets.only(right: Dimentions.sizeS),
               child: SearchBar(
