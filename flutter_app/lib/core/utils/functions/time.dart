@@ -1,7 +1,7 @@
 class TimeUtils {
-  static bool isDayInWorkCycle(DateTime day, DateTime startTime, DateTime endTime) {
-      return startTime.subtract(Duration(days: 1)).isBefore(day) &&
-          DateTime(endTime.year, endTime.month, endTime.day, 23, 59)
-              .isAfter(day);
+  static bool dayWorkCycleOverlap(DateTime day, DateTime startTime, DateTime endTime) {
+      DateTime lowerBound = DateTime(day.year, day.month, day.day, 0, 0);
+      DateTime upperBound = DateTime(day.year, day.month, day.day, 23, 59);
+      return (startTime.isBefore(upperBound) && endTime.isAfter(lowerBound)) || (endTime.isAfter(lowerBound) && startTime.isBefore(upperBound));
     }
 }

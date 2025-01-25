@@ -58,7 +58,7 @@ class CalendarProvider with ChangeNotifier {
 
   getEventsForDay(DateTime day) {
     return workCycles!.where((element) {
-      return TimeUtils.isDayInWorkCycle(day, element.startTime, element.endTime);
+      return TimeUtils.dayWorkCycleOverlap(day, element.startTime, element.endTime);
     }).toList();
   }
 
