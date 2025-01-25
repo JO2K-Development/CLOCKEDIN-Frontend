@@ -59,7 +59,7 @@ class EmployeesManagmentPage extends StatelessWidget {
                           Gap(Dimentions.sizeM),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: Dimentions.sizeS),
+                              padding: const EdgeInsets.only(left: Dimentions.sizeXS),
                               child: MyBeveledContainer(
                                   radius: 30,
                                   onlyTop: true,
@@ -121,69 +121,54 @@ class EmployeesManagmentPage extends StatelessWidget {
   }
 
   Widget searchBarRow(EmployeesManagmentProvider provider, BuildContext context) {
-    return Stack(
+    return Row(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(5), topRight: Radius.circular(25)) ,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-                width: 300,
-                height: 50,
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: Dimentions.sizeS),
-                    child: Icon(
-                      Icons.filter_alt_outlined,
-                      size: Dimentions.sizeL,
-                      color: Theme.of(context).textTheme.titleLarge!.color,
-                    ),
-                  ),
-                )),
-          ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            color: Theme.of(context).highlightColor,
-            child: Padding(
-              padding: const EdgeInsets.only(right: Dimentions.sizeS),
-              child: SearchBar(
-                constraints: BoxConstraints(maxWidth: 330, minHeight: 50),
-                hintText: provider.isSearchActive
-                    ? ""
-                    : " ${AppLocalizations.of(context).org_members_management_hint_text}",
-                padding:
-                    WidgetStateProperty.all(EdgeInsets.only(left: Dimentions.sizeM)),
-                hintStyle: WidgetStatePropertyAll<TextStyle>(
-                  Theme.of(context).textTheme.bodySmall!,
-                ),
-                trailing: [
-                  InkWell(
-                      onTap: () {
+        Padding(
+          padding: const EdgeInsets.only(right: Dimentions.sizeS),
+          child: SearchBar(
+            constraints: BoxConstraints(maxWidth: 310, minHeight: 50),
+            hintText: provider.isSearchActive
+                ? ""
+                : " ${AppLocalizations.of(context).org_members_management_hint_text}",
+            padding:
+                WidgetStateProperty.all(EdgeInsets.only(left: Dimentions.sizeM)),
+            hintStyle: WidgetStatePropertyAll<TextStyle>(
+              Theme.of(context).textTheme.bodySmall!,
+            ),
+            trailing: [
+              InkWell(
+                  onTap: () {
+                    provider.searchController.clear();
+                  },
+                  child: IconButton(
+                      onPressed: () {
                         provider.searchController.clear();
                       },
-                      child: IconButton(
-                          onPressed: () {
-                            provider.searchController.clear();
-                          },
-                          icon: Icon(Icons.clear)))
-                ],
-                controller: provider.searchController,
-                onTap: () {
-                  provider.setSearchActive(true);
-                },
-                onTapOutside: (event) {
-                  FocusScope.of(context).unfocus();
-                  provider.setSearchActive(false);
-                },
-              ),
-            ),
+                      icon: Icon(Icons.clear)))
+            ],
+            controller: provider.searchController,
+            onTap: () {
+              provider.setSearchActive(true);
+            },
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+              provider.setSearchActive(false);
+            },
           ),
         ),
-        
+        Spacer(),
+        ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(25)) ,
+          child: Container(
+              width: 50,
+              height: 50,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Icon(
+                Icons.filter_alt_outlined,
+                size: Dimentions.sizeL,
+                color: Theme.of(context).textTheme.titleLarge!.color,
+              )),
+        ),
       ],
     );
   }
