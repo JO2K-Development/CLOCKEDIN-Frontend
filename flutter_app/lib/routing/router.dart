@@ -22,8 +22,10 @@ import 'package:provider/provider.dart';
 
 GoRouter router(
   // AuthRepository authRepository,
-) => GoRouter(
-  initialLocation: Routes.employeesManagement,
+) {
+  
+  return GoRouter(
+  initialLocation: AliasedRoutes.additionalFeatures[1].path,
   // refreshListenable: authRepository,
   // redirect: _redirect,
 
@@ -61,66 +63,19 @@ GoRouter router(
         ),
       ),
     ),
-    
+    //This takes care of adding the features in a parametric way
     StatefulShellRoute.indexedStack(
-      builder: (context, state, child) => BottomBarShell(
+      builder: (context, state, child) => AppScaffolding(
         child: child!,
       ),
-      branches: 
-    [
-     StatefulShellBranch(
-      routes: [
-      GoRoute(
-      path: Routes.employeesManagement,
-      builder: (context, state) => EmployeesManagmentPage(
-        viewModel: EmployeesManagmentProvider(
-          managmentRepository: context.read()
-          ) 
-        )),
-     ]),
-     StatefulShellBranch(
-      routes: [
-        GoRoute(
-          path: Routes.clockInOut,
-          builder: (context, state) => ClockInOutPage(
-            viewModel: ClockInOutProvider(
-              currentUserRepository: context.read()
-            ),
-          ),
-        ),
-      ]
-     ),
-      StatefulShellBranch(
-        routes: [
-          GoRoute(
-            // path: ":id",
-            path: Routes.calendar,
-            builder: (context, state) { 
-            // final int id = int.parse(state.pathParameters["id"]!);
-            final CalendarProvider viewModel = CalendarProvider(
-                usersRepository: context.read(),
-                // userId: id,
-              );
-            viewModel.load.execute();
+      branches: List.generate(AliasedRoutes.additionalFeatures.length, 
+        (index) => StatefulShellBranch(routes: [
+          AliasedRoutes.additionalFeatures[index]
+        ]))
 
-            return CalendarPage(
-              viewModel: viewModel,
-            );}
-          ),
-        ],
       ),
-      StatefulShellBranch(routes: [
-        GoRoute(
-          path: Routes.employeeProfile,
-          builder: (context, state) => EmployeeProfilePage(
-            viewModel: EmployeeProfileProvider(
-              currentUserRepository: context.read(),
-            ),
-          ),
-        ),
-      ]),
-      ])
     ]);
+}
 
   
 
@@ -151,5 +106,61 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
 
   // no need to redirect at all
   return null;
+}
+
+
+class AliasedRoutes {
+  AliasedRoutes._();
+
+  // could have a dict<string name, GoRoute route> and a conf/downloaded file
+  // would list the names of the available features (which are expansion of the 
+  // basic routes group)
+
+  static GoRoute employeesManagement = GoRoute(
+      path: Routes.employeesManagement,
+      builder: (context, state) => EmployeesManagmentPage(
+        viewModel: EmployeesManagmentProvider(
+          managmentRepository: context.read()
+          ) 
+        ));
+  
+  static GoRoute clockInOut = GoRoute(
+          path: Routes.clockInOut,
+          builder: (context, state) => ClockInOutPage(
+            viewModel: ClockInOutProvider(
+              currentUserRepository: context.read()
+            ),
+          ),
+        );
+  static GoRoute calendar = GoRoute(
+            // path: ":id",
+            path: Routes.calendar,
+            builder: (context, state) { 
+            // final int id = int.parse(state.pathParameters["id"]!);
+            final CalendarProvider viewModel = CalendarProvider(
+                usersRepository: context.read(),
+                // userId: id,
+              );
+            viewModel.load.execute();
+
+            return CalendarPage(
+              viewModel: viewModel,
+            );}
+          );
+  static GoRoute employeeProfile = GoRoute(
+          path: Routes.employeeProfile,
+          builder: (context, state) => EmployeeProfilePage(
+            viewModel: EmployeeProfileProvider(
+              currentUserRepository: context.read(),
+            ),
+          ),
+        );
+
+  static List<GoRoute> additionalFeatures = [
+    employeesManagement,
+    clockInOut,
+    calendar,
+    employeeProfile,
+  ];
 }
 
