@@ -15,7 +15,7 @@ class MyBeveledContainer extends StatelessWidget {
     if (customColor != null) {
       bgColor = customColor!;
     } else if (isBackGPrimary) {
-      bgColor = Theme.of(context).highlightColor;
+      bgColor = Theme.of(context).colorScheme.secondary;
     }
 
     return Container(

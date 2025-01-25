@@ -47,6 +47,7 @@ class EmployeesManagmentPage extends StatelessWidget {
                   child: MyBeveledContainer(
                     radius: 30,
                     onlyTop: true,
+                    customColor: Theme.of(context).highlightColor,
                     child: Padding(
                       padding: const EdgeInsets.only(
                           top: Dimentions.sizeXS,
