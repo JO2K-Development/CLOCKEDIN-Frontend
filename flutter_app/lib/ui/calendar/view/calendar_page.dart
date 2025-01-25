@@ -1,0 +1,192 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_app/core/navigation/navigation_handler.dart';
+import 'package:flutter_app/core/utils/constants/dimentions.dart';
+import 'package:flutter_app/core/widgets/my_beveled_container.dart';
+import 'package:flutter_app/core/widgets/my_error.dart';
+import 'package:flutter_app/core/widgets/section_title.dart';
+import 'package:flutter_app/core/widgets/statistics_list.dart';
+import 'package:flutter_app/routing/routes.dart';
+import 'package:flutter_app/ui/calendar/view_model/calendar_provider.dart';
+import 'package:flutter_app/ui/day_of_work/view/day_of_work_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class CalendarPage extends StatelessWidget {
+  const CalendarPage({super.key, required this.viewModel});
+  
+  final CalendarProvider viewModel;
+  
+  @override
+  Widget build(BuildContext context) {
+    final weekendColor =
+        Theme.of(context).colorScheme.secondary.withOpacity(0.3);
+    var currentDay = DateTime.now();
+    currentDay.add(Duration(days: 1));
+
+    return ListenableBuilder(
+      listenable: viewModel.load,
+      builder: (context, child) {
+      
+      if (viewModel.load.running) {
+        return Center(child: CircularProgressIndicator());
+      }
+
+      if (viewModel.load.error) {
+        return ErrorMessage(title: AppLocalizations.of(context).calendar_errorTitle);
+      }
+
+      return SingleChildScrollView(
+        child: Column(
+          children:[
+            Padding(
+              padding: const EdgeInsets.all(Dimentions.sizeS),
+              child: MyBeveledContainer(
+                radius: 20,
+                child: Padding(
+                  padding: const EdgeInsets.all(Dimentions.sizeM),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TableCalendar(
+                        locale: Localizations.localeOf(context).languageCode,
+                        firstDay: DateTime.utc(2023, 1, 1),
+                        lastDay: DateTime.utc(2025, 12, 31),
+                        focusedDay: currentDay,
+                        startingDayOfWeek: StartingDayOfWeek.monday,
+                        headerStyle: HeaderStyle(
+                            formatButtonVisible:
+                                false, // Hide the button that toggles month/day format
+                            titleCentered: true, // Center the month title
+                            titleTextStyle: Theme.of(context).textTheme.titleSmall!), // Style for the month title
+                        eventLoader: (day) => viewModel.getEventsForDay(day),
+                        onDaySelected: (selectedDay, focusedDay) {
+                          var workCyclesForDay = viewModel.getEventsForDay(selectedDay);
+                          // TODO: actually send the statistics for day not for the month
+                          var statisticsModel = viewModel.statisticsModel!;
+
+                          context.push("${Routes.dayOfWork}/${selectedDay.toIso8601String()}");
+                        
+                        },
+                        daysOfWeekHeight: 50,
+                        calendarBuilders: CalendarBuilders(
+                          markerBuilder: (context, day, events) {
+                            if (events.isNotEmpty) {
+                              return _buildEventsMarker(events, context);
+                            }
+                          },
+                          todayBuilder: (context, day, focusedDay) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  center: Alignment
+                                      .center, // Center of the gradient
+                                  radius:
+                                      0.8, // Controls how far the gradient spreads
+                                  colors: [
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.5),
+                                    Theme.of(context).colorScheme.primary
+                                  ], // Gradient colors
+                                  stops: [
+                                    0.6,
+                                    1.7
+                                  ], // Stops for the gradient colors
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              margin: const EdgeInsets.all(2.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                day.day.toString(),
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
+                              ),
+                            );
+                          },
+                          outsideBuilder: _weekendColumnsBuilder(weekendColor,
+                              outside: true),
+                          disabledBuilder: _weekendColumnsBuilder(weekendColor,
+                              outside: true),
+                          defaultBuilder: _weekendColumnsBuilder(weekendColor),
+                          dowBuilder: (context, day) {
+                            if ([DateTime.sunday, DateTime.saturday]
+                                .contains(day.weekday)) {
+                              final text = DateFormat.E().format(day);
+
+                              return Container(
+                                color: weekendColor,
+                                child: Center(
+                                  child: Text(
+                                    text,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SectionTitle(AppLocalizations.of(context).calendar_statistics),
+            StatisticsList(
+                viewModel.statisticsModel!),
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget Function(BuildContext, DateTime, DateTime) _weekendColumnsBuilder(
+      Color weekendColor,
+      {bool outside = false}) {
+    return (context, day, focusedDay) {
+      if ([DateTime.sunday, DateTime.saturday].contains(day.weekday)) {
+        return Container(
+          color: weekendColor,
+          child: Center(
+            child: Text(
+              day.day.toString(),
+              style: TextStyle(
+                color: !outside ? Theme.of(context).primaryColor : null,
+              ),
+            ),
+          ),
+        );
+      }
+      return Center(
+        child: Text(
+          day.day.toString(),
+          style: TextStyle(
+            color: !outside ? Theme.of(context).primaryColor : null,
+          ),
+        ),
+      );
+    };
+  }
+
+  _buildEventsMarker(List<Object?> events, BuildContext context) {
+    return Container(
+      width: 8.0, // Size of the dot
+      height: 8.0, // Size of the dot
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor, // Dot color
+        shape: BoxShape.circle, // Circular shape
+      ),
+    );
+  }
+}

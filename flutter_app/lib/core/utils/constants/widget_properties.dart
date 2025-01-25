@@ -10,8 +10,8 @@ class WidgetsProperties {
       );
   }
   static const Shadow lightBottomRightShadow = Shadow(
-        offset: Offset(0, 2), // Horizontal and vertical offset
-        blurRadius: 2.0,           // How blurry the shadow should be
+        offset: Offset(0, 1), // Horizontal and vertical offset
+        blurRadius: 1.0,           // How blurry the shadow should be
         color: AppColors.fadedBlack, // Shadow color with transparency
       );
   static dynamic lightTopLeftShadow = () => Shadow(

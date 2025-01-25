@@ -1,0 +1,47 @@
+# Dart/Pub related
+.dart_tool/
+.packages
+.pub/
+build/
+
+# Flutter related
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter/
+.packages
+.pub-cache/
+pubspec.lock
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code related
+.vscode/
+
+# Android Studio related
+*.iml
+.idea/
+.gradle/
+local.properties
+.DS_Store
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+local.properties
+*.log
+
+# MacOS related
+.DS_Store
+
+# Windows related
+Thumbs.db
+
+# Linux related
+*.swp
+
+# Others
+*.log

@@ -13,12 +13,21 @@ allowing certain features only to users with permissions to use them
 
 
 ## For devs
+- all commands shall be run in the ./flutter_app dir
+- for render/re-render of the splashscreen run (and generally for the app to work) run 
+```flutter pub run flutter_native_splash:create```
+- for re-rendering the freezed objects run
+```dart run build_runner build```
 
 ### Get started:
 - get in the /flutter_app dir
 - if you dont have a working splash screen, run 
 ```flutter pub run flutter_native_splash:create```
 - for contributions create branches with this format: "feature/<feature_name>" 
+- for installing dependecies run
+```flutter pub get```
+- for updating sdk run
+```flutter upgrade```
 
 ### Get a mock db for tests:
 - pull the https://github.com/JO2K-Development/CLOCKEDIN-Backend.git repository
