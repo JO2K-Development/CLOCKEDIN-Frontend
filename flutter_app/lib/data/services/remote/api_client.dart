@@ -79,32 +79,6 @@ class ApiClient {
   }
 
   Future<Result<StatisticsModel>> getStatisticsForUser(int id) async {
-    StatisticsModel sM = StatisticsModel.fromJson({"result" : [
-        {"simple" : {
-          "name": "Statisctic one",
-          "value": 234}},
-        {"plot": {
-          "title": "Example plot",
-          "x_label": "Time",
-          "y_label": "Value",
-          "data": {
-            "Jan": 35,
-            "Feb": 28,
-            "Mar": 34,
-            "Apr": 32,
-            "May": 40,
-            "Jun": 33,
-            "Jul": 25,
-            "Aug": 28,
-            "Sep": 30,
-            "Oct": 35,
-            "Nov": 38,
-            "Dec": 32,
-          }
-        }
-  }]});
-    return Result.ok(sM);
-
     final client = _clientFactory();
     try{
       final request = await client.get(_host, _port, '/statistics/$id');
@@ -126,54 +100,7 @@ class ApiClient {
 
   Future<Result<List<WorkCycleModel>>> getWorkCyclesForUser(int userId) {
     //TODO: implement getWorkCyclesForUser with db
-    dummyWorkCycles()  {
-    //TODO: implement getWorkCycles
-    // they should be sorted and be like a short list of some
-    return [
-      WorkCycleModel(
-          id: 6,
-          startTime: DateTime.now().add(Duration(days: 1)),
-          endTime: DateTime.now().add(Duration(days: 1, hours: 8)),
-          type: WorkCycleType.remoteWork),
-      WorkCycleModel(
-          id: 7,
-          startTime: DateTime.now().subtract(Duration(days: 1)),
-          endTime: DateTime.now().add(Duration(days: 12, hours: -8)),
-          type: WorkCycleType.approvedByLocation),
-      WorkCycleModel(
-          id: 8,
-          startTime: DateTime.now().subtract(Duration(days: 10)),
-          endTime: DateTime.now().subtract(Duration(days: 10, hours: -8)),
-          type: WorkCycleType.approvedByManager),
-      WorkCycleModel(
-          id: 9,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-      WorkCycleModel(
-          id: 10,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-      WorkCycleModel(
-          id: 11,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-
-      WorkCycleModel(
-          id: 12,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-      WorkCycleModel(
-          id: 13,
-          startTime: DateTime.now().subtract(Duration(days: 4)),
-          endTime: DateTime.now().subtract(Duration(days: 3, hours: 8)),
-          type: WorkCycleType.approvedByQr),
-    ];
-  } 
-    return Future.value(Result.ok(dummyWorkCycles()));
+    return Future.value(Result.error(Exception("Not impl")));
   }
 
   Future<Result<List<EmployeeBriefModel>>> getManagedUsers(int userId) {

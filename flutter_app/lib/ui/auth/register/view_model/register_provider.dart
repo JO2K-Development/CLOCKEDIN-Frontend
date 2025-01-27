@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/command.dart';
 import 'package:flutter_app/core/utils/result.dart';
-import 'package:flutter_app/data/repositories/auth_repository.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_app/data/repositories/abstract/auth_repository.dart';
 
 class RegisterProvider with ChangeNotifier {
   // TextEditingControllers for form fields

@@ -3,7 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app/config/dependencies.dart';
 import 'package:flutter_app/core/navigation/navigation_handler.dart';
 import 'package:flutter_app/core/theme/my_theme.dart';
-import 'package:flutter_app/data/repositories/auth_repository.dart';
+import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/production/auth_repository.dart';
+import 'package:flutter_app/data/services/local/local_storage_service.dart';
+import 'package:flutter_app/dev_main.dart';
+import 'package:flutter_app/production_main.dart';
 import 'package:flutter_app/routing/router.dart';
 import 'package:flutter_app/ui/app_scaffold/view/app_scaffold.dart';
 import 'package:flutter_app/ui/auth/data_filling/view/data_filling_page.dart';
@@ -20,10 +24,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-  
-  runApp(MultiProvider(providers: providers, child: MyApp()));
+  DevMain.main(); 
+  // ProductionMain.main(); // requires connection with db
 }
 
 class MyApp extends StatelessWidget {

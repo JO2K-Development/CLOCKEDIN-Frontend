@@ -29,6 +29,20 @@ required List<AccessIdentifier>? accessIdentifiers,
         profilePictureUrl: json["profile_picture_url"],
         accessIdentifiers: List<AccessIdentifier>.from(json["access_identifiers"].map((x) => AccessIdentifier.fromString(x))),
   );
+
+  @override
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "company_id": companyId,
+    "position": position,
+    "first_name": firstName,
+    "last_name": lastName,
+    "email": email,
+    "manager_id": managerId,
+    "profile_picture_url": profilePictureUrl,
+    "access_identifiers": accessIdentifiers?.map((x) => x.toString()).toList(),
+  };
+ 
  static bool isProfileFilled(CurrentUserModel currentUser) {
     return currentUser.firstName != null && currentUser.lastName != null;
   }

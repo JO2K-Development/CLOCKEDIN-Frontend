@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/abstract/auth_repository.dart';
 import 'package:flutter_app/data/services/local/local_storage_service.dart';
 import 'package:flutter_app/data/services/models/auth_request/auth_request.dart';
 import 'package:flutter_app/data/services/models/auth_response/auth_response.dart';
 import 'package:flutter_app/data/services/remote/api_client.dart';
 import 'package:flutter_app/data/services/remote/auth_client.dart';
 
-class AuthRepository with ChangeNotifier{
-  AuthRepository({
+class AuthRepositoryProduction extends AuthRepository{
+  AuthRepositoryProduction({
     required ApiClient apiClient,
     required AuthApiClient authApiClient,
     required LocalDataService localDataService,
@@ -25,6 +26,7 @@ class AuthRepository with ChangeNotifier{
   String? _refreshToken;
 
   /// Fetch token 
+  @override
   Future<void> _fetch() async {
     final Result<String?> result = await _localDataService.getAccessToken();
 
@@ -36,6 +38,7 @@ class AuthRepository with ChangeNotifier{
     }
   }
 
+  @override
   Future<bool> get isAuthenticated async {
     // Status is cached
     if (_isAuthenticated != null) {
@@ -47,7 +50,7 @@ class AuthRepository with ChangeNotifier{
     return _isAuthenticated ?? false;
   }
 
-
+  @override
   Future<Result<void>> login({
     required String email,
     required String password,
@@ -76,6 +79,7 @@ class AuthRepository with ChangeNotifier{
     }
   }
 
+  @override
   Future<Result<void>> logout() async {
     // _log.info('User logged out');
     try {

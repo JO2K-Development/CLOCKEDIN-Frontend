@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/navigation/navigation_handler.dart';
 import 'package:flutter_app/core/utils/command.dart';
 import 'package:flutter_app/core/utils/result.dart';
-import 'package:flutter_app/data/repositories/auth_repository.dart';
-import 'package:flutter_app/data/services/remote/network_handler.dart';
-import 'package:flutter_app/data/services/local/storage_handler.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:flutter_app/data/repositories/abstract/auth_repository.dart';
 
 class InitialLoginProvider with ChangeNotifier {
   InitialLoginProvider({

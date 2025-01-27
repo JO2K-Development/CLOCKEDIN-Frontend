@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/utils/command.dart';
 import 'package:flutter_app/core/utils/result.dart';
-import 'package:flutter_app/data/repositories/current_user_repository.dart';
+import 'package:flutter_app/data/repositories/abstract/current_user_repository.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
 
 class ClockInOutProvider with ChangeNotifier {

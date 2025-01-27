@@ -2,43 +2,50 @@ import 'dart:convert';
 
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/abstract/current_user_repository.dart';
 import 'package:flutter_app/data/services/local/local_storage_service.dart';
 import 'package:flutter_app/data/services/models/user_api_model/user_api_model.dart';
 import 'package:flutter_app/data/services/remote/api_client.dart';
 import 'package:flutter_app/data/services/local/storage_handler.dart';
 import 'package:flutter_app/domain/model_classes/current_user_model/current_user_model.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
-import '../../core/navigation/navigation_handler.dart';
+import '../../../core/navigation/navigation_handler.dart';
 
-class CurrentUserRepository {
-  CurrentUserRepository(
+class CurrentUserRepositoryTesting extends CurrentUserRepository {
+  CurrentUserRepositoryTesting(
     {
       required LocalDataService localDataService,
-      required ApiClient apiClient,
     }
   ):
-    _localDataService = localDataService,
-    _apiClient = apiClient;
+    _localDataService = localDataService;
 
   final LocalDataService _localDataService;
-  final ApiClient _apiClient;
 
   CurrentUserModel? _currentUserCache;
   
+  @override
   Future<bool> get isProfileFilled async {
-    if (_currentUserCache != null) {
-      return Future.value(CurrentUserModel.isProfileFilled(_currentUserCache!));
-    } else {
-      final Result<CurrentUserModel> result = await getCurrentUser();
-      switch (result){
-        case Ok<CurrentUserModel>():
-          return CurrentUserModel.isProfileFilled(result.value);
-        case Error<CurrentUserModel>():
-          return false;
-      }
+      print("object1");
+    try {
+  if (_currentUserCache != null) {
+    return Future.value(CurrentUserModel.isProfileFilled(_currentUserCache!));
+  } else {
+
+    final Result<CurrentUserModel> result = await getCurrentUser();
+    switch (result){
+      case Ok<CurrentUserModel>():
+        return CurrentUserModel.isProfileFilled(result.value);
+      case Error<CurrentUserModel>():
+        return false;
     }
+  }
+} on Exception catch (e) {
+  print("obj ${e}");
+}
+return false;
   } 
 
+  @override
   Future<bool> get isCompanyChosen async {
     if (_currentUserCache != null) {
       return Future.value(_currentUserCache!.companyId != null);
@@ -54,51 +61,49 @@ class CurrentUserRepository {
     }
   }
 
-  Future<Result<CurrentUserModel>> getCurrentUser()async {
-    String exampleJson = '''
-  {
-     "id": 1,
-     "company_id": 123,
-     "position": "Developer",
-     "first_name": "Johnissimo",
-     "last_name": "Doe",
-     "email": "john.doe@example.com",
-     "manager_id": 456,
-     "profile_picture_url": "https://picsum.photos/200",
-     "access_identifiers": ["employee"]
-   }
-   ''';
+  @override
+  Future<Result<CurrentUserModel>> getCurrentUser({bool forceNetworkSolution=false})async {
+      print("object1");
 
-    return Result.ok(CurrentUserModel.fromJson(jsonDecode(exampleJson)));
+    if (_currentUserCache != null){
+      return Result.ok(_currentUserCache!);
+    }
+
+    final Result<CurrentUserModel> result = await _localDataService.getCurrentUser();
     
-    if (_currentUserCache != null) {
-      return Future.value(Result.ok(_currentUserCache!));
-    } 
-
-    final Result<CurrentUserModel> locallyStored = await _localDataService.getCurrentUser();
-    switch (locallyStored){
+    switch (result) {
       case Ok<CurrentUserModel>():
-        CurrentUserModel user = CurrentUserModel.fromJson(locallyStored.value.toJson());
-        _currentUserCache = user;
-        return Result.ok(user);
+        _currentUserCache = result.value;
+
+        await _localDataService.storeCurrentUser(result.value);
+        return Future.value(result);
       case Error<CurrentUserModel>():
-        break;
-        // we want to try to get the user from the server
-        // return Result.error(locallyStored.error);
+      print(result.error);
     }
 
-    final Result<CurrentUserModel> serverStored = await _apiClient.getCurrentUser();
-    switch (serverStored){
-      case Ok<CurrentUserModel>():
-        CurrentUserModel user = CurrentUserModel.fromJson(serverStored.value.toJson());
-        _currentUserCache = user;
-        return Result.ok(user);
-      case Error<CurrentUserModel>():
-        return Result.error(serverStored.error);
+    String exampleJson = '''
+    {
+      "id": 1,
+      "company_id": 123,
+      "position": "Developer",
+      "first_name": "Johnissimo",
+      "last_name": "Doe",
+      "email": "john.doe@example.com",
+      "manager_id": 456,
+      "profile_picture_url": "https://picsum.photos/200",
+      "access_identifiers": ["employee"]
     }
+    ''';
+    print("compare ${jsonDecode(exampleJson)}");
+    final CurrentUserModel currentUser = CurrentUserModel.fromJson(jsonDecode(exampleJson));
+    _currentUserCache = currentUser;
+    await _localDataService.storeCurrentUser(currentUser);
+
+    return Result.ok(currentUser);
   }
 
-  Future<Result<List<WorkCycleModel>>> getWorkCycles() async {
+  @override
+  Future<Result<List<WorkCycleModel>>> getWorkCycles({forceNetworkSolution=false}) async {
     //TODO: implement getWorkCycles
     // they should be sorted and be like a short list of some
     List<WorkCycleModel> list =  [

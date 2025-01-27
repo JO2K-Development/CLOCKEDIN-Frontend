@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/repositories/auth_repository.dart';
-import 'package:flutter_app/data/repositories/current_user_repository.dart';
+import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/abstract/auth_repository.dart';
+import 'package:flutter_app/data/repositories/abstract/current_user_repository.dart';
+import 'package:flutter_app/data/services/local/local_storage_service.dart';
 import 'package:flutter_app/routing/routes.dart';
 import 'package:flutter_app/ui/app_scaffold/view/app_scaffold.dart';
 import 'package:flutter_app/ui/auth/initial_login/view/initial_login_page.dart';
@@ -20,6 +22,7 @@ import 'package:flutter_app/ui/employees_management/view_model/employees_managme
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+
 GoRouter router(
   AuthRepository authRepository,
 ) {
@@ -27,7 +30,7 @@ GoRouter router(
   return GoRouter(
   initialLocation: AliasedRoutes.appScaffoldFeatures[1].path,
   refreshListenable: authRepository,
-  redirect: _redirect,
+  // redirect: _redirect,
 
   routes: [
     
@@ -52,11 +55,12 @@ GoRouter router(
 
     // From https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/redirection.dart
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
-  // if the user is not logged in, they need to login
+  // if the user is not logged in, they need to login 
   final loggedIn = await context.read<AuthRepository>().isAuthenticated;
+
+      print("object11");
   final profileFilled = await context.read<CurrentUserRepository>().isProfileFilled;
   final chosenCompany = await context.read<CurrentUserRepository>().isCompanyChosen;
-
   // handles situations when the user is in the auth layer
   if ([AliasedRoutes.initLogin, AliasedRoutes.registerPage].any((el) => el.path == state.matchedLocation)){
     if (loggedIn){
@@ -69,6 +73,7 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   if (!loggedIn) {
     return Routes.initialLogin;
   }
+    print("object");
 
   // handles incomplete user profile
   if (!profileFilled) {
