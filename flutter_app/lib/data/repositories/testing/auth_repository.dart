@@ -31,6 +31,7 @@ class AuthRepositoryTesting extends AuthRepository {
     }
   }
 
+  @override
   Future<bool> get isAuthenticated async {
     // Status is cached
     if (_isAuthenticated != null) {
@@ -42,7 +43,7 @@ class AuthRepositoryTesting extends AuthRepository {
     return _isAuthenticated ?? false;
   }
 
-
+  @override
   Future<Result<void>> login({
     required String email,
     required String password,
@@ -51,6 +52,7 @@ class AuthRepositoryTesting extends AuthRepository {
     return await _localDataService.storeAuthTokens('dummy_access', 'dummy_refresh');
   }
 
+  @override
   Future<Result<void>> logout() async {
     // _log.info('User logged out');
     try {
@@ -67,13 +69,17 @@ class AuthRepositoryTesting extends AuthRepository {
     }
   }
 
+  @override
   String? _authHeaderProvider() => null;
 
+  @override
   Future<Result<void>> register({
     required String email,
-    required String password,
+    required String password1,
+    required String password2,
+    String? username,
   }) async {
-    var res = await login(email: email, password: password);
+    // var res = await login(email: email, password: password);
     return Result.ok(null);
   }
 }

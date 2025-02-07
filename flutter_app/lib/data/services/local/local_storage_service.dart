@@ -92,8 +92,10 @@ class LocalDataService {
         return Result.error(Exception(
             "The key: ${AvailableTokens.currentUser.toString()} wasn't found in the _storage"));
       }
+
+
       var dataDec = jsonDecode(data);
-      print("ect1 ${dataDec}");
+      print("obj $dataDec");
       var l = CurrentUserModel.fromJson(dataDec);
       return Result.ok(l);
     } on Exception catch (e) {

@@ -7,15 +7,15 @@ part 'current_user_model.g.dart';
 @freezed
 class CurrentUserModel with _$CurrentUserModel {
   const factory CurrentUserModel({
-         required int id, // Changed to int
-required int? companyId, // Changed to int (nullable)
-required String? position,
-required String? firstName,
-required String? lastName,
-required String email,
-required int? managerId, // Changed to int (nullable)
-required String? profilePictureUrl,
-required List<AccessIdentifier>? accessIdentifiers,
+    @JsonKey(name: 'id') required int id, // Changed to int
+    @JsonKey(name: 'company_id') required int? companyId, // Changed to int (nullable)
+    @JsonKey(name: 'position') required String? position,
+    @JsonKey(name: 'first_name') required String? firstName,
+    @JsonKey(name: 'last_name') required String? lastName,
+    @JsonKey(name: 'email') required String email,
+    @JsonKey(name: 'manager_id') required int? managerId, // Changed to int (nullable)
+    @JsonKey(name: 'profile_picture_url') required String? profilePictureUrl,
+    @JsonKey(name: 'access_identifiers') required List<AccessIdentifier>? accessIdentifiers,
   }) = _CurrentUserModel;
 
   factory CurrentUserModel.fromJson(Map<String, dynamic> json) => CurrentUserModel(
@@ -27,7 +27,7 @@ required List<AccessIdentifier>? accessIdentifiers,
         email: json["email"],
         managerId: json["manager_id"] == null || json["manager_id"] == "" ? null : json["manager_id"],
         profilePictureUrl: json["profile_picture_url"],
-        accessIdentifiers: List<AccessIdentifier>.from(json["access_identifiers"].map((x) => AccessIdentifier.fromString(x))),
+        accessIdentifiers: json["access_identifiers"] == null || json["access_identifiers"] == [] ? null : List<AccessIdentifier>.from(json["access_identifiers"].map((x) => AccessIdentifier.fromString(x))),
   );
 
   @override

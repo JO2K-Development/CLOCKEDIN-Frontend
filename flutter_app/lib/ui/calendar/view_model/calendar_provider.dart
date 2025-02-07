@@ -25,6 +25,7 @@ class CalendarProvider with ChangeNotifier {
 
   Future<Result<void>> _load() async {
     await Future.delayed(Duration(seconds: 1));
+    print("deb");
     try{
       final result = await _usersRepository.getStatistics(_userId);
       switch(result){

@@ -20,16 +20,25 @@ CurrentUserModel _$CurrentUserModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CurrentUserModel {
+  @JsonKey(name: 'id')
   int get id => throw _privateConstructorUsedError; // Changed to int
+  @JsonKey(name: 'company_id')
   int? get companyId =>
       throw _privateConstructorUsedError; // Changed to int (nullable)
+  @JsonKey(name: 'position')
   String? get position => throw _privateConstructorUsedError;
+  @JsonKey(name: 'first_name')
   String? get firstName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_name')
   String? get lastName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'email')
   String get email => throw _privateConstructorUsedError;
+  @JsonKey(name: 'manager_id')
   int? get managerId =>
       throw _privateConstructorUsedError; // Changed to int (nullable)
+  @JsonKey(name: 'profile_picture_url')
   String? get profilePictureUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'access_identifiers')
   List<AccessIdentifier>? get accessIdentifiers =>
       throw _privateConstructorUsedError;
 
@@ -50,14 +59,15 @@ abstract class $CurrentUserModelCopyWith<$Res> {
       _$CurrentUserModelCopyWithImpl<$Res, CurrentUserModel>;
   @useResult
   $Res call(
-      {int id,
-      int? companyId,
-      String? position,
-      String? firstName,
-      String? lastName,
-      String email,
-      int? managerId,
-      String? profilePictureUrl,
+      {@JsonKey(name: 'id') int id,
+      @JsonKey(name: 'company_id') int? companyId,
+      @JsonKey(name: 'position') String? position,
+      @JsonKey(name: 'first_name') String? firstName,
+      @JsonKey(name: 'last_name') String? lastName,
+      @JsonKey(name: 'email') String email,
+      @JsonKey(name: 'manager_id') int? managerId,
+      @JsonKey(name: 'profile_picture_url') String? profilePictureUrl,
+      @JsonKey(name: 'access_identifiers')
       List<AccessIdentifier>? accessIdentifiers});
 }
 
@@ -136,14 +146,15 @@ abstract class _$$CurrentUserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      int? companyId,
-      String? position,
-      String? firstName,
-      String? lastName,
-      String email,
-      int? managerId,
-      String? profilePictureUrl,
+      {@JsonKey(name: 'id') int id,
+      @JsonKey(name: 'company_id') int? companyId,
+      @JsonKey(name: 'position') String? position,
+      @JsonKey(name: 'first_name') String? firstName,
+      @JsonKey(name: 'last_name') String? lastName,
+      @JsonKey(name: 'email') String email,
+      @JsonKey(name: 'manager_id') int? managerId,
+      @JsonKey(name: 'profile_picture_url') String? profilePictureUrl,
+      @JsonKey(name: 'access_identifiers')
       List<AccessIdentifier>? accessIdentifiers});
 }
 
@@ -215,14 +226,15 @@ class __$$CurrentUserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CurrentUserModelImpl implements _CurrentUserModel {
   const _$CurrentUserModelImpl(
-      {required this.id,
-      required this.companyId,
-      required this.position,
-      required this.firstName,
-      required this.lastName,
-      required this.email,
-      required this.managerId,
-      required this.profilePictureUrl,
+      {@JsonKey(name: 'id') required this.id,
+      @JsonKey(name: 'company_id') required this.companyId,
+      @JsonKey(name: 'position') required this.position,
+      @JsonKey(name: 'first_name') required this.firstName,
+      @JsonKey(name: 'last_name') required this.lastName,
+      @JsonKey(name: 'email') required this.email,
+      @JsonKey(name: 'manager_id') required this.managerId,
+      @JsonKey(name: 'profile_picture_url') required this.profilePictureUrl,
+      @JsonKey(name: 'access_identifiers')
       required final List<AccessIdentifier>? accessIdentifiers})
       : _accessIdentifiers = accessIdentifiers;
 
@@ -230,26 +242,35 @@ class _$CurrentUserModelImpl implements _CurrentUserModel {
       _$$CurrentUserModelImplFromJson(json);
 
   @override
+  @JsonKey(name: 'id')
   final int id;
 // Changed to int
   @override
+  @JsonKey(name: 'company_id')
   final int? companyId;
 // Changed to int (nullable)
   @override
+  @JsonKey(name: 'position')
   final String? position;
   @override
+  @JsonKey(name: 'first_name')
   final String? firstName;
   @override
+  @JsonKey(name: 'last_name')
   final String? lastName;
   @override
+  @JsonKey(name: 'email')
   final String email;
   @override
+  @JsonKey(name: 'manager_id')
   final int? managerId;
 // Changed to int (nullable)
   @override
+  @JsonKey(name: 'profile_picture_url')
   final String? profilePictureUrl;
   final List<AccessIdentifier>? _accessIdentifiers;
   @override
+  @JsonKey(name: 'access_identifiers')
   List<AccessIdentifier>? get accessIdentifiers {
     final value = _accessIdentifiers;
     if (value == null) return null;
@@ -320,14 +341,16 @@ class _$CurrentUserModelImpl implements _CurrentUserModel {
 
 abstract class _CurrentUserModel implements CurrentUserModel {
   const factory _CurrentUserModel(
-          {required final int id,
-          required final int? companyId,
-          required final String? position,
-          required final String? firstName,
-          required final String? lastName,
-          required final String email,
-          required final int? managerId,
+          {@JsonKey(name: 'id') required final int id,
+          @JsonKey(name: 'company_id') required final int? companyId,
+          @JsonKey(name: 'position') required final String? position,
+          @JsonKey(name: 'first_name') required final String? firstName,
+          @JsonKey(name: 'last_name') required final String? lastName,
+          @JsonKey(name: 'email') required final String email,
+          @JsonKey(name: 'manager_id') required final int? managerId,
+          @JsonKey(name: 'profile_picture_url')
           required final String? profilePictureUrl,
+          @JsonKey(name: 'access_identifiers')
           required final List<AccessIdentifier>? accessIdentifiers}) =
       _$CurrentUserModelImpl;
 
@@ -335,22 +358,31 @@ abstract class _CurrentUserModel implements CurrentUserModel {
       _$CurrentUserModelImpl.fromJson;
 
   @override
+  @JsonKey(name: 'id')
   int get id; // Changed to int
   @override
+  @JsonKey(name: 'company_id')
   int? get companyId; // Changed to int (nullable)
   @override
+  @JsonKey(name: 'position')
   String? get position;
   @override
+  @JsonKey(name: 'first_name')
   String? get firstName;
   @override
+  @JsonKey(name: 'last_name')
   String? get lastName;
   @override
+  @JsonKey(name: 'email')
   String get email;
   @override
+  @JsonKey(name: 'manager_id')
   int? get managerId; // Changed to int (nullable)
   @override
+  @JsonKey(name: 'profile_picture_url')
   String? get profilePictureUrl;
   @override
+  @JsonKey(name: 'access_identifiers')
   List<AccessIdentifier>? get accessIdentifiers;
 
   /// Create a copy of CurrentUserModel

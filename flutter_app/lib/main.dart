@@ -24,8 +24,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 void main() async {
-  DevMain.main(); 
-  // ProductionMain.main(); // requires connection with db
+  // DevMain.main(); 
+  ProductionMain.main(); // requires connection with db
 }
 
 class MyApp extends StatelessWidget {

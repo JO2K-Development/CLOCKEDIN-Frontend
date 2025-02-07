@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/command.dart';
 import 'package:flutter_app/core/utils/result.dart';
 import 'package:flutter_app/data/repositories/abstract/auth_repository.dart';
+import 'package:logger/logger.dart';
 
 class RegisterProvider with ChangeNotifier {
   // TextEditingControllers for form fields
@@ -17,22 +18,33 @@ class RegisterProvider with ChangeNotifier {
 
   final AuthRepository _authRepository;
   late Command0 register;
+  final _log = Logger();
 
   Future<Result<void>> _register() async {
-    if (passwordController.text != confirmPasswordController.text) {
-      throw Exception("Passwords do not match");
-    }
-
     try {
+      if (passwordController.text != confirmPasswordController.text) {
+        throw Exception("Passwords do not match");
+      }
+
       final result = await _authRepository.register(
         email: emailController.text,
-        password: passwordController.text,
+        password1: passwordController.text,
+        password2: confirmPasswordController.text,
       );
-
+      switch (result) {
+        case Ok<void>():
+          // Handle success
+          _log.i("Registration successful");
+          break;
+        case Error<void>():
+          // Handle error
+          _log.e("Registration failed");
+          break;
+      }
       return result;
     } catch (e) {
       // Handle network or other errors
-      print("Error: $e");
+      _log.e(e);
       return Result.error(e as Exception);
     } finally {
       notifyListeners();

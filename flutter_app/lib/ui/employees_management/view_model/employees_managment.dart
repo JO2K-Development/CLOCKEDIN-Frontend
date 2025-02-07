@@ -24,6 +24,7 @@ class EmployeesManagmentProvider with ChangeNotifier {
     await Future.delayed(Duration(seconds: 1));
     try {
       final result = await _managmentRepository.getManagedUsers();
+      
       print(result);
       switch (result) {
         case Ok<List<EmployeeBriefModel>>():

@@ -13,7 +13,7 @@ class MyElevatedButtonThemes {
           borderRadius: WidgetsProperties.borderRadius,
         ),
       ),
-      elevation: WidgetStateProperty.all<double>(0.0),
+      elevation: WidgetStateProperty.all<double>(2.0),
       foregroundColor: WidgetStateProperty.all<Color>(AppColorsLight.scaffoldBackground),
       side: WidgetsProperties.makeElevatedButtonBorderSide(color: AppColorsLight.accent),
       textStyle: WidgetStateProperty.all<TextStyle>(

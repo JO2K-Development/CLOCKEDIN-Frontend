@@ -22,7 +22,6 @@ AuthResponse _$AuthResponseFromJson(Map<String, dynamic> json) {
 mixin _$AuthResponse {
   String get access => throw _privateConstructorUsedError;
   String get refresh => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
 
   /// Serializes this AuthResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +39,7 @@ abstract class $AuthResponseCopyWith<$Res> {
           AuthResponse value, $Res Function(AuthResponse) then) =
       _$AuthResponseCopyWithImpl<$Res, AuthResponse>;
   @useResult
-  $Res call({String access, String refresh, String userId});
+  $Res call({String access, String refresh});
 }
 
 /// @nodoc
@@ -60,7 +59,6 @@ class _$AuthResponseCopyWithImpl<$Res, $Val extends AuthResponse>
   $Res call({
     Object? access = null,
     Object? refresh = null,
-    Object? userId = null,
   }) {
     return _then(_value.copyWith(
       access: null == access
@@ -70,10 +68,6 @@ class _$AuthResponseCopyWithImpl<$Res, $Val extends AuthResponse>
       refresh: null == refresh
           ? _value.refresh
           : refresh // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -87,7 +81,7 @@ abstract class _$$AuthResponseImplCopyWith<$Res>
       __$$AuthResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String access, String refresh, String userId});
+  $Res call({String access, String refresh});
 }
 
 /// @nodoc
@@ -105,7 +99,6 @@ class __$$AuthResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? access = null,
     Object? refresh = null,
-    Object? userId = null,
   }) {
     return _then(_$AuthResponseImpl(
       access: null == access
@@ -116,10 +109,6 @@ class __$$AuthResponseImplCopyWithImpl<$Res>
           ? _value.refresh
           : refresh // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -127,8 +116,7 @@ class __$$AuthResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AuthResponseImpl implements _AuthResponse {
-  const _$AuthResponseImpl(
-      {required this.access, required this.refresh, required this.userId});
+  const _$AuthResponseImpl({required this.access, required this.refresh});
 
   factory _$AuthResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthResponseImplFromJson(json);
@@ -137,12 +125,10 @@ class _$AuthResponseImpl implements _AuthResponse {
   final String access;
   @override
   final String refresh;
-  @override
-  final String userId;
 
   @override
   String toString() {
-    return 'AuthResponse(access: $access, refresh: $refresh, userId: $userId)';
+    return 'AuthResponse(access: $access, refresh: $refresh)';
   }
 
   @override
@@ -151,13 +137,12 @@ class _$AuthResponseImpl implements _AuthResponse {
         (other.runtimeType == runtimeType &&
             other is _$AuthResponseImpl &&
             (identical(other.access, access) || other.access == access) &&
-            (identical(other.refresh, refresh) || other.refresh == refresh) &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.refresh, refresh) || other.refresh == refresh));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, access, refresh, userId);
+  int get hashCode => Object.hash(runtimeType, access, refresh);
 
   /// Create a copy of AuthResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -178,8 +163,7 @@ class _$AuthResponseImpl implements _AuthResponse {
 abstract class _AuthResponse implements AuthResponse {
   const factory _AuthResponse(
       {required final String access,
-      required final String refresh,
-      required final String userId}) = _$AuthResponseImpl;
+      required final String refresh}) = _$AuthResponseImpl;
 
   factory _AuthResponse.fromJson(Map<String, dynamic> json) =
       _$AuthResponseImpl.fromJson;
@@ -188,8 +172,6 @@ abstract class _AuthResponse implements AuthResponse {
   String get access;
   @override
   String get refresh;
-  @override
-  String get userId;
 
   /// Create a copy of AuthResponse
   /// with the given fields replaced by the non-null parameter values.

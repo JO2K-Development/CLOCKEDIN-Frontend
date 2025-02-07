@@ -31,6 +31,8 @@ abstract class AuthRepository with ChangeNotifier{
 
   Future<Result<void>> register({
     required String email,
-    required String password,
+    required String password1,
+    required String password2,
+    String? username,
   });
 }

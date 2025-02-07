@@ -47,7 +47,7 @@ class EmployeesManagmentPage extends StatelessWidget {
                   child: MyBeveledContainer(
                     radius: 30,
                     onlyTop: true,
-                    isBackGPrimary: true,
+                    // isBackGPrimary: true,
                     child: Padding(
                       padding: const EdgeInsets.only(
                           top: Dimentions.sizeXS,

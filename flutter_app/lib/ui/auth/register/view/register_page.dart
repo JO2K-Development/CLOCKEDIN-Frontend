@@ -30,7 +30,7 @@ class RegisterPage extends StatelessWidget {
       builder: (context, child) {
         if (viewModel.register.completed) {
           viewModel.register.clearResult();
-          context.push(Routes.dataFill);
+          context.push(Routes.dataFilling);
         }
 
         return Padding(

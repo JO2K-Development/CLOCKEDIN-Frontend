@@ -14,7 +14,7 @@ class DevMain {
   var providers = testingProviders;
   await DevMain.discardStorage();
   // await DevMain.setLevelToLoggedIn();
-  runApp(MultiProvider(providers: productionProviders, child: MyApp()));
+  runApp(MultiProvider(providers: providers, child: MyApp()));
 }
 
 static Future<void> setLevelToLoggedIn() async {

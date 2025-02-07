@@ -13,8 +13,16 @@ import 'package:flutter_app/data/repositories/testing/users_repository.dart';
 import 'package:flutter_app/data/services/local/local_storage_service.dart';
 import 'package:flutter_app/data/services/remote/api_client.dart';
 import 'package:flutter_app/data/services/remote/auth_client.dart';
+import 'package:flutter_app/routing/routes_language_support.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
+
+List<SingleChildWidget> get shared {
+  return [
+    Provider(create: (context) => LanguageSupportUtil())
+  ];
+}
+
 
 List<SingleChildWidget> get testingProviders {
   return [
@@ -24,6 +32,7 @@ List<SingleChildWidget> get testingProviders {
     // Provider(
     //   create: (context) => ApiClient(),
     // ),
+    ...shared,
     Provider(
       create: (context) => LocalDataService(),
     ),
@@ -52,6 +61,7 @@ List<SingleChildWidget> get testingProviders {
 
 List<SingleChildWidget> get productionProviders {
   return [
+    ...shared,
     Provider(
       create: (context) => AuthApiClient(),
     ),

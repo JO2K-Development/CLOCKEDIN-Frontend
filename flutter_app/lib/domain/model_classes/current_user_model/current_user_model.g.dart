@@ -10,14 +10,14 @@ _$CurrentUserModelImpl _$$CurrentUserModelImplFromJson(
         Map<String, dynamic> json) =>
     _$CurrentUserModelImpl(
       id: (json['id'] as num).toInt(),
-      companyId: (json['companyId'] as num?)?.toInt(),
+      companyId: (json['company_id'] as num?)?.toInt(),
       position: json['position'] as String?,
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
       email: json['email'] as String,
-      managerId: (json['managerId'] as num?)?.toInt(),
-      profilePictureUrl: json['profilePictureUrl'] as String?,
-      accessIdentifiers: (json['accessIdentifiers'] as List<dynamic>?)
+      managerId: (json['manager_id'] as num?)?.toInt(),
+      profilePictureUrl: json['profile_picture_url'] as String?,
+      accessIdentifiers: (json['access_identifiers'] as List<dynamic>?)
           ?.map((e) => $enumDecode(_$AccessIdentifierEnumMap, e))
           .toList(),
     );
@@ -26,14 +26,14 @@ Map<String, dynamic> _$$CurrentUserModelImplToJson(
         _$CurrentUserModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'companyId': instance.companyId,
+      'company_id': instance.companyId,
       'position': instance.position,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
       'email': instance.email,
-      'managerId': instance.managerId,
-      'profilePictureUrl': instance.profilePictureUrl,
-      'accessIdentifiers': instance.accessIdentifiers
+      'manager_id': instance.managerId,
+      'profile_picture_url': instance.profilePictureUrl,
+      'access_identifiers': instance.accessIdentifiers
           ?.map((e) => _$AccessIdentifierEnumMap[e]!)
           .toList(),
     };

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 final class Routes {
   static const String initialLogin = "/initial-login";
   static const String register = "/register";
-  static const String dataFill = "/data-fill";
+  static const String dataFilling = "/data-filling";
   static const String calendar = "/calendar";
   static const String employeeManagement = "/employee-management";
   static const String employeesManagement = "/employees-management";
@@ -12,7 +12,7 @@ final class Routes {
   static const String employeeProfile = "/employee-profile";
   static const String companyStatistics = "/company-statistics";
   static const String dayOfWork = "/day-of-work";
-  static const String companyChoosing = "/company-choosing";
+  static const String chooseAccountType = "/choose-account-type";
 
   static const Map<String, IconData> routesIcons = {
     calendar: Icons.calendar_month,
@@ -21,7 +21,7 @@ final class Routes {
     companyStatistics: Icons.bar_chart,
     employeesManagement: Icons.people,
     dayOfWork: Icons.work,
-    companyChoosing: Icons.business,
+    chooseAccountType: Icons.business,
   };
 }
 

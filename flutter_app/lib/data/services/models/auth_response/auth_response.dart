@@ -8,7 +8,6 @@ class AuthResponse with _$AuthResponse {
   const factory AuthResponse({
     required String access,
     required String refresh,
-    required String userId,
   }) = _AuthResponse;
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) =>

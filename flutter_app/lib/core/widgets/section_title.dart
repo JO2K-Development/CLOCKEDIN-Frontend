@@ -6,7 +6,8 @@ class SectionTitle extends StatelessWidget {
   final String text;
   final Widget? rightWidget;
   final String? description;
-  const SectionTitle(this.text, {super.key, this.rightWidget, this.description});
+  final List<String>? bulletPoints;
+  const SectionTitle(this.text, {super.key, this.rightWidget, this.description, this.bulletPoints});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,36 @@ class SectionTitle extends StatelessWidget {
                 child: Column(
                   children: [
                     title,
-                    Gap(Dimentions.sizeS),
                     description != null ? Padding(
-                      padding: const EdgeInsets.only(left: Dimentions.sizeS),
+                      padding: const EdgeInsets.only(left: Dimentions.sizeS, top: Dimentions.sizeS),
                       child: Text(description!, style: Theme.of(context).textTheme.labelMedium,),
                     ) : Container(),
+                    
+                    bulletPoints != null ? Builder(builder: (context) {
+                      List<Widget> bulletWidgets = [];
+                      for (var element in bulletPoints!) {
+                        bulletWidgets.add(Padding(
+                        padding: const EdgeInsets.only(left: Dimentions.sizeS, top: Dimentions.sizeS),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Icon(Icons.arrow_forward_ios, color: Theme.of(context).shadowColor, size: Dimentions.sizeM,)),
+                            Flexible(child: Text(element, style: Theme.of(context).textTheme.labelMedium,)),
+                          ],
+                        ),
+                      ));
+                      }
+                      return Column(
+                        children: [
+                          ...bulletWidgets
+                        ],
+                      );
+                    }
+                    ) : Container(),
+                    
+                    
                     Gap(Dimentions.sizeM),
                   ],
                 ),

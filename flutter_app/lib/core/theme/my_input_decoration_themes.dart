@@ -8,7 +8,7 @@ class MyInputDecorationThemes {
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
     border: OutlineInputBorder(
       borderRadius: WidgetsProperties.borderRadius,
-      borderSide: BorderSide(color: AppColorsLight.accent, width: 1.0),
+      borderSide: BorderSide(color: AppColorsLight.accent, width: 2.0),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: WidgetsProperties.borderRadius,
@@ -16,8 +16,9 @@ class MyInputDecorationThemes {
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: WidgetsProperties.borderRadius,
-      borderSide: BorderSide(color: AppColorsLight.accent, width: 1.0),
+      borderSide: BorderSide(color: AppColorsLight.accent, width: 2.0),
     ),
+    
     labelStyle: TextStyle(color: AppColorsLight.text),
     hintStyle: TextStyle(color: AppColorsLight.fadedText),
   );

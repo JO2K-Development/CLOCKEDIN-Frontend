@@ -30,6 +30,7 @@ class ClockInOutProvider with ChangeNotifier {
     await Future.delayed(Duration(seconds: 1));
 
     try {
+      
       final result = await _currentUserRepository.getWorkCycles();      
       switch (result) {
         case Ok<List<WorkCycleModel>>():

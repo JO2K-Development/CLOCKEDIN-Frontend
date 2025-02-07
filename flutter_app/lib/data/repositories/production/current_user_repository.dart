@@ -7,8 +7,10 @@ import 'package:flutter_app/data/services/local/local_storage_service.dart';
 import 'package:flutter_app/data/services/models/user_api_model/user_api_model.dart';
 import 'package:flutter_app/data/services/remote/api_client.dart';
 import 'package:flutter_app/data/services/local/storage_handler.dart';
+import 'package:flutter_app/domain/model_classes/company_invitation_model/company_invitation_model.dart';
 import 'package:flutter_app/domain/model_classes/current_user_model/current_user_model.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/navigation/navigation_handler.dart';
 
 class CurrentUserRepositoryProduction extends CurrentUserRepository {
@@ -37,10 +39,11 @@ class CurrentUserRepositoryProduction extends CurrentUserRepository {
     
   });
 
-  @override
+    @override
   Future<bool> get isProfileFilled async {
     if (_currentUserCache != null) {
       return Future.value(CurrentUserModel.isProfileFilled(_currentUserCache!));
+
     } else {
       final Result<CurrentUserModel> result = await getCurrentUser();
       switch (result){
@@ -65,6 +68,59 @@ class CurrentUserRepositoryProduction extends CurrentUserRepository {
         case Error<CurrentUserModel>():
           return false;
       }
+    }
+  }
+
+  @override
+  Future<Result<CurrentUserModel>> get currentUserModel async {
+    if (_currentUserCache != null) {
+      return Result.ok(_currentUserCache!);
+    } else {
+      return getCurrentUser();
+    }
+  }
+
+  @override
+  Future<Result<void>> fillData({required String firstName, required String lastName, XFile? profileImage}) async {
+    final Result<CurrentUserModel> getResult = await getCurrentUser();
+    switch (getResult) {
+      case Ok<CurrentUserModel>():
+        CurrentUserModel user = getResult.value.copyWith(firstName: firstName, lastName: lastName);
+        final Result<void> updResult = await _apiClient.updateCurrentUser(user);
+        switch (updResult) {
+          case Ok<void>():
+            _currentUserCache = user;
+            _localDataService.storeCurrentUser(user);
+            return Result.ok(null);
+          case Error<void>():
+            return Result.error(updResult.error);
+        }
+      case Error<CurrentUserModel>():
+        return Result.error(getResult.error);
+    }
+  }
+
+  @override
+  Future<Result<void>> updateCurrentUser({required CurrentUserModel currentUserModel}) async {
+    final Result<void> result = await _apiClient.updateCurrentUser(currentUserModel);
+    switch (result) {
+      case Ok<void>():
+        _currentUserCache = currentUserModel;
+        _localDataService.storeCurrentUser(currentUserModel);
+        return Result.ok(null);
+      case Error<void>():
+        return Result.error(result.error);
+    }
+  }
+
+  @override
+  Future<Result<List<CompanyInvitationModel>>> getCompanyInvitations() async {
+    final Result<List<CompanyInvitationModel>> result = await _apiClient.getCurrentUserCompanyInvitations();
+    switch (result) {
+      case Ok<List<CompanyInvitationModel>>():
+        return Result.ok(result.value);
+      case Error<List<CompanyInvitationModel>>():
+        return Result.error(result.error);
     }
   }
 
@@ -135,5 +191,7 @@ class CurrentUserRepositoryProduction extends CurrentUserRepository {
         return Result.error(userIdResult.error);
 
     }
+
+    
   }
 }

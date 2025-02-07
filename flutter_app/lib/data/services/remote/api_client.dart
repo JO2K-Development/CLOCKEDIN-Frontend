@@ -1,5 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_app/core/utils/dev/exceptions/not_implemented_resutl.dart';
+import 'package:flutter_app/data/services/local/local_storage_service.dart';
+import 'package:flutter_app/domain/model_classes/company_invitation_model/company_invitation_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+
 
 import 'package:flutter_app/core/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/utils/result.dart';
@@ -8,48 +14,53 @@ import 'package:flutter_app/domain/model_classes/current_user_model/current_user
 import 'package:flutter_app/domain/model_classes/employee_brief_model/employee_brief_model.dart';
 import 'package:flutter_app/domain/model_classes/statistics_model/statistics_model.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
-
-/// Adds the `Authentication` header to a header configuration.
-typedef AuthHeaderProvider = String? Function();
+import 'package:logger/logger.dart';
 
 class ApiClient {
   ApiClient({
     String? host,
     int? port,
-    HttpClient Function()? clientFactory,
-  })  : _host = host ?? 'localhost/api',
-        _port = port ?? 8000,
-        _clientFactory = clientFactory ?? HttpClient.new;
+  })  : _host = host ?? '10.0.2.2',
+        _port = port ?? 8000;
 
   final String _host;
   final int _port;
-  final HttpClient Function() _clientFactory;
+  final dynamic storage = FlutterSecureStorage();
+  String? _cachedBearer; 
+  Map<String,String>? _cachedAuthHeaders;
 
-  AuthHeaderProvider? _authHeaderProvider;
+  final _log = Logger();
 
-  set authHeaderProvider(AuthHeaderProvider authHeaderProvider) {
-    _authHeaderProvider = authHeaderProvider;
+  String get _baseUrl => '$_host:$_port';
+  Future<String> get bearer async {
+    return _cachedBearer ??= 'Bearer ${await storage.read(key: AvailableTokens.access.toString())}';
   }
-  //TODO: NIE ROZUMIEM
-  Future<void> _authHeader(HttpHeaders headers) async {
-    final header = _authHeaderProvider?.call();
-    if (header != null) {
-      headers.add(HttpHeaders.authorizationHeader, header);
-    }
+
+  Future<Map<String,String>> get authHeaders async {
+    return _cachedAuthHeaders ??= {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'Authorization': await bearer,
+        };
   }
+
 
   Future<Result<CurrentUserModel>> getUser(int id) async {
-    final client = _clientFactory();
+    final client = http.Client();
     try{
-      final request = await client.get(_host, _port, '/user/$id');
-      await _authHeader(request.headers);
-      final response = await request.close();
+      final uri = Uri.http(_baseUrl, 'api/user/$id');
+      
+      final response = await client.get(
+        uri,
+        headers: await authHeaders
+      );
       if (response.statusCode == 200) {
-        final stringData = await response.transform(utf8.decoder).join();
+        final stringData = response.body;
         final json = jsonDecode(stringData) as Map<String, dynamic>;
         return Result.ok(CurrentUserModel.fromJson(json));
       } else {
-        return Result.error(HttpException(response.reasonPhrase));
+        return Result.error(HttpException(response.body));
       }
     } on Exception catch (e) {
       return Result.error(e);
@@ -59,19 +70,26 @@ class ApiClient {
   }
 
   Future<Result<CurrentUserModel>> getCurrentUser() async {
-    final client = _clientFactory();
+    final client = http.Client();
     try{
-      final request = await client.get(_host, _port, '/user');
-      await _authHeader(request.headers);
-      final response = await request.close();
+      final uri = Uri.http(_baseUrl, 'api/user/user/');
+      _log.i("Getting current user headers: ${await authHeaders}, uri: $uri");
+      final response = await client.get(
+        uri,
+        headers: await authHeaders
+      );
       if (response.statusCode == 200) {
-        final stringData = await response.transform(utf8.decoder).join();
+        final stringData = response.body;
         final json = jsonDecode(stringData) as Map<String, dynamic>;
+        _log.i("Current user response: $json");
+        _log.i("which in model is ${CurrentUserModel.fromJson(json)}");
         return Result.ok(CurrentUserModel.fromJson(json));
       } else {
-        return Result.error(HttpException(response.reasonPhrase));
+        _log.f("Error: ${response.body}");
+        return Result.error(HttpException(response.body));
       }
     } on Exception catch (e) {
+      _log.f(e);
       return Result.error(e);
     } finally {
       client.close();
@@ -79,17 +97,19 @@ class ApiClient {
   }
 
   Future<Result<StatisticsModel>> getStatisticsForUser(int id) async {
-    final client = _clientFactory();
+    final client = http.Client();
     try{
-      final request = await client.get(_host, _port, '/statistics/$id');
-      await _authHeader(request.headers);
-      final response = await request.close();
+      final uri = Uri.http(_baseUrl, 'api/statistics/$id');
+      final response = await client.get(
+        uri,
+        headers: await authHeaders
+      );
       if (response.statusCode == 200) {
-        final stringData = await response.transform(utf8.decoder).join();
+        final stringData = response.body;
         final json = jsonDecode(stringData) as Map<String, dynamic>;
         return Result.ok(StatisticsModel.fromJson(json));
       } else {
-        return Result.error(HttpException(response.reasonPhrase));
+        return Result.error(HttpException(response.body));
       }
     } on Exception catch (e) {
       return Result.error(e);
@@ -100,7 +120,7 @@ class ApiClient {
 
   Future<Result<List<WorkCycleModel>>> getWorkCyclesForUser(int userId) {
     //TODO: implement getWorkCyclesForUser with db
-    return Future.value(Result.error(Exception("Not impl")));
+    return NotImplementedFutureResult.raise();
   }
 
   Future<Result<List<EmployeeBriefModel>>> getManagedUsers(int userId) {
@@ -118,5 +138,50 @@ class ApiClient {
     ]..sort((a, b) => a.firstName.compareTo(b.position!));
     }
     return Future.value(Result.ok(dummyManagedUsers()));
+  }
+
+  Future<Result<void>> updateCurrentUser(CurrentUserModel user) async {
+    final client = http.Client();
+    try{
+      final uri = Uri.http(_baseUrl, 'api/user/user/');
+      
+      _log.i("Updating user");
+      _log.i("headers: ${await authHeaders}, uri: $uri, body: ${jsonEncode(user.toJson())}");
+      final response = await client.patch(
+        uri,
+        headers: await authHeaders,
+        body: jsonEncode(user.toJson())
+      );
+      if (response.statusCode == 200) {
+        _log.i("User updated with response: ${response.body}");
+        return Result.ok(null);
+      } else {
+        return Result.error(HttpException(response.body));
+      }
+    } on Exception catch (e) {
+      return Result.error(e);
+    } finally {
+      client.close();
+    }
+  }
+
+  Future<Result<List<CompanyInvitationModel>>> getCurrentUserCompanyInvitations() async {
+    try {
+      final client = http.Client();
+      final uri = Uri.http(_baseUrl, 'api/user/invitations/');
+      final response = await client.get(
+        uri,
+        headers: await authHeaders
+      );
+      if (response.statusCode == 200) {
+        final stringData = response.body;
+        final json = jsonDecode(stringData) as List<dynamic>;
+        return Result.ok(json.map((e) => CompanyInvitationModel.fromJson(e as Map<String, dynamic>)).toList());
+      } else {
+        return Result.error(HttpException(response.body));
+      }
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
   }
 }

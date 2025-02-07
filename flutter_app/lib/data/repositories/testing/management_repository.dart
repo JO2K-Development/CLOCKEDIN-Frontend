@@ -22,18 +22,22 @@ class ManagementRepositoryTesting extends ManagementRepository {
   @override
   Future<Result<List<EmployeeBriefModel>>> getManagedUsers(
       {forceInternetResolution = false}) async {
-    final Result<CurrentUserModel> currUser = await _localDataService.getCurrentUser();
-    if (currUser is Ok<CurrentUserModel>){
+    // final Result<CurrentUserModel> currUser = await _localDataService.getCurrentUser();
+    final Result<CurrentUserModel> currUser = Result.ok(
+      CurrentUserModel(id: 0, companyId: 2, position: "SomeGuy", firstName: "Name", lastName: "lastName", email: "email", managerId: 3, profilePictureUrl: '', accessIdentifiers: [])
+    );
 
+    if (currUser is Ok<CurrentUserModel>){
       int? c_u_company_id = currUser.value.companyId;
     } else {
       return Result.error(Exception("Fucking hell"));
     }
-    var positions = ["Junior Dev", "Senior Dev", "Child", null];
+    var positions = ["Junior Dev", "Senior Dev", "Child", ''];
     Random random = new Random();
     
     List<EmployeeBriefModel> users = List.generate(30, (index) => EmployeeBriefModel(id: index, companyId: currUser.value.companyId! , position: positions[random.nextInt(4)], firstName: "User", lastName: "${index}", 
-    additionalInfo: (index % 4 == 0 ? "Here Some additional info" : null), managerId: currUser.value.id, profilePictureUrl: "https://thispersondoesnotexist.com/?${random.nextInt(1000000000)}"));
+    additionalInfo: (index % 4 == 0 ? "Here Some additional info" : ''), managerId: currUser.value.id, profilePictureUrl: "https://thispersondoesnotexist.com/?${random.nextInt(1000000000)}"));
+    users.sort((a, b) => a.position!.compareTo(b.position!));
     return Result.ok(users);
   }
 }
