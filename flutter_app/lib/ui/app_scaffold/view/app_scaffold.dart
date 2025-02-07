@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/enums/access_identifiers.dart';
 import 'package:flutter_app/core/widgets/my_app_bar.dart';
+import 'package:flutter_app/routing/routes_language_support.dart';
 import 'package:flutter_app/routing/router.dart';
 import 'package:flutter_app/routing/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,8 +12,9 @@ import 'package:provider/provider.dart';
 class AppScaffolding extends StatefulWidget {
   final Widget child;
   final int numberOfBottomIcons;
+  final LanguageSupportUtil languageSupportUtil;
 
-  const AppScaffolding({super.key, required this.child, this.numberOfBottomIcons = 3});
+  const AppScaffolding({super.key, required this.child, this.numberOfBottomIcons = 3, required this.languageSupportUtil});
   
   @override
   State<AppScaffolding> createState() => _AppScaffoldingState();
@@ -28,20 +30,14 @@ class _AppScaffoldingState extends State<AppScaffolding> {
 
   @override
   Widget build(BuildContext context) {
-    var routeToLocalizedText = {
-      Routes.calendar: AppLocalizations.of(context).calendar,
-      Routes.clockInOut: AppLocalizations.of(context).clock_in,
-      Routes.employeesManagement: AppLocalizations.of(context).company,
-      Routes.employeeProfile: AppLocalizations.of(context).profile,
-    };
+    
     List<BottomNavigationBarItem> bottomIcons = List.generate(widget.numberOfBottomIcons, (index) => BottomNavigationBarItem(
       icon: Icon(Routes.routesIcons[AliasedRoutes.appScaffoldFeatures[index].path]),
-      label: routeToLocalizedText[AliasedRoutes.appScaffoldFeatures[index].path],
+      label: widget.languageSupportUtil.getRouteToCachedLocalizedText(context)[AliasedRoutes.appScaffoldFeatures[index].path],
     ));
 
     return Scaffold(
       drawer: Drawer(
-
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -53,7 +49,7 @@ class _AppScaffoldingState extends State<AppScaffolding> {
             ),
             ...List.generate(AliasedRoutes.appScaffoldFeatures.length - widget.numberOfBottomIcons, (index) {
               return ListTile(
-                title: Text(AliasedRoutes.appScaffoldFeatures[index + widget.numberOfBottomIcons].path),
+                title: Text(widget.languageSupportUtil.getRouteToCachedLocalizedText(context)[AliasedRoutes.appScaffoldFeatures[index + widget.numberOfBottomIcons].path]!),
                 onTap: () {
                   GoRouter.of(context).go(AliasedRoutes.appScaffoldFeatures[index + widget.numberOfBottomIcons].path);
                   Navigator.pop(context);

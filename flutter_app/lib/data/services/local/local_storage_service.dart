@@ -1,13 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter_app/core/utils/dev/exceptions/not_implemented_resutl.dart';
 import 'package:flutter_app/core/utils/result.dart';
 import 'package:flutter_app/data/services/models/user_api_model/user_api_model.dart';
 import 'package:flutter_app/domain/model_classes/current_user_model/current_user_model.dart';
 import 'package:flutter_app/domain/model_classes/employee_brief_model/employee_brief_model.dart';
+import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 
-enum AvailableTokens { access, refresh, currentUser, managedUsers }
+enum AvailableTokens { access, refresh, currentUser, currentManagedUsers, currentWorkCycles }
 
 class LocalDataService {
   LocalDataService({
@@ -90,16 +92,21 @@ class LocalDataService {
         return Result.error(Exception(
             "The key: ${AvailableTokens.currentUser.toString()} wasn't found in the _storage"));
       }
-      return Result.ok(CurrentUserModel.fromJson(jsonDecode(data)));
+
+
+      var dataDec = jsonDecode(data);
+      print("obj $dataDec");
+      var l = CurrentUserModel.fromJson(dataDec);
+      return Result.ok(l);
     } on Exception catch (e) {
       return Result.error(e);
     }
   }
 
-  Future<Result<void>> storeMainUserJson(CurrentUserModel user) async {
+  Future<Result<void>> storeCurrentUser(CurrentUserModel user) async {
     try {
       await _storage.write(
-          key: AvailableTokens.currentUser.toString(), value: jsonEncode(user));
+          key: AvailableTokens.currentUser.toString(), value: jsonEncode(user.toJson()));
       return Result.ok(null);
     } on Exception catch (e) {
       return Result.error(e);
@@ -122,10 +129,10 @@ class LocalDataService {
   Future<Result<List<EmployeeBriefModel>>> getManagedUsers() async {
     try {
       String? data = await _storage.read(
-          key: AvailableTokens.managedUsers.toString());
+          key: AvailableTokens.currentManagedUsers.toString());
       if (data == null) {
         return Result.error(Exception(
-            "The key: ${AvailableTokens.managedUsers.toString()} wasn't found in the _storage"));
+            "The key: ${AvailableTokens.currentManagedUsers.toString()} wasn't found in the _storage"));
       }
       List<EmployeeBriefModel> managedUsers = [];
       for (var userJson in jsonDecode(data)) {
@@ -144,11 +151,39 @@ class LocalDataService {
         employeesJson.add(employee.toJson());
       }
       await _storage.write(
-          key: AvailableTokens.managedUsers.toString(),
+          key: AvailableTokens.currentManagedUsers.toString(),
           value: jsonEncode(employeesJson));
       return Result.ok(null);
     } on Exception catch (e) {
       return Result.error(e);
+    }
+  }
+
+  Future<Result<List<WorkCycleModel>>> getCurrentUsersWorkcycles() async {
+    try {
+      String? data = await _storage.read(
+          key: AvailableTokens.currentWorkCycles.toString());
+      if (data == null) {
+        return Result.error(Exception(
+            "The key: ${AvailableTokens.currentWorkCycles.toString()} wasn't found in the _storage"));
+      }
+      List<WorkCycleModel> workCycles = [];
+      for (var workCycleJson in jsonDecode(data)) {
+        workCycles.add(WorkCycleModel.fromJson(workCycleJson));
+      }
+      return Result.ok(workCycles);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
+  Future<Result<void>> storeCurrentUserWorkCycles(List<WorkCycleModel> wC) async {
+    try {
+      await _storage.write(key: AvailableTokens.currentWorkCycles.toString(), value: jsonEncode(wC)); 
+      return Result.ok(null);
+    }
+    catch (e) {
+      return Result.error(Exception("Failed writing"));
     }
   }
 }

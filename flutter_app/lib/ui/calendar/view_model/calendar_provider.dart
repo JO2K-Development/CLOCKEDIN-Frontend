@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/enums/work_cycles_type.dart';
 import 'package:flutter_app/core/utils/command.dart';
 import 'package:flutter_app/core/utils/functions/time.dart';
 import 'package:flutter_app/core/utils/result.dart';
-import 'package:flutter_app/data/repositories/current_user_repository.dart';
-import 'package:flutter_app/data/repositories/users_repository.dart';
+import 'package:flutter_app/data/repositories/abstract/users_repository.dart';
 import 'package:flutter_app/domain/model_classes/statistics_model/statistics_model.dart';
 import 'package:flutter_app/domain/model_classes/work_cycle_model/work_cycle_model.dart';
 
@@ -27,6 +25,7 @@ class CalendarProvider with ChangeNotifier {
 
   Future<Result<void>> _load() async {
     await Future.delayed(Duration(seconds: 1));
+    print("deb");
     try{
       final result = await _usersRepository.getStatistics(_userId);
       switch(result){

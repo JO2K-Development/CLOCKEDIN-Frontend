@@ -7,7 +7,7 @@ part 'statistics_model.g.dart';
 @freezed
 class StatisticsModel with _$StatisticsModel {
   const factory StatisticsModel({
-     required List<dynamic> statistics,
+     required List<dynamic> statistics, // we would have polymorphism here but freezed doesn't support abstract classes
   }) = _StatisticsModel;
 
   factory StatisticsModel.fromJson(Map<String, dynamic> json) =>

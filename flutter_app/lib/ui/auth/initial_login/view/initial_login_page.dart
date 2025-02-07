@@ -105,10 +105,14 @@ class LoginWidget extends StatelessWidget {
                         child: MyButtonShort(text:  AppLocalizations.of(context).login_button, onPressed: viewModel.login.execute,),
                       ),
                     ),
-                    if (viewModel.errorMessage.isNotEmpty)
+                    if (viewModel.login.error)
                       Padding(
                         padding: const EdgeInsets.only(top: Dimentions.sizeXL),
-                        child: Text(viewModel.errorMessage),
+                        child: 
+                        Text(
+                          // AppLocalizations.of(context).login_error,
+                          viewModel.login.result.toString(),
+                        style: Theme.of(context).textTheme.bodyLarge!),
                       ),
                       
                         ],

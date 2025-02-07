@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data/repositories/auth_repository.dart';
-import 'package:flutter_app/data/repositories/current_user_repository.dart';
+import 'package:flutter_app/core/utils/result.dart';
+import 'package:flutter_app/data/repositories/abstract/auth_repository.dart';
+import 'package:flutter_app/data/repositories/abstract/current_user_repository.dart';
+import 'package:flutter_app/data/services/local/local_storage_service.dart';
 import 'package:flutter_app/routing/routes.dart';
 import 'package:flutter_app/ui/app_scaffold/view/app_scaffold.dart';
+import 'package:flutter_app/ui/auth/choose_account_type/view/choose_account_type_page.dart';
+import 'package:flutter_app/ui/auth/choose_account_type/view_model/choose_account_type_provider.dart';
+import 'package:flutter_app/ui/auth/data_filling/view/data_filling_page.dart';
+import 'package:flutter_app/ui/auth/data_filling/view_model/data_filling_provider.dart';
 import 'package:flutter_app/ui/auth/initial_login/view/initial_login_page.dart';
 import 'package:flutter_app/ui/auth/initial_login/view_model/initial_login_provider.dart';
 import 'package:flutter_app/ui/auth/register/view/register_page.dart';
@@ -18,26 +24,29 @@ import 'package:flutter_app/ui/employee_profile/view_model/employee_profile_prov
 import 'package:flutter_app/ui/employees_management/view/employees_managment.dart';
 import 'package:flutter_app/ui/employees_management/view_model/employees_managment.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
+
 
 GoRouter router(
   AuthRepository authRepository,
 ) {
   
   return GoRouter(
-  initialLocation: AliasedRoutes.appScaffoldFeatures[1].path,
+  initialLocation: AliasedRoutes.appScaffoldFeatures[0].path,
   refreshListenable: authRepository,
   redirect: _redirect,
 
   routes: [
-    
     AliasedRoutes.dayOfWeek,
     
     ...AliasedRoutes.authFeatures,
+    
     //This takes care of adding the features in a parametric way
     StatefulShellRoute.indexedStack(
       builder: (context, state, child) => AppScaffolding(
-        child: child!,
+        languageSupportUtil: context.read(),
+        child: child,
       ),
       branches: List.generate(AliasedRoutes.appScaffoldFeatures.length, 
         (index) => StatefulShellBranch(routes: [
@@ -52,10 +61,11 @@ GoRouter router(
 
     // From https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/redirection.dart
 Future<String?> _redirect(BuildContext context, GoRouterState state) async {
-  // if the user is not logged in, they need to login
+  // if the user is not logged in, they need to login 
+  final _log = Logger();
+  _log.i("Redirecting user");
   final loggedIn = await context.read<AuthRepository>().isAuthenticated;
-  final profileFilled = await context.read<CurrentUserRepository>().isProfileFilled;
-  final chosenCompany = await context.read<CurrentUserRepository>().isCompanyChosen;
+
 
   // handles situations when the user is in the auth layer
   if ([AliasedRoutes.initLogin, AliasedRoutes.registerPage].any((el) => el.path == state.matchedLocation)){
@@ -70,14 +80,18 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
     return Routes.initialLogin;
   }
 
+  final profileFilled = await context.read<CurrentUserRepository>().isProfileFilled;
+
   // handles incomplete user profile
   if (!profileFilled) {
-    return Routes.dataFill;
+    return Routes.dataFilling;
   }
+
+  final chosenCompany = await context.read<CurrentUserRepository>().isCompanyChosen;
 
   // handles not chosen company
   if (!chosenCompany) {
-    return Routes.companyChoosing;
+    return Routes.chooseAccountType;
   }
 
   // if the user is logged in but still in the auth layer of the pages, send them to
@@ -115,15 +129,18 @@ class AliasedRoutes {
             ),
           ),
         );
+
   static GoRoute calendar = GoRoute(
             // path: ":id",
             path: Routes.calendar,
             builder: (context, state) { 
+
             // final int id = int.parse(state.pathParameters["id"]!);
             final CalendarProvider viewModel = CalendarProvider(
                 usersRepository: context.read(),
                 // userId: id,
               );
+
             viewModel.load.execute();
 
             return CalendarPage(
@@ -151,6 +168,8 @@ class AliasedRoutes {
       return DayOfWorkPage(
         viewModel: viewModel,);
           });
+
+          
   static GoRoute initLogin = GoRoute(
       path: Routes.initialLogin,
       builder: (context, state) => InitialLoginPage(
@@ -167,10 +186,22 @@ class AliasedRoutes {
         ),
       ),
     );
-   // GoRoute(
-    //   path: Routes.dataFill,
-    //   builder: (context, state) => DataFillingPage(),
-    // ),
+   static GoRoute dataFilling = GoRoute(
+      path: Routes.dataFilling,
+      builder: (context, state) => DataFillingPage(
+        viewModel: DatafillingProvider(
+          currentUserRepository: context.read(),
+        ),
+      ),
+    );
+  static GoRoute chooseAccountType = GoRoute(
+      path: Routes.chooseAccountType,
+      builder: (context, state) => ChooseAccountTypePage(
+        viewModel: ChooseAccountTypeProvider(
+          currentUserRepository: context.read(),
+        ),
+      ),
+    );
   static List<GoRoute> appScaffoldFeatures = [
     employeesManagement,
     clockInOut,
@@ -178,9 +209,13 @@ class AliasedRoutes {
     employeeProfile,
   ];
 
+  static final String landingPage = appScaffoldFeatures[1].path;
+
   static List<GoRoute> authFeatures = [
     initLogin,
     registerPage,
+    dataFilling,
+    chooseAccountType,
   ];
   
 }
